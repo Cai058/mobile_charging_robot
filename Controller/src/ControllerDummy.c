@@ -12,6 +12,15 @@ uint16_t debug_flag;
 Sensor_t m_ctrl;              //Sensor
 ServerMsg_t m_server_ctrl;    //Server
 
+// Test 
+//direction
+char m_direction = 0;
+char m_direction1 = 1; //direction of mode 1
+char m_mode_ctrl = 1;  // default dummy
+//test_index
+uint8_t test_index = 1;
+uint8_t test_mode = 1;
+
 StateMachine sm;              //State Machine
 
 int16_t m_motor_speed[4];     //Motor_speed
@@ -24,6 +33,7 @@ uint32_t switch_cnt = 0;
 uint16_t charge_cnt = 0;
 uint16_t rail_cnt = 0;
 uint16_t rfid_rx_cnt = 0;
+uint16_t stop_charge_cnt = 0;
 
 // Flag
 uint8_t slow_flag = 0;  // 是否是慢速状态
@@ -42,9 +52,9 @@ const char* error_list[] = {
 };
 void Sensor_t_Update(void)
 {	
-	// Update
+	// *********Update***************
 	Ultrawave_Update();
-	//RFID
+	//== RFID ==
 	if(m_ctrl.number != 0){rfid_flag = 1;}
 	if(rfid_flag == 1)
 	{
@@ -67,25 +77,46 @@ void Sensor_t_Update(void)
 	Battery_Update();
 	RC_Update();
 	
-		// Assign to variable
-		//m_ctrl.ultra_stop = Ultrawave_IfStop(); 
-		m_ctrl.ultra_stop =0;
-		m_ctrl.pg_state = Get_PGState();
-		m_ctrl.action = Get_ifaction();
-		if(m_ctrl.number != 0){m_ctrl.location_id = m_ctrl.number;}  // 记录当前经过的点位
-		m_ctrl.front_state = Get_frontlimitState();
-		m_ctrl.rear_state = Get_rearlimitState();
-		m_ctrl.need_charge = Battery_ifNeedCharge();
-		m_ctrl.is_charging = Battery_isCharging();
-		m_ctrl.m_soc = Get_SOC();
-		if(m_ctrl.action == 1) {m_ctrl.if_finished = 0;}  // 只要收到消息就是0（表示未完成）, 它变为0也不受影响，只有当后限位开关触发（表示完成时），if_finished = 1
-		if(m_ctrl.available == 1)
-		{
-				m_server_ctrl =  Get_serverMsg();
-		}
-		
+	// Assign to variable
+	//m_ctrl.ultra_stop = Ultrawave_IfStop(); 
+	
+	m_ctrl.ultra_stop =0;
+	m_ctrl.pg_state = Get_PGState();
+	if(m_ctrl.number != 0){m_ctrl.location_id = m_ctrl.number;}  // 记录当前经过的点位
+	m_ctrl.front_state = Get_frontlimitState();
+	m_ctrl.rear_state = Get_rearlimitState();
+	m_ctrl.need_charge = Battery_ifNeedCharge();
+	m_ctrl.is_charging = Battery_isCharging();
+	m_ctrl.m_soc = Get_SOC();
+	
 }
 
+void Dummy_Update(void)
+{
+		m_direction = RC_GetDirection();
+		//m_mode_ctrl = RC_GetMode();
+		m_ctrl.action = (m_direction == 3) ? Get_ifaction() : 1;  //if test or server control
+	  if(m_ctrl.action == 1) {m_ctrl.if_finished = 0;}  // 只要收到消息就是0（表示未完成）, 它变为0也不受影响，只有当后限位开关触发（表示完成时），if_finished = 1
+		
+		if(m_ctrl.available == 1)
+		{
+				if(m_direction == 3) // server control
+				{
+						m_server_ctrl =  Get_serverMsg();
+				}
+				else               // test
+				{
+						m_server_ctrl.target_id = test_index;
+						m_server_ctrl.command = (m_ctrl.place_complete == 0) ? 1:0;
+						if(m_server_ctrl.command == 0)
+						{
+								//test_index = (m_direction == 1) ? ((test_index %18)+1) : ((test_index + 16 )%18 + 1);
+								test_index = Get_test_index(test_mode,test_index);
+						}
+				}
+		}
+
+}
 void Dummy_Init(void)
 {
 		StateMachine_Init();
@@ -106,7 +137,25 @@ void SwitchState(void)
 					send_json_response("free");
 			 }
 	 
-			 //2. 收到任务
+			 //2. need charge
+			 if(m_ctrl.place_complete && m_ctrl.need_charge)
+			 {
+//					if(sm.lastState == STATE_PULL && charge_cnt < 5000)
+//					{
+//							charge_cnt++;
+//					}
+//					else
+//					{
+						  charge_cnt = 0;
+							heart_cnt = 0; // 进入下一个状态，重新开始计算
+							sm.currentState = STATE_RUNNING;
+							sm.lastState = STATE_IDLE;
+						  m_ctrl.available = 0;
+							break;
+					//}
+			 }
+			 
+			 //3. 收到任务
 			 if(m_ctrl.if_finished == 0)   // or need charge
 			 {
 					 heart_cnt = 0; // 进入下一个状态，重新开始计算
@@ -116,26 +165,9 @@ void SwitchState(void)
 				   m_ctrl.place_complete = 0;
 					 send_json_response("Success");
 					 break;
-					
 			 }
 			 
-			 //3. need charge
-			 if(m_ctrl.place_complete && m_ctrl.need_charge)
-			 {
-					if(sm.lastState == STATE_PULL && charge_cnt < 5000)
-					{
-							charge_cnt++;
-					}
-					else
-					{
-						  charge_cnt = 0;
-							heart_cnt = 0; // 进入下一个状态，重新开始计算
-							sm.currentState = STATE_RUNNING;
-							sm.lastState = STATE_IDLE;
-						  m_ctrl.available = 0;
-							break;
-					}
-			 }
+			 
 		 break;
 		 
 	 case STATE_RUNNING:
@@ -327,10 +359,14 @@ void SwitchState(void)
 			 // 
 			 if(m_ctrl.m_soc >= 90)
 			 {
-					PushRod_StopCharge();
+				 PushRod_StopCharge();
+				 if(stop_charge_cnt < 10000){stop_charge_cnt ++;}
+				 else{
 					sm.currentState = STATE_IDLE;
 				  sm.lastState = STATE_CHARGING;
 				  m_ctrl.available = 1;
+					stop_charge_cnt = 0;
+				 }
 			 }
 			 else
 			 {
@@ -468,4 +504,33 @@ Sensor_t Get_SensorData(void)
 {
 		return m_ctrl;
 
+}
+
+uint8_t Get_test_index(uint8_t _mode,uint8_t _current)
+{
+		uint8_t _next = _current;
+	  char _direction;
+	
+	  if(_mode == 1)
+		{
+				if(_next == 1){m_direction1 = 1;}  // 1-9
+				else if(_next == 9){m_direction1 = 2;} //9-1
+				_direction = m_direction1;
+		}
+		else
+		{
+				_direction = m_direction;
+		}
+		
+		if(_mode == 1 || _mode == 2)
+		{
+				do{_next = (_direction == 1) ? ((_next %18)+1) : ((_next + 16 )%18 + 1);}
+				while(_next == 3 || _next == 10 || _next == 14 || _next == 15 || _next == 18);
+		}
+		else
+		{
+				_next = (_direction == 1) ? ((_next %18)+1) : ((_next + 16 )%18 + 1);
+		}
+	  
+		return _next;
 }

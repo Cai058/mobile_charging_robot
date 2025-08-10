@@ -22,6 +22,7 @@ VxFilter_t vx_filter[4];           // in first_order_filter.h
 char mode_ctrl = 0;
 char last_mode_ctrl = 0;
 
+
 //is charge
 uint8_t m_ischarge = 0;
 
@@ -72,7 +73,6 @@ void Update(void)
 {
 // 更新各个传感器,获得各个传感器的值
 Sensor_t_Update();
-
 mode_ctrl = RC_GetMode();
 m_ischarge = Battery_isCharging();
 
@@ -88,7 +88,9 @@ if(mode_ctrl == 1)  // 左上
 		  SetySpeed(0);
 		  //send_json_response("free");
 	}
+		Dummy_Update();
 		SwitchState();
+	
 	
 }
 else if(mode_ctrl == 2 || mode_ctrl == 3) // 左下

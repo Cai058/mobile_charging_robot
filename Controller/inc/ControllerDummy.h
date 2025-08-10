@@ -56,6 +56,7 @@ typedef struct {
 } StateMachine;
 
 void Sensor_t_Update(void);
+void Dummy_Update(void);
 void SwitchState(void);
 
 //初始化结构体
@@ -79,4 +80,7 @@ void Reset_flag(void);
 
 //传递sensor_t
 Sensor_t Get_SensorData(void);
+
+// Get test index
+uint8_t Get_test_index(uint8_t _mode,uint8_t _current);
 #endif

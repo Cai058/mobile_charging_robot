@@ -85,3 +85,12 @@ char RC_GetMode(void)
 		
 		return m_rc_raw.rc.s[1];
 }
+
+char RC_GetDirection(void)
+{
+	 if(m_rc_raw.rc.s[0] == 0)
+	 {
+			return 3;
+	 }
+		return m_rc_raw.rc.s[0];
+}

@@ -156,7 +156,7 @@ void Battery_t_init(void)
 
 uint8_t Battery_ifNeedCharge(void)  // test!!!!!!!!!!!!!!!!!!!!!!! 85?
 {
-		if(battery_info.soc < 10) return 1;
+		if(battery_info.soc < 5) return 1;
 		
 	return 0;
 }

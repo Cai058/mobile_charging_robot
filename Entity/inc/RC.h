@@ -41,6 +41,7 @@ void RC_Update(void);
 
 RC_raw_t RC_GetData(void);
 char RC_GetMode(void); 
+char RC_GetDirection(void);
 static void SBUS_TO_RC(volatile const uint8_t *sbus_buf, RC_raw_t *rc_raw);
 
 #endif

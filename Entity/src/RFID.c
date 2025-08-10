@@ -139,12 +139,12 @@ uint16_t ExtractRFIDNumber(const uint8_t *data, uint16_t len)
 //				rfid_number = 4;
 //			break;
 			
-			//case 0x149F:
-			case 0xBA9B:
+		case 0x149F:
+			//case 0xBA9B:
         rfid_number = 1;
         break;
-    //case 0x4409:
-			case 0x9A22:
+    case 0x4409:
+			//case 0x9A22:
         rfid_number = 2;
         break;
     case 0x4D6F:
