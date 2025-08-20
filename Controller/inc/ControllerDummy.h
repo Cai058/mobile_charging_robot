@@ -30,6 +30,7 @@ uint8_t previous_id;
 uint8_t if_finished;
 uint8_t need_charge;
 uint8_t is_charging;
+uint8_t charge_mode;
 int move_direction;
 uint8_t current_target_id; //当前目标（充电点位或者从平台获取的）
 uint8_t available;
@@ -45,6 +46,7 @@ typedef enum {
 	  STATE_PUSH,
 	  STATE_PULL,
     STATE_RUNNING,
+	  STATE_ADJUST,
 		STATE_WORKING,
 	  STATE_CHARGING
 } State;
@@ -63,6 +65,10 @@ void SwitchState(void);
 void Dummy_Init(void);
 void Sensor_t_Init(void);
 void StateMachine_Init(void);
+
+//切换回自动状态时，重置变量
+void Dummy_Reset(void);
+void Sensor_t_Reset(void);
 
 //返回值
 void Get_MotorSpeed(int16_t *_speed);
@@ -83,4 +89,7 @@ Sensor_t Get_SensorData(void);
 
 // Get test index
 uint8_t Get_test_index(uint8_t _mode,uint8_t _current);
+
+//充电推杆位置调整
+void Charging_Adjust(void);
 #endif

@@ -4,6 +4,9 @@
 float m_Kp = 15.0f;
 float m_Ki = 0.15f;
 float m_Kd = 0.0001f;
+//float m_Kp = 1.0f;
+//float m_Ki = 0.0;
+//float m_Kd = 0.0f;
 float m_Kp_y = 1.0f;
 float m_Ki_y = 0.0f;
 float m_Kd_y = 0.0f;
@@ -54,13 +57,13 @@ void Init(void)
 	
 	//PID and Motor Init
 	//Init Y
-	VxFilter_Init(&vx_filter[0],0.01f,0.01f,0.00f,1); //tau1 = 0.15, tau2 = 0.05, tau3 = 0.01, period = 1ms
+	VxFilter_Init(&vx_filter[0],0.01f,0.01f,0.00f,1); //tau1 = 0.01, tau2 = 0.01, tau3 = 0.00, period = 1ms
   PID_Init(&Motor_pid[0],PID_POSITION_SPEED,m_Kp_y,m_Ki_y,m_Kd_y,m_intergral_limit,m_maxout,m_deadband);	
 	//Init X
 	for(int i=1; i<4; i++)
 	{
 	 // Filter
-	 VxFilter_Init(&vx_filter[i],0.01f,0.01f,0.00f,1); //tau1 = 0.15, tau2 = 0.05, tau3 = 0.01, period = 1ms
+	 VxFilter_Init(&vx_filter[i],0.5f,0.01f,0.00f,1); //tau1 = 0.15, tau2 = 0.05, tau3 = 0.01, period = 1ms
    PID_Init(&Motor_pid[i],PID_POSITION_SPEED,m_Kp,m_Ki,m_Kd,m_intergral_limit,m_maxout,m_deadband);		//4 motos angular rate closeloop.
 	}
 	
@@ -82,10 +85,10 @@ if(mode_ctrl == 1)  // ×óÉÏ
 {
 	if(last_mode_ctrl != 1)  // The first siwtch, init the state to IDLE
 	{
-			last_mode_ctrl = 1;
-		  Dummy_Init();
-			SetxSpeed(0);
-		  SetySpeed(0);
+		last_mode_ctrl = 1;
+		Dummy_Reset();
+		SetxSpeed(0);
+		SetySpeed(0);
 		  //send_json_response("free");
 	}
 		Dummy_Update();

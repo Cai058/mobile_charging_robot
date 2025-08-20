@@ -19,11 +19,11 @@ void RC_Update(void)
 {
 	
 		SBUS_TO_RC((uint8_t *)pbuf_rc, &m_rc_raw); 
-    printf("Received: ");
-    for (int i = 0; i < len_rc; i++) {
-        printf("%02X ", (uint8_t)pbuf_rc[i]);
-    }
-    printf("\\r\\n");
+//    printf("Received: ");
+//    for (int i = 0; i < len_rc; i++) {
+//        printf("%02X ", (uint8_t)pbuf_rc[i]);
+//    }
+//    printf("\\r\\n");
 		
 //		printf("ch0: %d ch1: %d ch2: %d ch3: %d s1: %d s2: %d\n",
 //               m_rc_raw->rc.ch[0], m_rc_raw->rc.ch[1], m_rc_raw->rc.ch[2], m_rc_raw->rc.ch[3],

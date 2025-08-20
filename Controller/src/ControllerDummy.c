@@ -27,19 +27,24 @@ int16_t m_motor_speed[4];     //Motor_speed
 
 // Count
 uint8_t i;
-uint16_t pushrod_cnt = 0;
+uint16_t pushrod_cnt = 0;          //取放桩推杆伸缩时间
 uint32_t heart_cnt = 0;
-uint32_t switch_cnt = 0;
-uint16_t charge_cnt = 0;
-uint16_t rail_cnt = 0;
-uint16_t rfid_rx_cnt = 0;
-uint16_t stop_charge_cnt = 0;
+uint32_t switch_cnt = 0;           //用于判断限位开关是否过长时间未触发
+uint16_t charge_cnt = 0;           //从机器人完成放桩，到前往充电的等待时间
+uint16_t rail_cnt = 0;             //停稳后，等待一段时间再伸出盒子
+uint16_t rfid_rx_cnt = 0;          // RFID停止检测时长
+uint16_t charge_pushrod_cnt = 0;   //充电推杆伸缩时间
+uint16_t adjust_cnt = 0;           //等待机器人停稳的时间
+uint16_t charging_adjust_cnt = 0;  //充电调整移动时间
+uint16_t charge_err_cnt = 0;       //充电未停稳时间
+uint16_t find_cnt = 0;
 
 // Flag
 uint8_t slow_flag = 0;  // 是否是慢速状态
 uint8_t charge_flag = 0;  // 充电的电推杆是否推出
 uint8_t push_flag = 0;    // 是否推出滑杆
 uint8_t rfid_flag = 0;    // If the UID is changed
+uint8_t charging_adjust_flag = 0; // 用于判断是调整前，调整中，调整后
 
 // ERROR
 uint8_t error_code = 0;
@@ -50,6 +55,9 @@ const char* error_list[] = {
     "前限位开关未触发", // 3
     "后限位开关未触发"  // 4
 };
+
+
+
 void Sensor_t_Update(void)
 {	
 	// *********Update***************
@@ -94,11 +102,10 @@ void Sensor_t_Update(void)
 void Dummy_Update(void)
 {
 		m_direction = RC_GetDirection();
-		//m_mode_ctrl = RC_GetMode();
 		m_ctrl.action = (m_direction == 3) ? Get_ifaction() : 1;  //if test or server control
 	  if(m_ctrl.action == 1) {m_ctrl.if_finished = 0;}  // 只要收到消息就是0（表示未完成）, 它变为0也不受影响，只有当后限位开关触发（表示完成时），if_finished = 1
 		
-		if(m_ctrl.available == 1)
+		if(m_ctrl.available == 1)                        //只有available时才给m_server_ctrl赋值
 		{
 				if(m_direction == 3) // server control
 				{
@@ -115,7 +122,10 @@ void Dummy_Update(void)
 						}
 				}
 		}
-
+	if(m_ctrl.place_complete && m_ctrl.need_charge)
+	{
+			m_ctrl.charge_mode = 1;
+	}
 }
 void Dummy_Init(void)
 {
@@ -124,6 +134,27 @@ void Dummy_Init(void)
 		PushRod_StopCharge();	
 		Reset_flag();
 		heart_cnt = 0;
+}
+
+void Dummy_Reset(void)
+{
+	StateMachine_Init();
+	PushRod_StopCharge();
+	Reset_flag();
+	heart_cnt = 0;
+	//对于m_ctrl,只重置需要的
+	Sensor_t_Reset();
+}
+
+void Sensor_t_Reset(void)
+{
+	m_ctrl.action = 0;
+	m_ctrl.if_finished = 1;
+	m_ctrl.move_direction = 1;
+	m_ctrl.charge_mode = 0;
+	m_ctrl.current_target_id = 1;
+	m_ctrl.available = 1;
+	m_ctrl.place_complete = 1;
 }
 
 void SwitchState(void)
@@ -138,7 +169,7 @@ void SwitchState(void)
 			 }
 	 
 			 //2. need charge
-			 if(m_ctrl.place_complete && m_ctrl.need_charge)
+			 if(m_ctrl.charge_mode == 1)
 			 {
 //					if(sm.lastState == STATE_PULL && charge_cnt < 5000)
 //					{
@@ -146,6 +177,7 @@ void SwitchState(void)
 //					}
 //					else
 //					{
+				      //m_ctrl.charge_mode = 1;
 						  charge_cnt = 0;
 							heart_cnt = 0; // 进入下一个状态，重新开始计算
 							sm.currentState = STATE_RUNNING;
@@ -175,7 +207,7 @@ void SwitchState(void)
 			heart_cnt ++;
 			 if(heart_cnt % 60000 == 500)  // 10分钟发一次
 			 {   
-				  if(m_ctrl.need_charge)
+				  if(m_ctrl.charge_mode == 1)
 					{
 							send_json_response("move_charge");
 					}
@@ -191,7 +223,7 @@ void SwitchState(void)
 			 //2. 行走
 			 
 			 //2.1 当前目标点位：a. 充电点位 b. 放置/抓取点位
-			 if(m_ctrl.need_charge){m_ctrl.current_target_id = charge_id;}
+			 if(m_ctrl.charge_mode == 1){m_ctrl.current_target_id = charge_id;}
 			 else{m_ctrl.current_target_id = m_server_ctrl.target_id;}
 			 
 			
@@ -206,27 +238,31 @@ void SwitchState(void)
 		 if(m_ctrl.pg_state == 1 && m_ctrl.location_id == m_ctrl.current_target_id)  
 		 {
 					SetxSpeed(0);
-					if(m_ctrl.need_charge == 1)
-					{
-							sm.currentState = STATE_CHARGING;
-							send_json_response("arrive");
-							heart_cnt = 0;
-					}
-					else
-					{
-							sm.currentState = STATE_WORKING;
-						  m_ctrl.available = 0;
-							send_json_response("arrive");
-							heart_cnt = 0;
-						  rail_cnt = 0;
-					}
+			    sm.currentState = STATE_ADJUST;
 					sm.lastState = STATE_RUNNING;
+			 break;
 		 }
 		 
 		
 		 //2.4 设置速度
 		 if (m_ctrl.ultra_stop == 0)
 		 { 
+			 
+			 // Adjust
+			 if(sm.lastState == STATE_ADJUST)
+			 {
+				 if(m_ctrl.move_direction == 1)
+				 {
+						SetxSpeed(-50);
+				 }
+				 else
+				 {
+						SetxSpeed(50);
+				 }
+			 }
+			 else
+			 {
+			 // Normal
 			 if(m_ctrl.location_id != m_ctrl.previous_id && slow_flag == 0)  // 没移动到前一点：正常速度  (设置slow_flag是为了如果错过了停止点位，应该继续慢速寻找）
 			 {
 				 debug_flag = 11;
@@ -234,7 +270,7 @@ void SwitchState(void)
 				 {
 						if(m_ctrl.location_id == turn_num2 || m_ctrl.location_id == turn_num4)
 						{
-								SetxSpeed(-1500);
+								SetxSpeed(-2500);
 						}
 						else
 						{
@@ -245,7 +281,7 @@ void SwitchState(void)
 					{
 						if(m_ctrl.location_id == turn_num1 || m_ctrl.location_id == turn_num3)
 						{
-								SetxSpeed(1500);
+								SetxSpeed(2500);
 						}
 						else
 						{
@@ -253,16 +289,65 @@ void SwitchState(void)
 						}
 				 } 
 			 }
+		 
 			 else
        {
 				   debug_flag = 10;
 				   (m_ctrl.move_direction == 1) ? SetxSpeed(-1500) : SetxSpeed(1500);
 						slow_flag = 1;
-       }				 
+       }	
+		 }			 
 		 }
 		   
 		break;
-		 
+	
+	 case STATE_ADJUST:
+		    
+	      if(adjust_cnt > 2000)
+				{
+					if(m_ctrl.pg_state == 1 && m_ctrl.location_id == m_ctrl.current_target_id)  
+					{
+						adjust_cnt = 0;
+						SetxSpeed(0);
+						if(find_cnt > 2)
+						{
+							find_cnt = 0;
+						if(m_ctrl.charge_mode == 1)
+						{
+								sm.currentState = STATE_CHARGING;
+								send_json_response("arrive");
+								heart_cnt = 0;
+								m_ctrl.move_direction = m_ctrl.move_direction * -1; // 充电时，方向反转，以便于充电点位调整
+						}
+						else
+						{
+								sm.currentState = STATE_WORKING;
+								m_ctrl.available = 0;
+								send_json_response("arrive");
+								heart_cnt = 0;
+								rail_cnt = 0;
+						}
+						sm.lastState = STATE_RUNNING;
+					}
+						else
+						{
+								find_cnt++;
+						}
+					}
+					else
+					{
+						  find_cnt = 0;
+							m_ctrl.move_direction = -m_ctrl.move_direction;
+							sm.lastState = STATE_ADJUST;
+							sm.currentState = STATE_RUNNING;
+					}
+			}
+			else
+			{
+					adjust_cnt ++;
+			}
+		 break;
+	 
 	 case STATE_WORKING:
 				SetxSpeed(0);
 				rail_cnt++;
@@ -349,71 +434,63 @@ void SwitchState(void)
 		 
 		 case STATE_CHARGING:
 		    // 1.正在充电状态反馈 & 充电异常反馈
-				heart_cnt ++;
-				SetxSpeed(0);
-			 if(heart_cnt % 30000 == 100)  // 10分钟发一次
-			 {
-				  send_json_response("charge");
-			 }
-			 
-			 // 
-			 if(m_ctrl.m_soc >= 90)
-			 {
-				 PushRod_StopCharge();
-				 if(stop_charge_cnt < 10000){stop_charge_cnt ++;}
-				 else{
-					sm.currentState = STATE_IDLE;
-				  sm.lastState = STATE_CHARGING;
-				  m_ctrl.available = 1;
-					stop_charge_cnt = 0;
-				 }
-			 }
-			 else
-			 {
-					PushRod_StartCharge();
-				  if(m_ctrl.m_soc < 30)
-					{
-							m_ctrl.available = 0;
-					}
-			 }
-			 
-			 
-//			 
-//			 else 
+			heart_cnt ++;
+			SetxSpeed(0);
+			// 若充电异常，则进入故障模式，报告无法充电
+			// if(charge_err_cnt > 60000)
+			// {
+			// 	error_code = 5;
+			// 	sm.currentState = STATE_ERROR;
+			// 	sm.lastState = STATE_CHARGING;
+			// }
+//			 if(m_ctrl.is_charging == 0)
 //			 {
-//					if(m_ctrl.if_finished == 0)
-//					{
-//							PushRod_StopCharge();
-//							if(m_ctrl.m_soc < 30)
-//							{
-//									m_ctrl.available = 0;
-//								  m_ctrl.if_finished = 1; // otherwise when soc >30, it will automally move.
-//								  send_json_response("Fail");
-//							}
-//							else
-//							{
-//									m_ctrl.available = 1;
-//								  heart_cnt = 0; // 进入下一个状态，重新开始计算
-//								  sm.currentState = STATE_RUNNING;
-//								  sm.lastState = STATE_IDLE;
-//								  send_json_response("Success");
-//								  send_json_response("move");
-//								  break;
-//							}
-//					}
-//					else
-//					{
-//							PushRod_StartCharge();
-//					}
+//				charge_err_cnt++;  // 记录充电接触不良时长
+//				Charging_Adjust(); // 调整充电推杆位置
 //			 }
-		 
-		 
+//			 else
+//			 {
+				if(heart_cnt % 30000 == 100)  // 10分钟发一次
+				{
+					send_json_response("charge");
+				}
+				
+				// 
+				if(m_ctrl.m_soc >= 99)
+				{
+					PushRod_StopCharge();
+					if(charge_pushrod_cnt < 10000){charge_pushrod_cnt ++;}
+					else{
+						sm.currentState = STATE_IDLE;
+						sm.lastState = STATE_CHARGING;
+						m_ctrl.available = 1;
+						m_ctrl.charge_mode = 0;
+						charge_pushrod_cnt = 0;
+					}
+				}
+				else
+				{
+					charging_adjust_flag = 0;      // 若电推杆伸出后，仍位置不准，则重新调整
+					charge_pushrod_cnt = 0;
+					PushRod_StartCharge();
+					if(m_ctrl.m_soc < 30)
+						{
+							m_ctrl.available = 0;
+							if(m_ctrl.if_finished == 0)
+								{
+									send_json_response("Fail");
+									m_ctrl.if_finished = 1;
+								}
+						}
+				}
+			 //}
+
 		 break;
 		 
 		 	case STATE_ERROR:
 				
 			// 其它故障怎么解决？
-		  SetxSpeed(0);
+		    SetxSpeed(0);
 			SetySpeed(0);
 			heart_cnt ++;
 			 if(heart_cnt % 600000 == 0)  // 10分钟发一次
@@ -463,22 +540,23 @@ uint8_t  get_previous_point(uint8_t target_id, int direction) {
 
 void Sensor_t_Init(void)
 {
-		//sensors state init
-		m_ctrl.ultra_stop = 0;
-		m_ctrl.pg_state = 0;
-		m_ctrl.action = 0;
-		m_ctrl.number = 0;
-		m_ctrl.front_state = 0;
-		m_ctrl.rear_state = 0;
-		//m_ctrl.location_id = 0;
-		m_ctrl.previous_id = 0;
-		m_ctrl.if_finished = 1; //先是任务完成
-		m_ctrl.need_charge = 0;
-		m_ctrl.is_charging = 0;
-		m_ctrl.move_direction = 1;
-	  m_ctrl.current_target_id = 0;
-		m_ctrl.available = 1;
-		m_ctrl.place_complete = 1;
+	//sensors state init
+	m_ctrl.ultra_stop = 0;
+	m_ctrl.pg_state = 0;
+	m_ctrl.action = 0;
+	m_ctrl.number = 0;
+	m_ctrl.front_state = 0;
+	m_ctrl.rear_state = 0;
+	//m_ctrl.location_id = 0;
+	m_ctrl.previous_id = 0;
+	m_ctrl.if_finished = 1; //先是任务完成
+	m_ctrl.need_charge = 0;
+	m_ctrl.is_charging = 0;
+	m_ctrl.charge_mode = 0;
+	m_ctrl.move_direction = 1;
+	m_ctrl.current_target_id = 0;
+	m_ctrl.available = 1;
+	m_ctrl.place_complete = 1;
 }
 
 void StateMachine_Init(void)
@@ -494,10 +572,10 @@ void Get_MotorSpeed(int16_t *_speed)
 
 void Reset_flag(void)
 {
-		slow_flag = 0;  // 是否是慢速状态
+	slow_flag = 0;  // 是否是慢速状态
     charge_flag = 0;  // 充电的电推杆是否推出
     push_flag = 0; 
-		error_code = 0;
+	error_code = 0;
 }
 
 Sensor_t Get_SensorData(void)
@@ -514,7 +592,7 @@ uint8_t Get_test_index(uint8_t _mode,uint8_t _current)
 	  if(_mode == 1)
 		{
 				if(_next == 1){m_direction1 = 1;}  // 1-9
-				else if(_next == 9){m_direction1 = 2;} //9-1
+				else if(_next == 17){m_direction1 = 2;} //9-1
 				_direction = m_direction1;
 		}
 		else
@@ -525,7 +603,7 @@ uint8_t Get_test_index(uint8_t _mode,uint8_t _current)
 		if(_mode == 1 || _mode == 2)
 		{
 				do{_next = (_direction == 1) ? ((_next %18)+1) : ((_next + 16 )%18 + 1);}
-				while(_next == 3 || _next == 10 || _next == 14 || _next == 15 || _next == 18);
+				while(_next == 18);
 		}
 		else
 		{
@@ -533,4 +611,45 @@ uint8_t Get_test_index(uint8_t _mode,uint8_t _current)
 		}
 	  
 		return _next;
+}
+
+void Charging_Adjust(void)
+{
+	switch (charging_adjust_flag) 
+	{
+	case 0:
+		PushRod_StopCharge();
+		if(charge_pushrod_cnt < 3000){charge_pushrod_cnt ++;}
+		else
+		{
+			charging_adjust_flag = 1;
+			charging_adjust_cnt = 0;
+			charge_pushrod_cnt = 0;
+		}
+		break;
+	
+	case 1:
+		if(charging_adjust_cnt < 20)  // 约0.02秒
+            {
+                charging_adjust_cnt++;
+                SetxSpeed(m_ctrl.move_direction * 500);  // 反方向慢速移动,速度约为0.05m/s
+            }
+            else
+            {
+                SetxSpeed(0);
+                charging_adjust_flag = 2;
+                charging_adjust_cnt = 0;
+            }
+		break;
+	
+	case 2:
+		PushRod_StartCharge();
+		if(charge_pushrod_cnt < 5000){charge_pushrod_cnt ++;}  // 到现场计数
+		charging_adjust_flag = 0;                              // 若电推杆伸出后，仍位置不准，则重新调整
+		charge_pushrod_cnt = 0;
+        break;
+
+	default:
+		break;
+	}
 }
