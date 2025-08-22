@@ -75,21 +75,7 @@ void Server_Update(void)
 		// 检测是否收到 JSON 结束符 `}`，未收到时，继续接收，存入server_rx_buffer里
 		if (server_rx_buffer_len > 0 && server_rx_buffer[server_rx_buffer_len - 1] == JSON_END_CHAR) {
 				server_rx_buffer[server_rx_buffer_len] = '\0';  // 确保字符串结束
-				recv_flag = process_json(server_rx_buffer); // 解析 JSON
-			
-				/**************************************TODO***********************************************/
-//				if(recv_flag == 1)
-//				{
-//						if(m_need_charge == 0)
-//						{
-//								send_json_response("Success");
-//						}
-//						else
-//						{
-//								send_json_response("Fail");
-//						}
-//				}
-				/*****************************************************************************************/
+				recv_flag = process_json(server_rx_buffer); // 解析 JSON*/
 				
 				server_rx_buffer_len = 0;                   // 清空缓冲区
 				clean_server_rebuff();
@@ -141,10 +127,6 @@ uint8_t  process_json(const char *json_str)
 		else if(strcmp(command->valuestring,"1") == 0)
 		{
 				m_server.command = 1;
-		}
-		else if (strcmp(command->valuestring,"2") == 0)
-		{
-				m_server.command = 2;
 		}
 		else
 		{
@@ -205,24 +187,6 @@ uint8_t  process_json(const char *json_str)
 						return 0;
 				}
 		}
-    
-		//5. 如果是充电命令，获取是否充电
-		if(m_server.command == 2)
-		{
-				cJSON *is_charge = cJSON_GetObjectItem(root, "is_charge");
-				if(is_charge != NULL)
-				{
-						strcpy(m_server.is_charge_char,is_charge->valuestring);
-						m_server.is_charge = (uint8_t)atoi(m_server.is_charge_char);
-						printf("记录 is_charge: %d\n", 	m_server.is_charge);
-				}
-				else
-				{
-						printf("is_charge错误");
-						return 0;
-				}
-				
-		}
     // 释放 JSON 对象
     cJSON_Delete(root);
 		
@@ -230,7 +194,7 @@ uint8_t  process_json(const char *json_str)
 }
 
 
-bool send_json_response(const char *status)
+bool send_json_response(const char *status,uint8_t _avaiable)
 {
     static char msg_buffer[256];           // msg 拼接用缓冲区
 
@@ -243,7 +207,7 @@ bool send_json_response(const char *status)
     const char *success_false = "\"false";
     const char *success = success_true;
     const char *code = "0";
-		const char *robot_sts = "0";
+	const char *robot_sts = "0";
     const char *msg = "null";
 
     if (strcmp(status, "Success") == 0)
@@ -269,6 +233,7 @@ bool send_json_response(const char *status)
             !append_string("\",\"chg_id\":\"") || !append_string(m_server.chg_id) ||
             !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"take_id\":\"") || !append_string(m_server.target_id_char) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -288,6 +253,7 @@ bool send_json_response(const char *status)
             !append_string("\",\"chg_id\":\"") || !append_string(m_server.chg_id) ||
             !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"give_id\":\"") || !append_string(m_server.target_id_char) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -306,6 +272,7 @@ bool send_json_response(const char *status)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -324,6 +291,7 @@ bool send_json_response(const char *status)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -342,6 +310,7 @@ bool send_json_response(const char *status)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -360,6 +329,7 @@ bool send_json_response(const char *status)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -378,6 +348,7 @@ bool send_json_response(const char *status)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+            !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
@@ -451,6 +422,8 @@ bool send_json_response(const char *status)
         !append_string(ROBOT_ID) ||
         !append_string("\",\"msg\":\"") ||
         !append_string(msg) ||
+        !append_string("\",\"available\":\"") || 
+        !append_string(_avaiable ? "1" : "0")||
         !append_string("\",\"success\":") ||
         !append_string(success) ||
         !append_string("\"}"))
@@ -524,10 +497,8 @@ void ServerMsg_Init(ServerMsg_t *msg)
 
     msg->target_id = 0;
     msg->command = -1;
-    msg->is_charge = 0;
 
     msg->target_id_char[0] = '\0';
-    msg->is_charge_char[0] = '\0';
     msg->chg_id[0] = '\0';
     msg->task_id[0] = '\0';
 }

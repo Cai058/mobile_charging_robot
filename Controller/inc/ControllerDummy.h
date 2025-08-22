@@ -18,6 +18,16 @@
 #include "RC.h"
 #include "first_order_filter.h"
 
+#define TOTAL_POINTS 18
+#define charge_id 1
+#define turn_num1 1
+#define turn_num2 9
+#define turn_num3 10
+#define turn_num4 18
+#define slow_speed 4000  //慢速的速度
+#define fast_speed 5000  //快速的速度
+#define working_speed 7000  //工作时的速度
+
 typedef struct{
 uint16_t ultra_stop;
 uint8_t  pg_state;
@@ -40,22 +50,22 @@ uint8_t m_soc;
 }Sensor_t;
 
 typedef enum {
-    STATE_IDLE,       
-    STATE_ERROR,      
-    //STATE_SLOWDOWN,
-	  STATE_PUSH,
-	  STATE_PULL,
-    STATE_RUNNING,
-	  STATE_ADJUST,
-		STATE_WORKING,
-	  STATE_CHARGING
+	STATE_IDLE,       
+	STATE_ERROR,
+	STATE_PUSH,
+	STATE_PULL,
+  STATE_RUNNING,
+	STATE_ADJUST,
+	STATE_WORKING,
+	STATE_CHARGING
 } State;
 
 
 typedef struct {
-	  State lastState;
-    State currentState;
+	State lastState;
+	State currentState;
 } StateMachine;
+
 
 void Sensor_t_Update(void);
 void Dummy_Update(void);

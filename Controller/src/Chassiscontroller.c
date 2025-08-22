@@ -1,7 +1,7 @@
 #include "Chassiscontroller.h"
 
 // PID controller const
-float m_Kp = 15.0f;
+float m_Kp = 3.0f;
 float m_Ki = 0.15f;
 float m_Kd = 0.0001f;
 //float m_Kp = 1.0f;
@@ -28,7 +28,6 @@ char last_mode_ctrl = 0;
 
 //is charge
 uint8_t m_ischarge = 0;
-
 
 void Init(void)
 {
@@ -63,7 +62,7 @@ void Init(void)
 	for(int i=1; i<4; i++)
 	{
 	 // Filter
-	 VxFilter_Init(&vx_filter[i],0.5f,0.01f,0.00f,1); //tau1 = 0.15, tau2 = 0.05, tau3 = 0.01, period = 1ms
+	 VxFilter_Init(&vx_filter[i],0.3f,0.01f,0.00f,1); //tau1 = 0.15, tau2 = 0.05, tau3 = 0.01, period = 1ms
    PID_Init(&Motor_pid[i],PID_POSITION_SPEED,m_Kp,m_Ki,m_Kd,m_intergral_limit,m_maxout,m_deadband);		//4 motos angular rate closeloop.
 	}
 	

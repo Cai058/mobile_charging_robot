@@ -26,12 +26,9 @@ typedef struct{
 	uint8_t target_id;
 	//uint8_t give_id;
 	int command;
-	uint8_t is_charge;
 	
 	// 从server发来的msg记录的char信息
 	char target_id_char[8];
-	//char give_id_char[8];
-	char is_charge_char[8];
 	char chg_id[15];
 	char task_id[8];
 }ServerMsg_t;
@@ -51,7 +48,7 @@ void ServerMsg_Init(ServerMsg_t *msg);
 void MsgQueue_Init(MsgQueue* q);
 
 uint8_t process_json(const char *json_str);   //处理接收到的json文件
-bool send_json_response(const char *status);  //发送json文件
+bool send_json_response(const char *status,uint8_t _avaiable);  //发送json文件
 uint8_t parseStringToUint8(const char *str);  //处理：将string变成uint8
 bool append_string(const char *str);          //用于拼接字符串
 
