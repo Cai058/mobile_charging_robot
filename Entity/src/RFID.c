@@ -180,7 +180,7 @@ uint16_t ExtractRFIDNumber(const uint8_t *data, uint16_t len)
 //    case 0x5256:
 //        rfid_number = 18;
 //        break;
-//    
+    
 //    // Mid 
 //    case 0x3F6B:
 //        rfid_number = 19;

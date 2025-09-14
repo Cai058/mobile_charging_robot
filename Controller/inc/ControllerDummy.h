@@ -19,11 +19,13 @@
 #include "first_order_filter.h"
 
 #define TOTAL_POINTS 18
-#define charge_id 1
+#define charge_id 2
 #define turn_num1 1
 #define turn_num2 9
 #define turn_num3 10
 #define turn_num4 18
+#define adjust_speed 50   //调整时的速度
+#define slow_speed_2nd 2000  //第二阶段慢速
 #define slow_speed 4000  //慢速的速度
 #define fast_speed 5000  //快速的速度
 #define working_speed 7000  //工作时的速度
@@ -100,6 +102,6 @@ Sensor_t Get_SensorData(void);
 // Get test index
 uint8_t Get_test_index(uint8_t _mode,uint8_t _current);
 
-//充电推杆位置调整
-void Charging_Adjust(void);
+// 判断目标点位是否在场站范围内
+uint8_t if_target_valid(uint8_t _id);
 #endif

@@ -1,7 +1,7 @@
 Dependencies for Project 'robot_010', Target 'robot_010': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
 F (startup_stm32f427xx.s)(0x6853EEF9)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 540" --pd "STM32F427xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f427xx.lst --xref -o .\new_robo\startup_stm32f427xx.o --depend .\new_robo\startup_stm32f427xx.d)
-F (..\User\Src\main.c)(0x68591B67)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\main.o --omf_browse .\new_robo\main.crf --depend .\new_robo\main.d)
+F (..\User\Src\main.c)(0x68C165F0)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\main.o --omf_browse .\new_robo\main.crf --depend .\new_robo\main.d)
 I (..\User\Inc\main.h)(0x68591B2E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
 I (..\User\Inc\stm32f4xx_hal_conf.h)(0x6853EEF9)
@@ -49,24 +49,24 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
-F (..\User\Src\can.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\can.o --omf_browse .\new_robo\can.crf --depend .\new_robo\can.d)
+F (..\User\Src\can.c)(0x68A57E08)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\can.o --omf_browse .\new_robo\can.crf --depend .\new_robo\can.d)
 I (..\User\Inc\can.h)(0x6853EEF9)
 I (..\User\Inc\main.h)(0x68591B2E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
@@ -114,20 +114,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
@@ -179,20 +179,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
@@ -244,20 +244,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
@@ -309,20 +309,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
@@ -360,8 +360,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
@@ -989,20 +989,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
@@ -1054,24 +1054,24 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
-F (..\BSP\src\bsp_L298N.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_l298n.o --omf_browse .\new_robo\bsp_l298n.crf --depend .\new_robo\bsp_l298n.d)
+F (..\BSP\src\bsp_L298N.c)(0x68B25EB6)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_l298n.o --omf_browse .\new_robo\bsp_l298n.crf --depend .\new_robo\bsp_l298n.d)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
@@ -1138,7 +1138,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
-F (..\BSP\src\bsp_limitSwitch.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_limitswitch.o --omf_browse .\new_robo\bsp_limitswitch.crf --depend .\new_robo\bsp_limitswitch.d)
+F (..\BSP\src\bsp_limitSwitch.c)(0x68B157B4)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_limitswitch.o --omf_browse .\new_robo\bsp_limitswitch.crf --depend .\new_robo\bsp_limitswitch.d)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
@@ -1238,7 +1238,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
-F (..\BSP\src\pid.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\pid.o --omf_browse .\new_robo\pid.crf --depend .\new_robo\pid.d)
+F (..\BSP\src\pid.c)(0x687F8CCC)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\pid.o --omf_browse .\new_robo\pid.crf --depend .\new_robo\pid.d)
 I (..\BSP\inc\pid.h)(0x6853EEF9)
 I (..\User\Inc\main.h)(0x68591B2E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
@@ -1286,20 +1286,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
@@ -1447,8 +1447,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
-F (..\BSP\src\bsp_485_battery.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_485_battery.o --omf_browse .\new_robo\bsp_485_battery.crf --depend .\new_robo\bsp_485_battery.d)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+F (..\BSP\src\bsp_485_battery.c)(0x6881ADDF)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_485_battery.o --omf_browse .\new_robo\bsp_485_battery.crf --depend .\new_robo\bsp_485_battery.d)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
 I (..\User\Inc\stm32f4xx_hal_conf.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6853EEF9)
@@ -1482,8 +1482,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
-F (..\BSP\src\bsp_485_rfid.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_485_rfid.o --omf_browse .\new_robo\bsp_485_rfid.crf --depend .\new_robo\bsp_485_rfid.d)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+F (..\BSP\src\bsp_485_rfid.c)(0x68C2D381)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_485_rfid.o --omf_browse .\new_robo\bsp_485_rfid.crf --depend .\new_robo\bsp_485_rfid.d)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Include/core_cm4.h)(0x6853EEF9)
@@ -1518,7 +1518,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-F (..\BSP\src\bsp_485_server.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_485_server.o --omf_browse .\new_robo\bsp_485_server.crf --depend .\new_robo\bsp_485_server.d)
+F (..\BSP\src\bsp_485_server.c)(0x68C2DDF8)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\bsp_485_server.o --omf_browse .\new_robo\bsp_485_server.crf --depend .\new_robo\bsp_485_server.d)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
@@ -1568,23 +1568,23 @@ I (..\BSP\inc\bsp_debug_usart.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5E8E3CC2)
-F (..\Controller\src\Chassiscontroller.c)(0x6875C318)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\chassiscontroller.o --omf_browse .\new_robo\chassiscontroller.crf --depend .\new_robo\chassiscontroller.d)
+F (..\Controller\src\Chassiscontroller.c)(0x68C3762D)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\chassiscontroller.o --omf_browse .\new_robo\chassiscontroller.crf --depend .\new_robo\chassiscontroller.d)
 I (..\Controller\inc\Chassiscontroller.h)(0x68595B3E)
 I (..\User\Inc\can.h)(0x6853EEF9)
 I (..\User\Inc\main.h)(0x68591B2E)
@@ -1632,25 +1632,25 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
-F (..\Controller\src\ControllerDummy.c)(0x6875C2B8)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\controllerdummy.o --omf_browse .\new_robo\controllerdummy.crf --depend .\new_robo\controllerdummy.d)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+F (..\Controller\src\ControllerDummy.c)(0x68C377EF)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\controllerdummy.o --omf_browse .\new_robo\controllerdummy.crf --depend .\new_robo\controllerdummy.d)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\BSP\inc\bsp_ultrawave.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
@@ -1698,25 +1698,25 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
-F (..\Controller\src\ControllerRC.c)(0x6875BFFD)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\controllerrc.o --omf_browse .\new_robo\controllerrc.crf --depend .\new_robo\controllerrc.d)
+F (..\Controller\src\ControllerRC.c)(0x687F4646)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\controllerrc.o --omf_browse .\new_robo\controllerrc.crf --depend .\new_robo\controllerrc.d)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
 I (..\User\Inc\stm32f4xx_hal_conf.h)(0x6853EEF9)
@@ -1750,7 +1750,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\BSP\inc\bsp_ultrawave.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_photogate.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_led.h)(0x6853EEF9)
@@ -1767,21 +1768,20 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
-I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
-F (..\Entity\src\Battery.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\battery.o --omf_browse .\new_robo\battery.crf --depend .\new_robo\battery.d)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+F (..\Entity\src\Battery.c)(0x68BFADF7)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\battery.o --omf_browse .\new_robo\battery.crf --depend .\new_robo\battery.d)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
 I (..\User\Inc\stm32f4xx_hal_conf.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6853EEF9)
@@ -1830,22 +1830,22 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\math\inc\first_order_filter.h)(0x68595C7E)
 I (E:\download\Keil_v5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)
-F (..\Entity\src\RC.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\rc.o --omf_browse .\new_robo\rc.crf --depend .\new_robo\rc.d)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
+F (..\Entity\src\RC.c)(0x68BF9DCD)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\rc.o --omf_browse .\new_robo\rc.crf --depend .\new_robo\rc.d)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6853EEF9)
 I (..\User\Inc\stm32f4xx_hal_conf.h)(0x6853EEF9)
@@ -1879,11 +1879,12 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
+I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_debug_usart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
-F (..\Entity\src\RFID.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\rfid.o --omf_browse .\new_robo\rfid.crf --depend .\new_robo\rfid.d)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+F (..\Entity\src\RFID.c)(0x68B158D6)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\rfid.o --omf_browse .\new_robo\rfid.crf --depend .\new_robo\rfid.d)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Include/core_cm4.h)(0x6853EEF9)
@@ -1918,8 +1919,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-F (..\Entity\src\Server.c)(0x6853EEF9)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\server.o --omf_browse .\new_robo\server.crf --depend .\new_robo\server.d)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+F (..\Entity\src\Server.c)(0x68C3784E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\BSP -I ..\BSP\inc -I ..\BSP\src -I ..\User -I ..\User\Inc -I ..\Controller -I ..\Controller\inc -I ..\Entity -I ..\Entity\src -I ..\Entity\inc -I ..\math -I ..\math\inc -I ..\math\src-I.\RTE\_robot_010-IE:\download\Keil_v5\ARM\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\download\Keil_v5\ARM\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="540" -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o .\new_robo\server.o --omf_browse .\new_robo\server.crf --depend .\new_robo\server.d)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6853EEF9)
 I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h)(0x6853EEF9)
@@ -1954,8 +1955,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6853EEF9)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
@@ -2010,18 +2011,18 @@ I (E:\download\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_limitSwitch.h)(0x6853EEF9)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (..\BSP\inc\bsp_L298N.h)(0x6853EEF9)
-I (..\Entity\inc\RFID.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_rfid.h)(0x6853EEF9)
+I (..\Entity\inc\RFID.h)(0x6881B1BA)
+I (..\BSP\inc\bsp_485_rfid.h)(0x6880ACD5)
 I (E:\download\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (..\User\Inc\usart_callback.h)(0x6853EEF9)
-I (..\Entity\inc\Server.h)(0x6853EEF9)
+I (..\Entity\inc\Server.h)(0x68C3D349)
 I (..\BSP\inc\bsp_485_server.h)(0x6853EEF9)
-I (..\Entity\inc\Battery.h)(0x6853EEF9)
-I (..\BSP\inc\bsp_485_battery.h)(0x6853EEF9)
+I (..\Entity\inc\Battery.h)(0x68C16611)
+I (..\BSP\inc\bsp_485_battery.h)(0x6881AE96)
 I (E:\download\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (..\BSP\inc\cJSON.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rgb.h)(0x6853EEF9)
 I (..\BSP\inc\bsp_rc.h)(0x6853EEF9)
-I (..\Entity\inc\RC.h)(0x6853EEF9)
-I (..\Controller\inc\ControllerDummy.h)(0x685946CE)
+I (..\Entity\inc\RC.h)(0x68BF9C06)
+I (..\Controller\inc\ControllerDummy.h)(0x68C237EE)
 I (..\Controller\inc\ControllerRC.h)(0x6853EEF9)

@@ -5,8 +5,8 @@
 #include "stdlib.h"
 
 #define BATTERY_BUFFER_SIZE 512  // 缓冲区大小
-#define NeedCharge_Threshold 95 //到达该阈值，需要充电
-#define StopCharge_Threshold 99  //到达该阈值，停止充电
+#define NeedCharge_Threshold 85 //到达该阈值，需要充电
+#define StopCharge_Threshold 86  //到达该阈值，停止充电
 #define Low_Battery_Threshold 30 //低于该阈值，机器人不可动
 
 extern char *pbuf_battery;

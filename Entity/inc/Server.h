@@ -11,7 +11,7 @@
 
 #define ROBOT_ID   "011"
 
-#define SERVER_RX_BUFFER_SIZE 1024   // 缓冲区大小
+#define SERVER_RX_BUFFER_SIZE 256   // 缓冲区大小
 #define JSON_END_CHAR '}'       // JSON 结束标志
 #define SERVER_TX_BUFFER_SIZE 256
 #define SERVER_TX_BUFFER_NUM 10 
@@ -54,6 +54,7 @@ bool append_string(const char *str);          //用于拼接字符串
 
 bool MsgQueue_Push(MsgQueue* q, const char* msg); // Push in queue
 bool MsgQueue_Pop(MsgQueue* q, char* out_msg);
+//void MsgQueue_PeekProtectMode(MsgQueue* q);
 
 ServerMsg_t Get_serverMsg(void);              //返回信息
 uint8_t Get_ifaction(void);                   //返回是否收到消息

@@ -13,7 +13,7 @@ void RC_Control(char mode)
 		if(m_rc_ctrl.rc.ch[2] != 0)
 		{
 				//RGB_ON(YELLOW);
-				SetxSpeed(m_rc_ctrl.rc.ch[2] * 20.0f); //×óºáÏò
+				SetxSpeed(-m_rc_ctrl.rc.ch[2] * 20.0f); //×óºáÏò
 //				if(m_rc_ctrl.rc.ch[2] < 0 )
 //				{
 //			    SetxSpeed(-4000);

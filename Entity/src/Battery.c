@@ -163,7 +163,7 @@ uint8_t Battery_ifNeedCharge(void)  // test!!!!!!!!!!!!!!!!!!!!!!! 85?
 
 uint8_t Battery_isCharging(void)
 {
-		if(battery_info.current_A > 0) return 1;
+		if(battery_info.current_A >= 0) return 1;
 		else return 0;
 }
 
