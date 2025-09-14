@@ -3,6 +3,7 @@
 
 #include "bsp_rc.h"
 #include "stdlib.h"
+#include "string.h"
 
 #define RC_BUFFER_SIZE 512  // »º³åÇø´óÐ¡
 

@@ -34,7 +34,7 @@ return 0;
 uint8_t Get_rearlimitState(void)  //
 {
 	/* 检测是否有按键按下 */
-if (HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_7) == 1 ) {
+if (HAL_GPIO_ReadPin(GPIOI,GPIO_PIN_7) == 0 ) {
 return 1;
 }
 

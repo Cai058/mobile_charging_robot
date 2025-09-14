@@ -100,6 +100,6 @@ Sensor_t Get_SensorData(void);
 // Get test index
 uint8_t Get_test_index(uint8_t _mode,uint8_t _current);
 
-//充电推杆位置调整
-void Charging_Adjust(void);
+// 判断目标点位是否在场站范围内
+uint8_t if_target_valid(uint8_t _id);
 #endif

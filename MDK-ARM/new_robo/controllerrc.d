@@ -35,6 +35,7 @@
 .\new_robo\controllerrc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 .\new_robo\controllerrc.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 .\new_robo\controllerrc.o: E:\download\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\new_robo\controllerrc.o: E:\download\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\new_robo\controllerrc.o: ..\Controller\inc\ControllerDummy.h
 .\new_robo\controllerrc.o: ..\BSP\inc\bsp_ultrawave.h
 .\new_robo\controllerrc.o: ..\BSP\inc\bsp_photogate.h
@@ -56,7 +57,6 @@
 .\new_robo\controllerrc.o: ..\BSP\inc\bsp_L298N.h
 .\new_robo\controllerrc.o: ..\Entity\inc\RFID.h
 .\new_robo\controllerrc.o: ..\BSP\inc\bsp_485_rfid.h
-.\new_robo\controllerrc.o: E:\download\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\new_robo\controllerrc.o: ..\User\Inc\usart_callback.h
 .\new_robo\controllerrc.o: ..\Entity\inc\Server.h
 .\new_robo\controllerrc.o: ..\BSP\inc\bsp_485_server.h

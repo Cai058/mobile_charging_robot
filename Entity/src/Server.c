@@ -4,7 +4,7 @@
 char *pbuf_server;
 uint16_t len_server;
 uint8_t recv_flag; // 是否接收成功
-uint8_t recv_cnt = 0; // 过10ms设置recv_flag为0（保证controller能够收到recv_flag = 1的时候）
+uint16_t recv_cnt = 0; // 过10ms设置recv_flag为0（保证controller能够收到recv_flag = 1的时候）
 
 // Tx
 char server_tx_buffer[SERVER_TX_BUFFER_SIZE];
@@ -17,17 +17,18 @@ uint16_t sent_cnt;
 uint8_t m_need_charge = 0;
 
 // Rx
-char server_rx_buffer[SERVER_RX_BUFFER_SIZE];  // 接收缓冲区
+char server_rx_buffer[SERVER_RX_BUFFER_SIZE];  // 接收缓冲区 
 uint16_t server_rx_buffer_len = 0;          // 当前缓冲区有效数据长度
-
 // Structure
 ServerMsg_t m_server;
 
 // Msg queue
 MsgQueue txQueue;
 
-
-
+// // 在每次发送取放桩完成后过3s才可继续发消息，防止收发冲突
+// uint8_t protect_flag = 0;
+// uint32_t protect_cnt = 0;
+// uint8_t protect_mode = 0; // 0: protect_flag无效，对于取放桩完成而言 1: protect_flag有效，对于其它反馈
 
 
 void Server_Init(void)
@@ -53,20 +54,27 @@ void Server_Update(void)
 		{
 			
 			recv_cnt ++;
-			if(recv_cnt % 2 == 0)
+			if(recv_cnt % 1000 == 0)
 			{
 				recv_flag = 0;	
 				recv_cnt = 0;
 			}
 		}
 		
+        // if(protect_flag == 1){
+        //     protect_cnt ++;
+        //     if(protect_cnt % 6000 == 0){
+        //         protect_flag = 0;
+        //         protect_cnt = 0;
+        //     }
+        // }
 //    
         // 将数据追加到缓冲区（防止溢出）
 		if (server_rx_buffer_len + len_server < SERVER_RX_BUFFER_SIZE) {
 				memcpy(&server_rx_buffer[server_rx_buffer_len], pbuf_server, len_server);
 				server_rx_buffer_len += len_server;
 		} else {
-				printf("Error: server buffer overflow\n");
+				//printf("Error: server buffer overflow\n");
 				server_rx_buffer_len = 0;
 				clean_server_rebuff();  // 清除数据防止溢出
 				return;
@@ -81,13 +89,15 @@ void Server_Update(void)
 				clean_server_rebuff();
 		}
     
-		sent_cnt ++;
-		_tx_complete = if_server_complete();
-		if (sent_cnt % 500 == 0 ){
-		if(_tx_complete && txQueue.count > 0)
+		sent_cnt ++;                                       //控制每条信息发送速率不要太快
+		_tx_complete = if_server_complete();               //查询上次发送是否完成
+		//MsgQueue_PeekProtectMode(&txQueue);
+		//if (sent_cnt % 1000 == 0  && (protect_flag == 0 || protect_mode == 0)){       //server_rx_buffer_len在接收完整数据之后才会清0，在接收之后10ms才可发送消息
+		if (sent_cnt % 1000 == 0){
+            if(_tx_complete && txQueue.count > 0)
 		{
-				MsgQueue_Pop(&txQueue, sent_msg);
-				Server_SendString((uint8_t *)sent_msg,strlen(sent_msg));
+			MsgQueue_Pop(&txQueue, sent_msg);
+			Server_SendString((uint8_t *)sent_msg,strlen(sent_msg));
 		}
 	}
 		
@@ -98,7 +108,7 @@ uint8_t  process_json(const char *json_str)
 {
 	 cJSON *root = cJSON_Parse(json_str);
     if (root == NULL) {
-        printf("JSON 解析失败\n");
+        //printf("JSON 解析失败\n");
         return 0;
     }
 
@@ -107,14 +117,14 @@ uint8_t  process_json(const char *json_str)
     cJSON *command = cJSON_GetObjectItem(root, "command");
 
     if (!cJSON_IsString(robot_id) || !cJSON_IsString(command)) {
-        printf("JSON 数据不完整或格式错误\n");
+        //printf("JSON 数据不完整或格式错误\n");
         cJSON_Delete(root);
         return 0;
     }
 
     // 2. 核对机器人 ID 是否匹配
     if (strcmp(robot_id->valuestring, ROBOT_ID) != 0) {
-        printf("robot_id 不匹配, 预期: %s, 实际: %s\n", ROBOT_ID, robot_id->valuestring);
+        //printf("robot_id 不匹配, 预期: %s, 实际: %s\n", ROBOT_ID, robot_id->valuestring);
         cJSON_Delete(root);
         return 0;
     }
@@ -130,10 +140,10 @@ uint8_t  process_json(const char *json_str)
 		}
 		else
 		{
-				printf("未知命令");
+				//printf("未知命令");
 				return 0;
 		}
-    printf("收到命令编号: %d\n", m_server.command);
+    //printf("收到命令编号: %d\n", m_server.command);
 		
 		
 		// 4. 如果是抓取或者放置，获取take_id, give_id, chg_id, task_id
@@ -146,7 +156,7 @@ uint8_t  process_json(const char *json_str)
 				{
 						strcpy(m_server.target_id_char,p_id->valuestring);
 						m_server.target_id = parseStringToUint8((char *)m_server.target_id_char);
-						printf("记录 take_id: %d\n", 	m_server.target_id);
+						//printf("记录 take_id: %d\n", 	m_server.target_id);
 				}
 				else
 				{
@@ -155,11 +165,11 @@ uint8_t  process_json(const char *json_str)
 						{
 								strcpy(m_server.target_id_char,p_id->valuestring);
 								m_server.target_id = parseStringToUint8((char *)m_server.target_id_char);
-								printf("记录 give_id: %d\n", m_server.target_id);
+								//printf("记录 give_id: %d\n", m_server.target_id);
 						}
 						else
 						{
-								printf("take id 或 give id不正确");
+								//printf("take id 或 give id不正确");
 								return 0;
 						}
 				}
@@ -169,7 +179,7 @@ uint8_t  process_json(const char *json_str)
 				if(p_id != NULL)
 				{
 						strcpy(m_server.chg_id,p_id->valuestring);
-						printf("记录 chg_id: %s\n", m_server.chg_id );
+						//printf("记录 chg_id: %s\n", m_server.chg_id );
 				}
 				else
 				{
@@ -180,7 +190,7 @@ uint8_t  process_json(const char *json_str)
 				if(p_id != NULL)
 				{
 					strcpy(m_server.task_id,p_id->valuestring);
-					printf("记录 task_id: %s\n", m_server.task_id);
+					//printf("记录 task_id: %s\n", m_server.task_id);
 				}
 				else
 				{
@@ -207,19 +217,21 @@ bool send_json_response(const char *status,uint8_t _avaiable)
     const char *success_false = "\"false";
     const char *success = success_true;
     const char *code = "0";
-	const char *robot_sts = "0";
+	  const char *robot_sts = "0";
     const char *msg = "null";
 
     if (strcmp(status, "Success") == 0)
     {
         code = "20000";
         msg = "success";
+        //protect_mode = 1;
     }
     else if (strcmp(status, "Fail") == 0)
     {
         code = "9999";
-        snprintf(msg_buffer, sizeof(msg_buffer), "fail:robot_%s low SOC", ROBOT_ID);
+        snprintf(msg_buffer, sizeof(msg_buffer), "robot_%s fail", ROBOT_ID);
         msg = msg_buffer;
+        //protect_mode = 1;
     }
     else if (strcmp(status, "pick") == 0)
     {
@@ -230,8 +242,8 @@ bool send_json_response(const char *status,uint8_t _avaiable)
         if (!append_string("{\"code\":\"") || !append_string(code) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+				    !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"chg_id\":\"") || !append_string(m_server.chg_id) ||
-            !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"take_id\":\"") || !append_string(m_server.target_id_char) ||
             !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
@@ -239,6 +251,9 @@ bool send_json_response(const char *status,uint8_t _avaiable)
             return false;
         }
 
+        // protect_flag = 1;
+        // protect_cnt = 0;
+        //protect_mode = 0;
         goto push_in_queue;
     }
     else if (strcmp(status, "place") == 0)
@@ -258,7 +273,9 @@ bool send_json_response(const char *status,uint8_t _avaiable)
         {
             return false;
         }
-
+        // protect_flag = 1;
+        // protect_cnt = 0;
+        //protect_mode = 0;
         goto push_in_queue;
     }
     else if (strcmp(status, "free") == 0)
@@ -277,7 +294,7 @@ bool send_json_response(const char *status,uint8_t _avaiable)
         {
             return false;
         }
-
+        //protect_mode = 1;
         goto push_in_queue;
     }
 		else if (strcmp(status, "move_pick") == 0)
@@ -291,12 +308,13 @@ bool send_json_response(const char *status,uint8_t _avaiable)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+				    !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
         }
-
+        //protect_mode = 1;
         goto push_in_queue;
     }
 		else if (strcmp(status, "move_place") == 0)
@@ -310,12 +328,13 @@ bool send_json_response(const char *status,uint8_t _avaiable)
 						!append_string("\",\"robot_sts\":\"") || !append_string(robot_sts) ||
             !append_string("\",\"robot_id\":\"") || !append_string(ROBOT_ID) ||
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
+				    !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"success\":") || !append_string(success_true) || !append_string("\"}"))
         {
             return false;
         }
-
+        //protect_mode = 1;
         goto push_in_queue;
     }
 		else if (strcmp(status, "move_charge") == 0)
@@ -335,6 +354,7 @@ bool send_json_response(const char *status,uint8_t _avaiable)
             return false;
         }
 
+        //protect_mode = 1;
         goto push_in_queue;
     }
 		else if (strcmp(status, "charge") == 0)
@@ -354,6 +374,7 @@ bool send_json_response(const char *status,uint8_t _avaiable)
             return false;
         }
 
+        //protect_mode = 1;
         goto push_in_queue;
     }
     else if (strcmp(status, "arrive") == 0)
@@ -361,6 +382,7 @@ bool send_json_response(const char *status,uint8_t _avaiable)
         code = "20003";
 				snprintf(msg_buffer, sizeof(msg_buffer), "robot_%s arrive", ROBOT_ID);
         msg = msg_buffer;
+        //protect_mode = 1;
     }
 //    else if (strcmp(status, "机器人充电") == 0)
 //    {
@@ -411,7 +433,7 @@ bool send_json_response(const char *status,uint8_t _avaiable)
     }
     else
     {
-        printf("未知状态: %s\n", status);
+        //printf("未知状态: %s\n", status);
         return false;
     }
 
@@ -422,6 +444,8 @@ bool send_json_response(const char *status,uint8_t _avaiable)
         !append_string(ROBOT_ID) ||
         !append_string("\",\"msg\":\"") ||
         !append_string(msg) ||
+				!append_string("\",\"task_id\":\"") || 
+				!append_string(m_server.task_id) ||
         !append_string("\",\"available\":\"") || 
         !append_string(_avaiable ? "1" : "0")||
         !append_string("\",\"success\":") ||
@@ -534,6 +558,21 @@ bool MsgQueue_Pop(MsgQueue* q, char* out_msg) {
 		//Server_SendString((uint8_t *)out_msg,strlen(out_msg));
     return true;
 }
+
+// void MsgQueue_PeekProtectMode(MsgQueue* q)
+// {
+//     if (q->count == 0) {
+//         return; // ????,???
+//     }
+
+//     const char *msg = q->messages[q->head];
+//     if (strstr(msg, "\"code\":\"20001\"") || strstr(msg, "\"code\":\"20002\"")) {
+//         protect_mode = 0;
+//     } else {
+//         protect_mode = 1;
+//     }
+// }
+
 
 uint8_t Get_ifaction(void)
 {

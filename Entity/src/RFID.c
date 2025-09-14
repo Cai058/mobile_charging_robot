@@ -124,63 +124,63 @@ uint16_t ExtractRFIDNumber(const uint8_t *data, uint16_t len)
 		
 		switch(rfid_code){
 			
-//		case 0x149F:
-//			//case 0xBA9B:
-//        rfid_number = 1;
-//        break;
-//    case 0x4409:
-//			//case 0x9A22:
-//        rfid_number = 2;
-//        break;
-//    case 0x4D6F:
-//        rfid_number = 3;
-//        break;
-//    case 0x4FEE:
-//        rfid_number = 4;
-//        break;
-//    case 0x0E7F:
-//        rfid_number = 5;
-//        break;
-//    case 0x1980:
-//        rfid_number = 6;
-//        break;
-//    case 0x4FEA:
-//        rfid_number = 7;
-//        break;
-//    case 0x1364:
-//        rfid_number = 8;
-//        break;
-//    case 0x1842:
-//        rfid_number = 9;
-//        break;
-//    case 0x197A:
-//        rfid_number = 10;
-//        break;
-//    case 0xF4FA:
-//        rfid_number = 11;
-//        break;
-//    case 0x4D7B:
-//        rfid_number = 12;
-//        break;
-//    case 0x171D:
-//        rfid_number = 13;
-//        break;
-//    case 0x184C:
-//        rfid_number = 14;
-//        break;
-//    case 0x1843:
-//        rfid_number = 15;
-//        break;
-//    case 0x1978:
-//        rfid_number = 16;
-//        break;
-//    case 0x512C:
-//        rfid_number = 17;
-//        break;
-//    case 0x5256:
-//        rfid_number = 18;
-//        break;
-//    
+		case 0x149F:
+			//case 0xBA9B:
+        rfid_number = 1;
+        break;
+    case 0x4409:
+			//case 0x9A22:
+        rfid_number = 2;
+        break;
+    case 0x4D6F:
+        rfid_number = 3;
+        break;
+    case 0x4FEE:
+        rfid_number = 4;
+        break;
+    case 0x0E7F:
+        rfid_number = 5;
+        break;
+    case 0x1980:
+        rfid_number = 6;
+        break;
+    case 0x4FEA:
+        rfid_number = 7;
+        break;
+    case 0x1364:
+        rfid_number = 8;
+        break;
+    case 0x1842:
+        rfid_number = 9;
+        break;
+    case 0x197A:
+        rfid_number = 10;
+        break;
+    case 0xF4FA:
+        rfid_number = 11;
+        break;
+    case 0x4D7B:
+        rfid_number = 12;
+        break;
+    case 0x171D:
+        rfid_number = 13;
+        break;
+    case 0x184C:
+        rfid_number = 14;
+        break;
+    case 0x1843:
+        rfid_number = 15;
+        break;
+    case 0x1978:
+        rfid_number = 16;
+        break;
+    case 0x512C:
+        rfid_number = 17;
+        break;
+    case 0x5256:
+        rfid_number = 18;
+        break;
+    
 //    // Mid 
 //    case 0x3F6B:
 //        rfid_number = 19;
@@ -192,15 +192,15 @@ uint16_t ExtractRFIDNumber(const uint8_t *data, uint16_t len)
 //        rfid_number = 21;
 //        break;
 
-    case 0xBA95:
-        rfid_number = 1;
-        break;
-    case 0xB14E:
-        rfid_number = 2;
-        break;
-    case 0xB4CE:
-        rfid_number = 3;
-        break;
+//    case 0xBA95:
+//        rfid_number = 1;
+//        break;
+//    case 0xB14E:
+//        rfid_number = 2;
+//        break;
+//    case 0xB4CE:
+//        rfid_number = 3;
+//        break;
 			
 			default:
 				rfid_number = 0;
