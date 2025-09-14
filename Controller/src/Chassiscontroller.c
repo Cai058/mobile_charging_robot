@@ -25,6 +25,7 @@ VxFilter_t vx_filter[4];           // in first_order_filter.h
 char mode_ctrl = 0;
 char last_mode_ctrl = 0;
 
+RC_raw_t m_rc;
 
 //is charge
 uint8_t m_ischarge = 0;
@@ -75,6 +76,7 @@ void Update(void)
 {
 // 更新各个传感器,获得各个传感器的值
 Sensor_t_Update();
+m_rc = RC_GetData();
 mode_ctrl = RC_GetMode();
 m_ischarge = Battery_isCharging();
 
@@ -101,7 +103,7 @@ else if(mode_ctrl == 2 || mode_ctrl == 3) // 左下
 	{
 		  SetxSpeed(0);
 		  SetySpeed(0);
-			last_mode_ctrl = 2;
+		 last_mode_ctrl = 2;
 	}
 	// 获得遥控器的值
 	RC_ctrl_Update();

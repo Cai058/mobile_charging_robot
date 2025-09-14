@@ -108,6 +108,9 @@ void UART7_Config(void)
 		
 	HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 1, 0);  // USART6 TX 是 DMA2_Stream6
 	HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+		
+	HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 1, 0);  // USART6 TX 是 DMA2_Stream6
+	HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
   /*配置串口接收中断 */
   //__HAL_UART_ENABLE_IT(&huart7,UART_IT_RXNE);
 
@@ -190,6 +193,10 @@ void DMA1_Stream1_IRQHandler(void)
     HAL_DMA_IRQHandler(&hdma_uart7_tx); // ???? TX
 }
 
+void DMA1_Stream3_IRQHandler(void)
+{
+		HAL_DMA_IRQHandler(&hdma_uart7_rx);
+}
 //static void Delay(__IO uint32_t nCount)	 //简单的延时函数
 //{
 //	for(; nCount != 0; nCount--);

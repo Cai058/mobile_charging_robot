@@ -5,7 +5,7 @@ char *pbuf_rc;
 uint16_t len_rc;
 uint16_t rc_cnt = 0;
 
-static RC_raw_t m_rc_raw;
+RC_raw_t m_rc_raw;
 
 void RC_Init(void)
 {
@@ -15,35 +15,25 @@ void RC_Init(void)
 void RC_Update(void)
 {
 	pbuf_rc = get_rc_rebuff(&len_rc);
-	if (pbuf_rc != NULL && len_rc > 0)
+if (pbuf_rc != NULL && len_rc > 0)
 {
 	
-		SBUS_TO_RC((uint8_t *)pbuf_rc, &m_rc_raw); 
-//    printf("Received: ");
-//    for (int i = 0; i < len_rc; i++) {
-//        printf("%02X ", (uint8_t)pbuf_rc[i]);
-//    }
-//    printf("\\r\\n");
-		
-//		printf("ch0: %d ch1: %d ch2: %d ch3: %d s1: %d s2: %d\n",
-//               m_rc_raw->rc.ch[0], m_rc_raw->rc.ch[1], m_rc_raw->rc.ch[2], m_rc_raw->rc.ch[3],
-//               m_rc_raw->rc.s[0], m_rc_raw->rc.s[1]);
+	SBUS_TO_RC((uint8_t *)pbuf_rc, &m_rc_raw); 
     clean_rc_rebuff(); // 清除数据，等待下一帧
-	
-//	if(rc_cnt <= 500)
-//	{
-//		rc_cnt++;
-//	}
-//	else
-//	{
-//		rc_cnt = 0;
-//			printf("Received: ");
-//    for (int i = 0; i < len_rc; i++) {
-//        printf("%02X ", (uint8_t)pbuf_rc[i]);
-//    }
-//    printf("\\r\\n");
-//	}
+	rc_cnt = 0;
 }
+else  // 当遥控器关闭时，将遥控器数据清零
+{
+	if(rc_cnt > 2000)  // 因为正常接收中间也会有数据为0的时候，所以等待1s后再清零
+	{
+		memset(&m_rc_raw, 0, sizeof(RC_raw_t));
+	}
+	else
+	{
+		rc_cnt++;
+	}
+}
+
 }
 
 
