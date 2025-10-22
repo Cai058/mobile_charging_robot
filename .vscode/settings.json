@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "battery.h": "c",
+        "controllerdummy.h": "c",
+        "chassiscontroller.h": "c",
+        "rc.h": "c",
+        "main.h": "c",
+        "bsp_limitswitch.h": "c",
+        "bsp_l298n.h": "c",
+        "server.h": "c",
+        "robot_config.h": "c",
+        "bsp_485_battery.h": "c"
+    }
+}
