@@ -325,9 +325,13 @@ void SwitchState(void)
 					}
 					else
 					{
-						slow_cnt ++;
-						//(m_ctrl.move_direction == 1) ? SetxSpeed(-slow_speed) : SetxSpeed(slow_speed);
-						SetxSpeed(slow_speed,2);
+						if(arrive_flag == 0) ///////////////////////////////////////////////////////////////////////////
+						{
+								slow_cnt ++;
+								//(m_ctrl.move_direction == 1) ? SetxSpeed(-slow_speed) : SetxSpeed(slow_speed);
+								SetxSpeed(slow_speed,2);
+						}
+						
 					}
 				}
 			}
@@ -467,19 +471,19 @@ void SwitchState(void)
 			}
 			
 			// 
-			// if(m_ctrl.m_soc >= StopCharge_Threshold)
-			// {
-			// 	PushRod_StopCharge();
-			// 	if(m_ctrl.is_charging ==0)  //当电推杆离开金属垫片
-			// 	{
-			// 		sm.currentState = STATE_IDLE;
-			// 		sm.lastState = STATE_CHARGING;
-			// 		Reset_flag();
-			// 		m_ctrl.available = 1;
-			// 	}
-			// }
-			// else
-			// {
+			if(m_ctrl.m_soc >= StopCharge_Threshold)
+			{
+				PushRod_StopCharge();
+				if(m_ctrl.is_charging ==0)  //当电推杆离开金属垫片
+				{
+					sm.currentState = STATE_IDLE;
+					sm.lastState = STATE_CHARGING;
+					Reset_flag();
+					m_ctrl.available = 1;
+				}
+			}
+			else
+			{
 				if(m_ctrl.is_charging == 1)
 					{
 						PushRod_Stop();
@@ -518,7 +522,7 @@ void SwitchState(void)
 						}
 					}
 				
-			// }
+			}
 
 		 break;
 		 
