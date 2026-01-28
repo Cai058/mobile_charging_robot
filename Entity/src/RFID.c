@@ -105,7 +105,7 @@ uint16_t ExtractRFIDNumber(const uint8_t *data, uint16_t len)
     // return 0; // Î´Ê¶±ð
 
     // ===========================================010===========================================
-    if (strcmp(Robot_ID, "010") == 0 || strcmp(Robot_ID, "014") == 0)
+    if (strcmp(Robot_ID, "010") == 0)
     {
         switch(rfid_code){
         
@@ -187,6 +187,24 @@ uint16_t ExtractRFIDNumber(const uint8_t *data, uint16_t len)
                 break;
                 case 0x54B9:
                 rfid_number = 4;
+                break;
+                    
+            default:
+                rfid_number = 0;
+                }
+    }
+		// ===========================================014=================================================
+		else if(strcmp(Robot_ID, "014") == 0)
+    {
+        switch(rfid_code){
+            case 0xAB32:
+                rfid_number = 1;
+                break;
+            case 0x9E1D:
+                rfid_number = 2;
+                break;
+            case 0xBCD2:
+                rfid_number = 3;
                 break;
                     
             default:

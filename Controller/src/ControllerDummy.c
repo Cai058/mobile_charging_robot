@@ -113,17 +113,40 @@ void Dummy_Update(void)
 	if(m_ctrl.available == 1)                        //只有available时才给m_server_ctrl赋值
 	{
 		m_ctrl.action = (m_dummy_mode == 3) ? Get_ifaction() : 1;  //m_dummy_mode == 3表示server控制
-		if(m_ctrl.action == 1) {m_ctrl.if_finished = 0;}  // 只要收到消息就是0（表示未完成）, action变为0也不受影响，只有当后限位开关触发（表示完成时），if_finished = 1
+		if(m_ctrl.action == 1) // 只要收到消息就是0（表示未完成）, action变为0也不受影响，只有当后限位开关触发（表示完成时），依次令pick_complete, place_complete变1
+		{
+			m_ctrl.pick_complete = 0;
+			m_ctrl.place_complete = 0;
+			// m_ctrl.if_finished = 0;
+		}  
 	
 		if(m_dummy_mode == 3) // server control
 		{
 			m_server_ctrl =  Get_serverMsg();
+			if(m_server_ctrl.command == 0 || m_server_ctrl.command == 1)
+			{
+				m_ctrl.current_command = m_server_ctrl.command;
+			}
+			else if(m_server_ctrl.command == 3) // 抓放结合
+			{
+				if(m_ctrl.pick_complete == 0) // 若没抓取，则抓取
+				{
+					m_ctrl.current_command = 0;
+				}
+				else
+				{
+					m_ctrl.current_command = 1;
+				}
+			}
 		}
 		else               // test
 		{
-			m_server_ctrl.target_id = test_index;
-			m_server_ctrl.command = (test_command == 0) ? 1:0;
-			if(m_server_ctrl.command == 0)
+			// m_server_ctrl.take_id = test_index;
+			m_ctrl.current_command = (test_command == 0) ? 1:0;  
+			// 感觉就是把原本一个target_id变成了take_id和give_id，在这里可以不区分。
+			m_server_ctrl.take_id = test_index;
+			m_server_ctrl.give_id = test_index;
+			if(m_ctrl.current_command == 0)
 			{
 				//test_index = (m_dummy_mode == 1) ? ((test_index %18)+1) : ((test_index + 16 )%18 + 1);
 				test_index = Get_test_index(test_index);
@@ -168,7 +191,11 @@ void SwitchState(void)
 			{
 				//charge_cnt = 0;
 				heart_cnt = 0; // 进入下一个状态，重新开始计算
-				m_ctrl.if_finished = 1; // 重置if_finished，防止直接从充电状态跳到running状态
+		
+				// 重置if_finished，防止直接从充电状态跳到running状态(没懂之前是什么情况写的这个，但照做吧)
+				// m_ctrl.if_finished = 1; 
+				m_ctrl.place_complete = 1;
+				m_ctrl.pick_complete = 1;
 				sm.currentState = STATE_RUNNING;
 				sm.lastState = STATE_IDLE;
 				m_ctrl.available = 0;
@@ -177,11 +204,16 @@ void SwitchState(void)
 			else
 			{
 				//2.2 收到任务，直接出发
-				if(m_ctrl.if_finished == 0)   // 是否需要取完桩后等待一段时间
+				if(m_ctrl.place_complete == 0)   // 空闲状态下，若server_command == 1/3，那么只要没放桩，都要移动；
 				{
-					if(if_target_valid(m_server_ctrl.target_id) == 0) // 目标点位不在范围内
+					if(m_server_ctrl.command == 0 && m_ctrl.pick_complete == 1) // 只有server_command == 0时，取完桩没放桩才不用移动
 					{
-						m_ctrl.if_finished = 1; //清空任务
+						break;
+					}
+					if(if_target_valid(m_server_ctrl.take_id) == 0 && if_target_valid(m_server_ctrl.give_id) == 0) // 目标点位不在范围内
+					{
+						//TODO：若取桩位置不对，则直接取消本次任务；若放桩位置不对，要到指定位置放桩
+						// m_ctrl.if_finished = 1; //清空任务
 						send_json_response("Fail",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 						break;
 					}
@@ -189,9 +221,13 @@ void SwitchState(void)
 					sm.currentState = STATE_RUNNING;
 					sm.lastState = STATE_IDLE;
 					m_ctrl.available = 0; // Server can not send task
-					m_ctrl.place_complete = 0;
-					test_command = 0;
-					send_json_response("Success",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
+					// m_ctrl.place_complete = 0;
+					// test_command = 0;
+					if(m_ctrl.current_command == 0) //只有第一次返回接受成功
+					{
+						send_json_response("Success",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
+					}
+					
 					break;
 				}
 			   //2.3 若30s内没收到任务，则前往充电
@@ -212,9 +248,7 @@ void SwitchState(void)
 						break;
 					}
 				}
-				//不在取放桩完成时设置1了，在空闲设置1，这样可以避免发送空闲的时候收消息
-				//只要电量>30，且没有上面这些进入状态break出去，机器人就一直available
-				m_ctrl.available = 1; 
+				
 			}
 			
 			 
@@ -230,11 +264,11 @@ void SwitchState(void)
 				{
 					send_json_response("move_charge",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 				}
-				else if(m_server_ctrl.command == 0)
+				else if(m_ctrl.current_command == 0)
 				{
 					send_json_response("move_pick",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 				}
-				else if(m_server_ctrl.command == 1)
+				else if(m_ctrl.current_command == 1)
 				{
 					send_json_response("move_place",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 				}
@@ -244,7 +278,14 @@ void SwitchState(void)
 			 
 			//2.1 当前目标点位：a. 充电点位 b. 放置/抓取点位
 			if(m_ctrl.charge_mode == 1){m_ctrl.current_target_id = Charge_ID;}
-			else{m_ctrl.current_target_id = m_server_ctrl.target_id;}
+			else if(m_ctrl.current_command == 0)  // pick
+			{
+				m_ctrl.current_target_id = m_server_ctrl.take_id;
+			}
+			else if(m_ctrl.current_command == 1)  // place
+			{
+				m_ctrl.current_target_id = m_server_ctrl.give_id;
+			}
 			 
 			
 			//2.2 计算方向 & 前一个点位信息 (when ID is correct but pg is not)
@@ -387,8 +428,8 @@ void SwitchState(void)
 				 }
 				 else
 				 {
-					 if(m_server_ctrl.command == 0){PushRod_Forward();}
-					 else if(m_server_ctrl.command == 1){PushRod_Backward();}
+					 if(m_ctrl.current_command == 0){PushRod_Forward();}
+					 else if(m_ctrl.current_command == 1){PushRod_Backward();}
 					 pushrod_cnt++;
 					 if(pushrod_cnt > 8000)
 					 {
@@ -440,15 +481,18 @@ void SwitchState(void)
 //				 {
 //					m_ctrl.available = 1;
 //				 }
-				 m_ctrl.if_finished = 1;
+				//  m_ctrl.if_finished = 1;
 				 charge_cnt = 0; // 用于计算从搬桩完成到等待平台指令的时间
+				 m_ctrl.available = 1; // 一定要设置，这样可以换current_command
 				 Reset_flag();
 				 
-				if(m_server_ctrl.command == 0)
+				if(m_ctrl.current_command == 0)
 				{
+					m_ctrl.pick_complete = 1;
+					test_command = 0;
 					send_json_response("pick",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 				}
-				else if(m_server_ctrl.command == 1)
+				else if(m_ctrl.current_command == 1)
 				{
 					m_ctrl.place_complete = 1;
 					test_command = 1;
@@ -504,7 +548,7 @@ void SwitchState(void)
 					{
 						m_ctrl.available = 1;
 						// 2.2.1 若收到命令，则退出充电状态
-						if(m_ctrl.if_finished == 0)
+						if(m_ctrl.place_complete == 0)
 						{
 							PushRod_StopCharge();
 							if(m_ctrl.is_charging ==0)  //当电推杆离开金属垫片
@@ -596,14 +640,16 @@ void Sensor_t_Init(void)
 	m_ctrl.rear_state = 0;
 	//m_ctrl.location_id = 0;
 	m_ctrl.previous_id = 0;
-	m_ctrl.if_finished = 1; //先是任务完成
+	// m_ctrl.if_finished = 1; //先是任务完成
 	m_ctrl.need_charge = 0;
 	m_ctrl.is_charging = 0;
 	m_ctrl.charge_mode = 0;
 	m_ctrl.move_direction = 1;
 	m_ctrl.current_target_id = 0;
 	m_ctrl.available = 1;
+	m_ctrl.pick_complete = 1;
 	m_ctrl.place_complete = 1;
+	m_ctrl.current_command = 99; // 无命令
 }
 
 void StateMachine_Init(void)
@@ -634,12 +680,14 @@ void Dummy_Reset(void)
 void Sensor_t_Reset(void)
 {
 	m_ctrl.action = 0;
-	m_ctrl.if_finished = 1;
+	// m_ctrl.if_finished = 1;
 	m_ctrl.move_direction = 1;
 	m_ctrl.charge_mode = 0;
 	m_ctrl.current_target_id = 1;
 	m_ctrl.available = 1;
 	m_ctrl.place_complete = 1;  // 本来希望不重置，这样自动测试程序可以继续；但是现在可以通过平台自动测试了，那就重置吧
+	m_ctrl.pick_complete = 1;
+	m_ctrl.current_command = 99; // 无命令S
 }
 
 void Get_MotorSpeed(int16_t *_speed)

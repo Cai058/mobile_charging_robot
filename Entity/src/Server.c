@@ -106,9 +106,9 @@ void Server_Update(void)
 }
 
 /* 解析平台发来的json文件*/
-uint8_t  process_json(const char *json_str)
+uint8_t process_json(const char *json_str)
 {
-	 cJSON *root = cJSON_Parse(json_str);
+    cJSON *root = cJSON_Parse(json_str);
     if (root == NULL) {
         //printf("JSON 解析失败\n");
         return 0;
@@ -132,77 +132,78 @@ uint8_t  process_json(const char *json_str)
     }
 
     // 3. 获取命令编号
-    if(strcmp(command->valuestring,"0") == 0)
-		{
-				m_server.command = 0;
-		}
-		else if(strcmp(command->valuestring,"1") == 0)
-		{
-				m_server.command = 1;
-		}
-		else
-		{
-				//printf("未知命令");
-				return 0;
-		}
+    if (strcmp(command->valuestring, "0") == 0) {
+        m_server.command = 0;
+    }
+    else if (strcmp(command->valuestring, "1") == 0) {
+        m_server.command = 1;
+    }
+    else if (strcmp(command->valuestring, "3") == 0) {
+        m_server.command = 3;
+    }
+    else {
+        //printf("未知命令");
+        cJSON_Delete(root); // 记得释放内存
+        return 0;
+    }
     //printf("收到命令编号: %d\n", m_server.command);
-		
-		
-		// 4. 如果是抓取或者放置，获取take_id, give_id, chg_id, task_id
-		if(m_server.command == 0 || m_server.command == 1)
-		{
-				// 记录 take_id 或 give_id（如果存在）
-				cJSON *p_id = cJSON_GetObjectItem(root, "take_id");
-			
-				if(p_id != NULL)
-				{
-						strcpy(m_server.target_id_char,p_id->valuestring);
-						m_server.target_id = parseStringToUint8((char *)m_server.target_id_char);
-						//printf("记录 take_id: %d\n", 	m_server.target_id);
-				}
-				else
-				{
-						p_id = cJSON_GetObjectItem(root, "give_id");
-						if(p_id != NULL)
-						{
-								strcpy(m_server.target_id_char,p_id->valuestring);
-								m_server.target_id = parseStringToUint8((char *)m_server.target_id_char);
-								//printf("记录 give_id: %d\n", m_server.target_id);
-						}
-						else
-						{
-								//printf("take id 或 give id不正确");
-								return 0;
-						}
-				}
-				
-				// 记录 chg_id（如果存在）
-				p_id = cJSON_GetObjectItem(root, "chg_id");
-				if(p_id != NULL)
-				{
-						strcpy(m_server.chg_id,p_id->valuestring);
-						//printf("记录 chg_id: %s\n", m_server.chg_id );
-				}
-				else
-				{
-						return 0;
-				}
-				// 记录 task_id (如果存在)
-				p_id = cJSON_GetObjectItem(root,"task_id");
-				if(p_id != NULL)
-				{
-					strcpy(m_server.task_id,p_id->valuestring);
-					//printf("记录 task_id: %s\n", m_server.task_id);
-				}
-				else
-				{
-						return 0;
-				}
-		}
+
+    // 4. 解析具体参数 (chg_id, task_id, take_id, give_id)
+    // 只要是 0(抓), 1(放), 3(抓+放) 都进入此逻辑
+    if (m_server.command == 0 || m_server.command == 1 || m_server.command == 3)
+    {
+        cJSON *p_id = NULL;
+
+        // --- A. 公共参数解析 (chg_id 和 task_id) ---
+        
+        // 记录 chg_id
+        p_id = cJSON_GetObjectItem(root, "chg_id");
+        if (p_id != NULL) {
+            strcpy(m_server.chg_id, p_id->valuestring);
+        } else {
+            cJSON_Delete(root);
+            return 0; // 缺少 chg_id
+        }
+
+        // 记录 task_id
+        p_id = cJSON_GetObjectItem(root, "task_id");
+        if (p_id != NULL) {
+            strcpy(m_server.task_id, p_id->valuestring);
+        } else {
+            cJSON_Delete(root);
+            return 0; // 缺少 task_id
+        }
+
+        // --- B. 按需解析 take_id (命令为 0 或 3 时需要) ---
+        if (m_server.command == 0 || m_server.command == 3)
+        {
+            p_id = cJSON_GetObjectItem(root, "take_id");
+            if (p_id != NULL) {
+                strcpy(m_server.take_id_char, p_id->valuestring);
+                m_server.take_id = parseStringToUint8((char *)m_server.take_id_char);
+            } else {
+                cJSON_Delete(root);
+                return 0; // 命令包含抓取但缺少 take_id
+            }
+        }
+
+        // --- C. 按需解析 give_id (命令为 1 或 3 时需要) ---
+        if (m_server.command == 1 || m_server.command == 3)
+        {
+            p_id = cJSON_GetObjectItem(root, "give_id");
+            if (p_id != NULL) {
+                strcpy(m_server.give_id_char, p_id->valuestring);
+                m_server.give_id = parseStringToUint8((char *)m_server.give_id_char);
+            } else {
+                cJSON_Delete(root);
+                return 0; // 命令包含放置但缺少 give_id
+            }
+        }
+    }
+
     // 释放 JSON 对象
     cJSON_Delete(root);
-		
-		return 1;
+    return 1;
 }
 
 
@@ -263,7 +264,7 @@ bool send_json_response(const char *status,uint8_t _avaiable,uint8_t _location, 
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
 				    !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
             !append_string("\",\"chg_id\":\"") || !append_string(m_server.chg_id) ||
-            !append_string("\",\"take_id\":\"") || !append_string(m_server.target_id_char) ||
+            !append_string("\",\"take_id\":\"") || !append_string(m_server.take_id_char) ||
             !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"location_id\":\"") || !append_string(loca)||
             !append_string("\",\"SOC\":\"") || !append_string(soc)||
@@ -288,7 +289,7 @@ bool send_json_response(const char *status,uint8_t _avaiable,uint8_t _location, 
             !append_string("\",\"msg\":\"") || !append_string(msg) ||
             !append_string("\",\"chg_id\":\"") || !append_string(m_server.chg_id) ||
             !append_string("\",\"task_id\":\"") || !append_string(m_server.task_id) ||
-            !append_string("\",\"give_id\":\"") || !append_string(m_server.target_id_char) ||
+            !append_string("\",\"give_id\":\"") || !append_string(m_server.give_id_char) ||
             !append_string("\",\"available\":\"") || !append_string(_avaiable ? "1" : "0")||
             !append_string("\",\"location_id\":\"") || !append_string(loca)||
             !append_string("\",\"SOC\":\"") || !append_string(soc)||
@@ -558,10 +559,12 @@ void ServerMsg_Init(ServerMsg_t *msg)
 {
     if (msg == NULL) return;
 
-    msg->target_id = 0;
+    msg->take_id = 0;
+    msg->give_id = 0;
     msg->command = -1;
 
-    msg->target_id_char[0] = '\0';
+    msg->take_id_char[0] = '\0';
+    msg->give_id_char[0] = '\0';
     msg->chg_id[0] = '\0';
     msg->task_id[0] = '\0';
 }

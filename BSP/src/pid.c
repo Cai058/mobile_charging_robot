@@ -82,7 +82,10 @@ float PID_calc(PID_typedef *PID, float measure, float target)
 			PID->D_item = (PID->error[0] - PID->error[1]);	  //微分项计算
 			PID->Dout = PID->Kd * PID->D_item;				  //d输出，通过微分项
 			// 积分分离
-			if(fabsf(PID->error[0]) < PID->I_band || PID->I_band == 0) {
+			if(target == 0){
+				PID->Iout = 0;
+			}
+			else if(fabsf(PID->error[0]) < PID->I_band || PID->I_band == 0) {
 				PID->Iout += PID->Ki * PID->error[0];		//i输出，累加
 				// 积分限幅
 				LimitMax(PID->Iout,PID->Max_iout);																	

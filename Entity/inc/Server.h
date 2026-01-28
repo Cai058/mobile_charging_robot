@@ -25,12 +25,15 @@ extern cJSON *root;
 // 传给controller
 typedef struct{
 	// 经过处理后得到的uint8信息，方便之后控制处理
-	uint8_t target_id;
+	uint8_t take_id;
+	uint8_t give_id;
+	// uint8_t target_id;
 	//uint8_t give_id;
 	int command;
 	
 	// 从server发来的msg记录的char信息
-	char target_id_char[8];
+	char take_id_char[8];
+	char give_id_char[8];
 	char chg_id[15];
 	char task_id[8];
 }ServerMsg_t;

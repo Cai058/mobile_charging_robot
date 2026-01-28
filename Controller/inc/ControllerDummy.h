@@ -39,8 +39,10 @@ int move_direction;
 uint8_t current_target_id; //当前目标（充电点位或者从平台获取的）
 uint8_t available;
 uint8_t place_complete;
+uint8_t pick_complete;
 uint8_t m_soc;
 float m_current;
+uint8_t current_command;
 //ServerMsg_t server_msg;
 }Sensor_t;
 

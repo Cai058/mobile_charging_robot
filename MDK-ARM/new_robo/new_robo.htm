@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\new_robo\new_robo.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\new_robo\new_robo.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Fri Oct 17 21:08:13 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Jan 28 17:06:43 2026
 <BR><P>
 <H3>Maximum Stack Usage =        512 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -411,8 +411,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetSysClockFreq
+<BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetSysClockFreq
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 <LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
@@ -430,13 +430,13 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[b4]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_ctrl_Update
+<BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_ctrl_Update
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_Control
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_serverMsg
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_SensorData
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Update
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
 </UL>
 
 <P><STRONG><a name="[184]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
@@ -459,8 +459,6 @@ Global Symbols
 <P><STRONG><a name="[95]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_json_response
-<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_server_rebuff
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
@@ -469,6 +467,8 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_New_Item
+<LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_json_response
+<LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_server_rebuff
 </UL>
 
 <P><STRONG><a name="[187]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
@@ -478,18 +478,18 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[141]"></a>strlen</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, strlen.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;append_string
+<BR><BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithOpts
+<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;append_string
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_Update
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithOpts
 </UL>
 
 <P><STRONG><a name="[b7]"></a>strcmp</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, strcmp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strcmp
 </UL>
-<BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
+<BR>[Called By]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_object_item
+<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ExtractRFIDNumber
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_json_response
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_object_item
 </UL>
 
 <P><STRONG><a name="[179]"></a>strcpy</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, strcpy.o(.text))
@@ -580,8 +580,8 @@ Global Symbols
 <P><STRONG><a name="[18a]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
 <P><STRONG><a name="[76]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
 </UL>
@@ -695,10 +695,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Init
 </UL>
@@ -709,10 +709,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_Config
 </UL>
@@ -720,8 +720,8 @@ Global Symbols
 <P><STRONG><a name="[9c]"></a>Battery_Init</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, battery.o(i.Battery_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = Battery_Init &rArr; BSP_Battery_Config &rArr; HAL_UART_Init &rArr; UART_SetConfig &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_t_init
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
+<BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
+<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_t_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
 </UL>
@@ -745,13 +745,13 @@ Global Symbols
 <P><STRONG><a name="[a2]"></a>Battery_Update</STRONG> (Thumb, 94 bytes, Stack size 8 bytes, battery.o(i.Battery_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = Battery_Update &rArr; Battery_SendRequest &rArr; battery_uart_send_frame &rArr; battery_SendString &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_if_rx_lock
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_SendRequest
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_ParseFrame
-<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_battery_rx_complete
+<BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_battery_rx_complete
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_battery_rebuff
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_battery_rebuff
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BATTERY_DMA_Rx_ReStart
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_if_rx_lock
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_SendRequest
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_ParseFrame
 </UL>
 <BR>[Called By]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sensor_t_Update
 </UL>
@@ -857,8 +857,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update
 </UL>
 
-<P><STRONG><a name="[b0]"></a>Dummy_Update</STRONG> (Thumb, 158 bytes, Stack size 56 bytes, controllerdummy.o(i.Dummy_Update))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Dummy_Update
+<P><STRONG><a name="[b0]"></a>Dummy_Update</STRONG> (Thumb, 206 bytes, Stack size 72 bytes, controllerdummy.o(i.Dummy_Update))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Dummy_Update
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_GetDummyMode
@@ -874,7 +874,7 @@ Global Symbols
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 </UL>
 
-<P><STRONG><a name="[b6]"></a>ExtractRFIDNumber</STRONG> (Thumb, 332 bytes, Stack size 16 bytes, rfid.o(i.ExtractRFIDNumber))
+<P><STRONG><a name="[b6]"></a>ExtractRFIDNumber</STRONG> (Thumb, 362 bytes, Stack size 16 bytes, rfid.o(i.ExtractRFIDNumber))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = ExtractRFIDNumber &rArr; strcmp
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
@@ -988,8 +988,7 @@ Global Symbols
 <P><STRONG><a name="[a7]"></a>HAL_CAN_IRQHandler</STRONG> (Thumb, 508 bytes, Stack size 40 bytes, stm32f4xx_hal_can.o(i.HAL_CAN_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo0MsgPendingCallback &rArr; HAL_CAN_GetRxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_WakeUpFromRxMsgCallback
+<BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_WakeUpFromRxMsgCallback
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_TxMailbox2CompleteCallback
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_TxMailbox2AbortCallback
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_TxMailbox1CompleteCallback
@@ -1001,6 +1000,7 @@ Global Symbols
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo1FullCallback
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0FullCallback
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ErrorCallback
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN2_TX_IRQHandler
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN2_RX0_IRQHandler
@@ -1035,8 +1035,8 @@ Global Symbols
 <P><STRONG><a name="[c6]"></a>HAL_CAN_RxFifo0MsgPendingCallback</STRONG> (Thumb, 64 bytes, Stack size 48 bytes, bsp_can.o(i.HAL_CAN_RxFifo0MsgPendingCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = HAL_CAN_RxFifo0MsgPendingCallback &rArr; HAL_CAN_GetRxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_measure_fun
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetRxMessage
+<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetRxMessage
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_measure_fun
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
@@ -1118,10 +1118,10 @@ Global Symbols
 <P><STRONG><a name="[a8]"></a>HAL_DMA_IRQHandler</STRONG> (Thumb, 412 bytes, Stack size 32 bytes, stm32f4xx_hal_dma.o(i.HAL_DMA_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = HAL_DMA_IRQHandler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream3_IRQHandler
-<LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream1_IRQHandler
-<LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream0_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream0_IRQHandler
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA2_Stream6_IRQHandler
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream3_IRQHandler
+<LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA1_Stream1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[98]"></a>HAL_DMA_Init</STRONG> (Thumb, 206 bytes, Stack size 24 bytes, stm32f4xx_hal_dma.o(i.HAL_DMA_Init))
@@ -1131,10 +1131,10 @@ Global Symbols
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_CalcBaseAndBitshift
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
+<BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 </UL>
 
 <P><STRONG><a name="[d6]"></a>HAL_DMA_Start_IT</STRONG> (Thumb, 110 bytes, Stack size 24 bytes, stm32f4xx_hal_dma.o(i.HAL_DMA_Start_IT))
@@ -1150,6 +1150,10 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = HAL_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB_Config
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Ultrawave_Config
 <LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Photogate_Config
 <LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Limit_Switch_Config
@@ -1157,10 +1161,6 @@ Global Symbols
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;l298n_GPIO_Config
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_GPIO_Config
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB_Config
 </UL>
 
 <P><STRONG><a name="[bd]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin))
@@ -1171,23 +1171,23 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[118]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin))
-<BR><BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_StopCharge
+<BR><BR>[Called By]<UL><LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB_ON
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_StopCharge
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_Stop
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_StartCharge
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_Forward
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_Backward
-<LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB_ON
 </UL>
 
 <P><STRONG><a name="[ce]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_GetTick))
 <BR><BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Init
 <LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 <LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 </UL>
 
 <P><STRONG><a name="[14a]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_IncTick))
@@ -1223,10 +1223,10 @@ Global Symbols
 <P><STRONG><a name="[9a]"></a>HAL_NVIC_EnableIRQ</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ))
 <BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 <LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Time_Init
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 </UL>
 
 <P><STRONG><a name="[99]"></a>HAL_NVIC_SetPriority</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority))
@@ -1236,11 +1236,11 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 <LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Time_Init
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 </UL>
 
 <P><STRONG><a name="[d9]"></a>HAL_NVIC_SetPriorityGrouping</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriorityGrouping))
@@ -1308,12 +1308,12 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e4]"></a>HAL_TIM_PWM_ConfigChannel</STRONG> (Thumb, 204 bytes, Stack size 16 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_PWM_ConfigChannel))
-<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = HAL_TIM_PWM_ConfigChannel &rArr; TIM_OC2_SetConfig
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = HAL_TIM_PWM_ConfigChannel &rArr; TIM_OC3_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2_SetConfig
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4_SetConfig
+<BR>[Calls]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4_SetConfig
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3_SetConfig
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC1_SetConfig
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC2_SetConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Ultrawave_Config
 </UL>
@@ -1359,14 +1359,14 @@ Global Symbols
 <P><STRONG><a name="[ee]"></a>HAL_UART_DMAStop</STRONG> (Thumb, 112 bytes, Stack size 8 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_DMAStop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = HAL_UART_DMAStop &rArr; HAL_DMA_Abort
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_IRQHandler
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_IRQHandler
 </UL>
 
 <P><STRONG><a name="[f1]"></a>HAL_UART_DeInit</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_DeInit))
@@ -1387,16 +1387,16 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = HAL_UART_IRQHandler &rArr; HAL_DMA_Abort
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_TxCpltCallback
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort_IT
+<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_ErrorCallback
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Receive_IT
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort_IT
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_IRQHandler
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_IRQHandler
 </UL>
 
 <P><STRONG><a name="[97]"></a>HAL_UART_Init</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Init))
@@ -1405,10 +1405,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_MspInit
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SetConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
+<BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 </UL>
 
 <P><STRONG><a name="[f2]"></a>HAL_UART_MspDeInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_MspDeInit))
@@ -1416,9 +1416,9 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[92]"></a>HAL_UART_MspInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_MspInit))
-<BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
-<LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_DMA_Rx_ReStart
+<BR><BR>[Called By]<UL><LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_DMA_Rx_ReStart
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BATTERY_DMA_Rx_ReStart
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
 
 <P><STRONG><a name="[93]"></a>HAL_UART_Receive_DMA</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Receive_DMA))
@@ -1426,9 +1426,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Start_Receive_DMA
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_IRQHandler
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART8_IRQHandler
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_DMA_Rx_ReStart
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
@@ -1436,6 +1434,8 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BATTERY_DMA_Rx_ReStart
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_IRQHandler
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 </UL>
 
 <P><STRONG><a name="[14f]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_RxCpltCallback))
@@ -1450,8 +1450,8 @@ Global Symbols
 <P><STRONG><a name="[fb]"></a>HAL_UART_Transmit</STRONG> (Thumb, 178 bytes, Stack size 32 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Transmit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fputc
 </UL>
@@ -1461,9 +1461,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_SendString
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_SendStr
+<BR>[Called By]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_SendStr
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_SendString
+<LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_SendString
 </UL>
 
 <P><STRONG><a name="[f8]"></a>HAL_UART_TxCpltCallback</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, usart_callback.o(i.HAL_UART_TxCpltCallback))
@@ -1491,6 +1491,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB_Config
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Init
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Ultrawave_Config
 <LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Photogate_Config
@@ -1505,7 +1506,6 @@ Global Symbols
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_Init
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Init
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Init
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RGB_Config
 </UL>
 <BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1601,7 +1601,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
 </UL>
 
-<P><STRONG><a name="[158]"></a>PID_calc</STRONG> (Thumb, 378 bytes, Stack size 0 bytes, pid.o(i.PID_calc))
+<P><STRONG><a name="[158]"></a>PID_calc</STRONG> (Thumb, 388 bytes, Stack size 0 bytes, pid.o(i.PID_calc))
 <BR><BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update
 </UL>
 
@@ -1671,8 +1671,8 @@ Global Symbols
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Init
 </UL>
 
-<P><STRONG><a name="[11c]"></a>RC_Control</STRONG> (Thumb, 242 bytes, Stack size 48 bytes, controllerrc.o(i.RC_Control))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = RC_Control &rArr; PushRod_StopCharge
+<P><STRONG><a name="[11c]"></a>RC_Control</STRONG> (Thumb, 242 bytes, Stack size 56 bytes, controllerrc.o(i.RC_Control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = RC_Control &rArr; PushRod_StopCharge
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_StopCharge
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_Stop
@@ -1713,10 +1713,10 @@ Global Symbols
 <P><STRONG><a name="[122]"></a>RC_Update</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, rc.o(i.RC_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RC_Update &rArr; clean_rc_rebuff
 </UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SBUS_TO_RC
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_rc_rebuff
+<BR>[Calls]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_rc_rebuff
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_rc_rebuff
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SBUS_TO_RC
 </UL>
 <BR>[Called By]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sensor_t_Update
 </UL>
@@ -1767,13 +1767,13 @@ Global Symbols
 <P><STRONG><a name="[12a]"></a>RFID_Update</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, rfid.o(i.RFID_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = RFID_Update &rArr; RFID_DMA_Rx_ReStart &rArr; HAL_UART_Receive_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rfid_if_rx_lock
-<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_SendCommand
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ExtractRFIDNumber
-<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_rfid_rx_complete
+<BR>[Calls]<UL><LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_rfid_rx_complete
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_rfid_rebuff
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_rfid_rebuff
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_DMA_Rx_ReStart
+<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rfid_if_rx_lock
+<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_SendCommand
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ExtractRFIDNumber
 </UL>
 <BR>[Called By]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sensor_t_Update
 </UL>
@@ -1803,11 +1803,11 @@ Global Symbols
 <P><STRONG><a name="[9]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f427xx.o(RESET)
 </UL>
-<P><STRONG><a name="[ab]"></a>Sensor_t_Init</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, controllerdummy.o(i.Sensor_t_Init))
+<P><STRONG><a name="[ab]"></a>Sensor_t_Init</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, controllerdummy.o(i.Sensor_t_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Init
 </UL>
 
-<P><STRONG><a name="[af]"></a>Sensor_t_Reset</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, controllerdummy.o(i.Sensor_t_Reset))
+<P><STRONG><a name="[af]"></a>Sensor_t_Reset</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, controllerdummy.o(i.Sensor_t_Reset))
 <BR><BR>[Called By]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Reset
 </UL>
 
@@ -1832,7 +1832,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update
 </UL>
 
-<P><STRONG><a name="[13a]"></a>ServerMsg_Init</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, server.o(i.ServerMsg_Init))
+<P><STRONG><a name="[13a]"></a>ServerMsg_Init</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, server.o(i.ServerMsg_Init))
 <BR><BR>[Called By]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_Init
 </UL>
 
@@ -1902,7 +1902,7 @@ Global Symbols
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dummy_Init
 </UL>
 
-<P><STRONG><a name="[145]"></a>SwitchState</STRONG> (Thumb, 1242 bytes, Stack size 40 bytes, controllerdummy.o(i.SwitchState))
+<P><STRONG><a name="[145]"></a>SwitchState</STRONG> (Thumb, 1362 bytes, Stack size 40 bytes, controllerdummy.o(i.SwitchState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = SwitchState &rArr; send_json_response &rArr; MsgQueue_Push &rArr; __2snprintf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_StopCharge
@@ -1982,9 +1982,9 @@ Global Symbols
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_Init
 </UL>
@@ -2201,8 +2201,8 @@ Global Symbols
 <P><STRONG><a name="[a1]"></a>battery_uart_send_frame</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, battery.o(i.battery_uart_send_frame))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = battery_uart_send_frame &rArr; battery_SendString &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_SendString
+<BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_SendString
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_SendRequest
@@ -2214,12 +2214,12 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_DeInit
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DeInit
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_DeInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_Init
 </UL>
@@ -2230,11 +2230,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
 </UL>
-<BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
+<BR>[Called By]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_object
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_array
+<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
 </UL>
 
 <P><STRONG><a name="[166]"></a>cJSON_GetObjectItem</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, cjson.o(i.cJSON_GetObjectItem))
@@ -2260,12 +2260,12 @@ Global Symbols
 <P><STRONG><a name="[16b]"></a>cJSON_ParseWithLengthOpts</STRONG> (Thumb, 210 bytes, Stack size 64 bytes, cjson.o(i.cJSON_ParseWithLengthOpts))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
+<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
 <LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_value
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_New_Item
 <LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buffer_skip_whitespace
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithOpts
 </UL>
@@ -2273,8 +2273,8 @@ Global Symbols
 <P><STRONG><a name="[16a]"></a>cJSON_ParseWithOpts</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, cjson.o(i.cJSON_ParseWithOpts))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = cJSON_ParseWithOpts &rArr; cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
+<BR>[Calls]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
+<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Parse
 </UL>
@@ -2388,16 +2388,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
 </UL>
 
-<P><STRONG><a name="[13f]"></a>process_json</STRONG> (Thumb, 188 bytes, Stack size 16 bytes, server.o(i.process_json))
+<P><STRONG><a name="[13f]"></a>process_json</STRONG> (Thumb, 242 bytes, Stack size 16 bytes, server.o(i.process_json))
 <BR><BR>[Stack]<UL><LI>Max Depth = 424<LI>Call Chain = process_json &rArr; cJSON_Parse &rArr; cJSON_ParseWithOpts &rArr; cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parseStringToUint8
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Parse
+<BR>[Calls]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Parse
 <LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_IsString
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_GetObjectItem
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parseStringToUint8
 </UL>
 <BR>[Called By]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_Update
 </UL>
@@ -2415,14 +2415,14 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_Update
 </UL>
 
-<P><STRONG><a name="[146]"></a>send_json_response</STRONG> (Thumb, 2198 bytes, Stack size 88 bytes, server.o(i.send_json_response))
+<P><STRONG><a name="[146]"></a>send_json_response</STRONG> (Thumb, 2170 bytes, Stack size 88 bytes, server.o(i.send_json_response))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = send_json_response &rArr; MsgQueue_Push &rArr; __2snprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<BR>[Calls]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;append_string
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MsgQueue_Push
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2snprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchState
@@ -2559,9 +2559,9 @@ Local Symbols
 <P><STRONG><a name="[f9]"></a>UART_SetConfig</STRONG> (Thumb, 258 bytes, Stack size 16 bytes, stm32f4xx_hal_uart.o(i.UART_SetConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = UART_SetConfig &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
+<BR>[Calls]<UL><LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK1Freq
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
@@ -2622,10 +2622,10 @@ Local Symbols
 <P><STRONG><a name="[173]"></a>parse_number</STRONG> (Thumb, 240 bytes, Stack size 96 bytes, cjson.o(i.parse_number))
 <BR><BR>[Stack]<UL><LI>Max Depth = 312<LI>Call Chain = parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_strtod
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 <LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
+<LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_strtod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_value
 </UL>
@@ -2655,11 +2655,11 @@ Local Symbols
 <P><STRONG><a name="[16e]"></a>parse_value</STRONG> (Thumb, 226 bytes, Stack size 16 bytes, cjson.o(i.parse_value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 328<LI>Call Chain = parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_string
+<BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_string
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_object
 <LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_number
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_array
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_object
@@ -2679,9 +2679,9 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[15e]"></a>_fp_digits</STRONG> (Thumb, 366 bytes, Stack size 64 bytes, printfa.o(i._fp_digits), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<BR><BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
