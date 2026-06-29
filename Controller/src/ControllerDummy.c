@@ -33,6 +33,8 @@ uint16_t rfid_rx_cnt = 0;          // RFID停止检测时长
 uint16_t charge_pushrod_cnt = 0;   //充电推杆伸缩时间
 uint16_t adjust_cnt = 0;           //等待机器人停稳的时间
 uint16_t slow_cnt = 0;             // 用于两段减速计时
+uint8_t  pg_delay_flag = 0;        // 光电门后延时标志，1=延时中
+uint16_t pg_delay_cnt = 0;         // 光电门后延时计数(200=0.1s)
 uint16_t arrive_cnt = 0;           //机器人到达计时，若超过则表示光电门未触发，往回寻找
 
 // Flag
@@ -380,40 +382,58 @@ void SwitchState(void)
 		break;
 	
 	 case STATE_ADJUST:
-		    
-	      if(adjust_cnt > 2000)
+		    // 光电门后延时阶段：识别到光电门后继续低速走200次(0.1s)再停车
+		    if(pg_delay_flag == 1)
+		    {
+		        if(pg_delay_cnt < 200)
+		        {
+		            pg_delay_cnt++;
+		            SetxSpeed(50,2);         // 继续低速移动
+		        }
+		        else
+		        {
+		            SetxSpeed(0,2);          // 真正停车
+		            pg_delay_flag = 0;
+		            pg_delay_cnt = 0;
+		            if(m_ctrl.charge_mode == 1)
+		            {
+		                sm.currentState = STATE_CHARGING;
+		                send_json_response("arrive",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
+		                heart_cnt = 0;
+		                charge_pushrod_cnt = 0; // 充电推杆伸缩计数清零
+		            }
+		            else
+		            {
+		                sm.currentState = STATE_WORKING;
+		                m_ctrl.available = 0;
+		                send_json_response("arrive",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
+		                heart_cnt = 0;
+		            }
+		            sm.lastState = STATE_RUNNING;
+		        }
+		        break;
+		    }
+
+		      if(adjust_cnt > 2000)
 				{
 					adjust_cnt = 0;
 					if(m_ctrl.pg_state == 1 && m_ctrl.location_id == m_ctrl.current_target_id)  
 					{
-						SetxSpeed(0,2);
-							if(m_ctrl.charge_mode == 1)
-							{
-								sm.currentState = STATE_CHARGING;
-								send_json_response("arrive",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
-								heart_cnt = 0;
-								charge_pushrod_cnt = 0; // 充电推杆伸缩计数清零
-							}
-							else
-							{
-								sm.currentState = STATE_WORKING;
-								m_ctrl.available = 0;
-								send_json_response("arrive",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
-								heart_cnt = 0;
-							}
-						sm.lastState = STATE_RUNNING;
+						// 光电门确认有效，进入延时阶段而非立即停车
+						pg_delay_flag = 1;
+						pg_delay_cnt = 0;
+					}
+					else
+					{
+						m_ctrl.move_direction = -m_ctrl.move_direction;
+						sm.lastState = STATE_ADJUST;
+						sm.currentState = STATE_RUNNING;
+					}
 				}
 				else
 				{
-					m_ctrl.move_direction = -m_ctrl.move_direction;
-					sm.lastState = STATE_ADJUST;
-					sm.currentState = STATE_RUNNING;
+					adjust_cnt ++;
 				}
-			}
-			else
-			{
-				adjust_cnt ++;
-			}
 		 break;
 	 
 	 case STATE_WORKING:
@@ -702,6 +722,8 @@ void Reset_flag(void)
 	error_code = 0;
 	arrive_flag = 0;
 	charge_flag = 0;
+	pg_delay_flag = 0;  // 光电门延时标志清零
+	pg_delay_cnt = 0;   // 光电门延时计数清零
 }
 
 Sensor_t Get_SensorData(void)

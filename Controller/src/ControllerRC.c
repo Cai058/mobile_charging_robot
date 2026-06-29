@@ -16,27 +16,27 @@ void RC_Control(char mode)
 				SetxSpeed(m_rc_ctrl.rc.ch[2] * 20.0f,1); //左横向
 //				if(m_rc_ctrl.rc.ch[2] < 0 )
 //				{
-//			    SetxSpeed(-4000);
+//			    SetxSpeed(-2500,1);
 //				}
 //				else
 //				{
-//					SetxSpeed(4000);
+//					SetxSpeed(2500,1);
 //				}
 		}
 		else if(m_rc_ctrl.rc.ch[1] != 0)
 		{
 				//RGB_ON(RED);
 				
-				speed_y = m_rc_ctrl.rc.ch[1] * 20.0f;
+				//speed_y = m_rc_ctrl.rc.ch[1] * 20.0f;
 			
-//				if(m_rc_ctrl.rc.ch[1] < 0 )
-//				{
-//			    speed_y = -4500;
-//				}
-//				else
-//				{
-//					speed_y = 4500;
-//				}
+				if(m_rc_ctrl.rc.ch[1] < 0 )
+				{
+			    speed_y = -5000;
+				}
+				else
+				{
+					speed_y = 5000;
+				}
 
 				if ((m_sensor_t.rear_state == 1 && speed_y < 0) || (m_sensor_t.front_state == 1 && speed_y > 0)) {  // 如果后限位开关触发&要向后  或  前限位开关触发&要向前 --> 设置speed = 0
 						speed_y = 0;
