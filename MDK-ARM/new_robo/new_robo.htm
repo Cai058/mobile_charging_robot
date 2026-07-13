@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\new_robo\new_robo.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\new_robo\new_robo.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Jun 08 20:10:50 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Fri Jul 10 21:59:44 2026
 <BR><P>
 <H3>Maximum Stack Usage =        520 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -573,19 +573,19 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[77]"></a>__aeabi_llsl</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llshl.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<BR><BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 
 <P><STRONG><a name="[18a]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
 <P><STRONG><a name="[76]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 
 <P><STRONG><a name="[18b]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
@@ -699,8 +699,8 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Init
 </UL>
@@ -713,8 +713,8 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFID_Config
 </UL>
@@ -862,11 +862,11 @@ Global Symbols
 <P><STRONG><a name="[b0]"></a>Dummy_Update</STRONG> (Thumb, 206 bytes, Stack size 96 bytes, controllerdummy.o(i.Dummy_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Dummy_Update
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_GetDummyMode
+<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_GetDummyMode
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_serverMsg
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_ifaction
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_test_index
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update
 </UL>
@@ -1238,8 +1238,8 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 <LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Time_Init
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART7_Config
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_RFID_Config
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Battery_Config
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bsp_rc_Config
@@ -1681,10 +1681,10 @@ Global Symbols
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_StartCharge
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_Forward
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PushRod_Backward
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetySpeed
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetxSpeed
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_SensorData
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update
 </UL>
@@ -1715,10 +1715,10 @@ Global Symbols
 <P><STRONG><a name="[122]"></a>RC_Update</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, rc.o(i.RC_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = RC_Update &rArr; clean_rc_rebuff
 </UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SBUS_TO_RC
+<BR>[Calls]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SBUS_TO_RC
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_rc_rebuff
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_rc_rebuff
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sensor_t_Update
 </UL>
@@ -1726,8 +1726,8 @@ Global Symbols
 <P><STRONG><a name="[126]"></a>RC_ctrl_Update</STRONG> (Thumb, 24 bytes, Stack size 32 bytes, controllerrc.o(i.RC_ctrl_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = RC_ctrl_Update
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_GetData
+<BR>[Calls]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_GetData
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Update
 </UL>
@@ -1859,15 +1859,15 @@ Global Symbols
 <P><STRONG><a name="[133]"></a>Server_Update</STRONG> (Thumb, 198 bytes, Stack size 32 bytes, server.o(i.Server_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464<LI>Call Chain = Server_Update &rArr; process_json &rArr; cJSON_Parse &rArr; cJSON_ParseWithOpts &rArr; cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
+<BR>[Calls]<UL><LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_json
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MsgQueue_Pop
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_ifNeedCharge
 <LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;if_server_complete
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_server_rebuff
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clean_server_rebuff
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_SendString
+<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sensor_t_Update
 </UL>
@@ -2203,9 +2203,9 @@ Global Symbols
 <P><STRONG><a name="[a1]"></a>battery_uart_send_frame</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, battery.o(i.battery_uart_send_frame))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = battery_uart_send_frame &rArr; battery_SendString &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_SendString
+<BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;battery_SendString
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_SendRequest
 </UL>
@@ -2219,9 +2219,9 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_DMA
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DeInit
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Init
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_DeInit
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RC_Init
 </UL>
@@ -2262,12 +2262,12 @@ Global Symbols
 <P><STRONG><a name="[16b]"></a>cJSON_ParseWithLengthOpts</STRONG> (Thumb, 210 bytes, Stack size 64 bytes, cjson.o(i.cJSON_ParseWithLengthOpts))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
+<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
 <LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_value
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_New_Item
 <LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buffer_skip_whitespace
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithOpts
 </UL>
@@ -2275,8 +2275,8 @@ Global Symbols
 <P><STRONG><a name="[16a]"></a>cJSON_ParseWithOpts</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, cjson.o(i.cJSON_ParseWithOpts))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = cJSON_ParseWithOpts &rArr; cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
+<BR>[Calls]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
+<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Parse
 </UL>
@@ -2393,13 +2393,13 @@ Global Symbols
 <P><STRONG><a name="[13f]"></a>process_json</STRONG> (Thumb, 274 bytes, Stack size 24 bytes, server.o(i.process_json))
 <BR><BR>[Stack]<UL><LI>Max Depth = 432<LI>Call Chain = process_json &rArr; cJSON_Parse &rArr; cJSON_ParseWithOpts &rArr; cJSON_ParseWithLengthOpts &rArr; parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parseStringToUint8
+<BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parseStringToUint8
 <LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Parse
 <LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_IsString
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_GetObjectItem
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_Delete
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Server_Update
 </UL>
@@ -2420,12 +2420,12 @@ Global Symbols
 <P><STRONG><a name="[146]"></a>send_json_response</STRONG> (Thumb, 2166 bytes, Stack size 88 bytes, server.o(i.send_json_response))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = send_json_response &rArr; MsgQueue_Push &rArr; __2snprintf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;append_string
+<BR>[Calls]<UL><LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;append_string
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MsgQueue_Push
 <LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2snprintf
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchState
 </UL>
@@ -2561,9 +2561,9 @@ Local Symbols
 <P><STRONG><a name="[f9]"></a>UART_SetConfig</STRONG> (Thumb, 258 bytes, Stack size 16 bytes, stm32f4xx_hal_uart.o(i.UART_SetConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = UART_SetConfig &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
+<BR>[Calls]<UL><LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK2Freq
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_GetPCLK1Freq
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
@@ -2657,11 +2657,11 @@ Local Symbols
 <P><STRONG><a name="[16e]"></a>parse_value</STRONG> (Thumb, 226 bytes, Stack size 16 bytes, cjson.o(i.parse_value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 328<LI>Call Chain = parse_value &rArr; parse_number &rArr; __hardfp_strtod &rArr; __strtod_int &rArr; _local_sscanf &rArr; _scanf_real
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_string
+<BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_string
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_object
 <LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_number
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_array
+<LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strncmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cJSON_ParseWithLengthOpts
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_object
@@ -2681,22 +2681,22 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[15e]"></a>_fp_digits</STRONG> (Thumb, 366 bytes, Stack size 64 bytes, printfa.o(i._fp_digits), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<BR><BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
 <P><STRONG><a name="[15a]"></a>_printf_core</STRONG> (Thumb, 1704 bytes, Stack size 136 bytes, printfa.o(i._printf_core), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<BR><BR>[Calls]<UL><LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_pre_padding
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_post_padding
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
+<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0snprintf
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0printf
