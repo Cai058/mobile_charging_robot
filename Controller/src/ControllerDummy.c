@@ -4,15 +4,15 @@ Sensor_t m_ctrl;              //
 ServerMsg_t m_server_ctrl;    //Server
 
 
-char m_dummy_mode = 0;   // 3£ºserver, 1/2£ºtest
+char m_dummy_mode = 0;   // 3ï¼šserver, 1/2ï¼štest
 
 // Test 
-char m_test_direction = 1; // ²âÊÔµÄÔË¶¯·½Ïò
+char m_test_direction = 1; // æµ‹è¯•çš„è¿åŠ¨æ–¹å‘
 //test_index
 uint8_t test_index = 1;
 uint8_t test_command = 1; //0: pick 1: place
 
-// RFID + ¹âµçÃÅ²âÊÔ
+// RFID + å…‰ç”µé—¨æµ‹è¯•
 uint8_t last_number = 0;
 uint8_t last_pg_state = 0;
 uint16_t rfid_cnt = 0;
@@ -25,34 +25,34 @@ int16_t m_motor_speed[4];     //Motor_speed
 
 // Count
 uint8_t i;
-uint16_t pushrod_cnt = 0;          //È¡·Å×®ÍÆ¸ËÉìËõÊ±¼ä
+uint16_t pushrod_cnt = 0;          //å–æ”¾æ¡©æ¨æ†ä¼¸ç¼©æ—¶é—´
 uint32_t heart_cnt = 0;
-uint32_t switch_cnt = 0;           //ÓÃÓÚÅĞ¶ÏÏŞÎ»¿ª¹ØÊÇ·ñ¹ı³¤Ê±¼äÎ´´¥·¢
-uint16_t charge_cnt = 0;           //´Ó»úÆ÷ÈËÍê³É·Å×®£¬µ½Ç°Íù³äµçµÄµÈ´ıÊ±¼ä
-uint16_t rfid_rx_cnt = 0;          // RFIDÍ£Ö¹¼ì²âÊ±³¤
-uint16_t charge_pushrod_cnt = 0;   //³äµçÍÆ¸ËÉìËõÊ±¼ä
-uint16_t adjust_cnt = 0;           //µÈ´ı»úÆ÷ÈËÍ£ÎÈµÄÊ±¼ä
-uint16_t slow_cnt = 0;             // ÓÃÓÚÁ½¶Î¼õËÙ¼ÆÊ±
-uint8_t  pg_delay_flag = 0;        // ¹âµçÃÅºóÑÓÊ±±êÖ¾£¬1=ÑÓÊ±ÖĞ
-uint16_t pg_delay_cnt = 0;         // ¹âµçÃÅºóÑÓÊ±¼ÆÊı(200=0.1s)
-uint16_t arrive_cnt = 0;           //»úÆ÷ÈËµ½´ï¼ÆÊ±£¬Èô³¬¹ıÔò±íÊ¾¹âµçÃÅÎ´´¥·¢£¬Íù»ØÑ°ÕÒ
+uint32_t switch_cnt = 0;           //ç”¨äºåˆ¤æ–­é™ä½å¼€å…³æ˜¯å¦è¿‡é•¿æ—¶é—´æœªè§¦å‘
+uint16_t charge_cnt = 0;           //ä»æœºå™¨äººå®Œæˆæ”¾æ¡©ï¼Œåˆ°å‰å¾€å……ç”µçš„ç­‰å¾…æ—¶é—´
+uint16_t rfid_rx_cnt = 0;          // RFIDåœæ­¢æ£€æµ‹æ—¶é•¿
+uint16_t charge_pushrod_cnt = 0;   //å……ç”µæ¨æ†ä¼¸ç¼©æ—¶é—´
+uint16_t adjust_cnt = 0;           //ç­‰å¾…æœºå™¨äººåœç¨³çš„æ—¶é—´
+uint16_t slow_cnt = 0;             // ç”¨äºä¸¤æ®µå‡é€Ÿè®¡æ—¶
+uint8_t  pg_delay_flag = 0;        // å…‰ç”µé—¨åå»¶æ—¶æ ‡å¿—ï¼Œ1=å»¶æ—¶ä¸­
+uint16_t pg_delay_cnt = 0;         // å…‰ç”µé—¨åå»¶æ—¶è®¡æ•°(200=0.1s)
+uint16_t arrive_cnt = 0;           //æœºå™¨äººåˆ°è¾¾è®¡æ—¶ï¼Œè‹¥è¶…è¿‡åˆ™è¡¨ç¤ºå…‰ç”µé—¨æœªè§¦å‘ï¼Œå¾€å›å¯»æ‰¾
 
 // Flag
-uint8_t slow_flag = 0;  // ÊÇ·ñÊÇÂıËÙ×´Ì¬
-uint8_t push_flag = 0;    // ÊÇ·ñÍÆ³ö»¬¸Ë
+uint8_t slow_flag = 0;  // æ˜¯å¦æ˜¯æ…¢é€ŸçŠ¶æ€
+uint8_t push_flag = 0;    // æ˜¯å¦æ¨å‡ºæ»‘æ†
 uint8_t rfid_flag = 0;    // If the UID is changed
-uint8_t arrive_flag = 0;  // ÊÇ·ñµ½´ï£¨Ö¸RFIDÊ¶±ğ£¬¹âµçÃÅ²»Ò»¶¨Ê¶±ğ£©
-//uint8_t stop_flag = 0;   //Èç¹ûstop_flag = 1,ÄÇÃ´Ö±½Ó¼õËÙ£¬²»ÔÈËÙ¼õ
-uint8_t charge_flag = 0;  // ÊÇ·ñ·¢ËÍ³äµçÖ¸Áî
+uint8_t arrive_flag = 0;  // æ˜¯å¦åˆ°è¾¾ï¼ˆæŒ‡RFIDè¯†åˆ«ï¼Œå…‰ç”µé—¨ä¸ä¸€å®šè¯†åˆ«ï¼‰
+//uint8_t stop_flag = 0;   //å¦‚æœstop_flag = 1,é‚£ä¹ˆç›´æ¥å‡é€Ÿï¼Œä¸åŒ€é€Ÿå‡
+uint8_t charge_flag = 0;  // æ˜¯å¦å‘é€å……ç”µæŒ‡ä»¤
 
 // ERROR
 uint8_t error_code = 0;
 const char* error_list[] = {
-    "Õı³£",            // 0
-    "Óöµ½ÕÏ°­",        // 1
-    "³äµçÒì³£",        // 2
-    "Ç°ÏŞÎ»¿ª¹ØÎ´´¥·¢", // 3
-    "ºóÏŞÎ»¿ª¹ØÎ´´¥·¢"  // 4
+    "æ­£å¸¸",            // 0
+    "é‡åˆ°éšœç¢",        // 1
+    "å……ç”µå¼‚å¸¸",        // 2
+    "å‰é™ä½å¼€å…³æœªè§¦å‘", // 3
+    "åé™ä½å¼€å…³æœªè§¦å‘"  // 4
 };
 
 
@@ -89,7 +89,7 @@ void Sensor_t_Update(void)
 	
 	m_ctrl.ultra_stop =0;
 	m_ctrl.pg_state = Get_PGState();
-	// ¼ÇÂ¼µ±Ç°¾­¹ıµÄµãÎ»
+	// è®°å½•å½“å‰ç»è¿‡çš„ç‚¹ä½
 	if(m_ctrl.number != 0){
 		if(m_ctrl.number == 99)
 		{
@@ -112,10 +112,10 @@ void Dummy_Update(void)
 {
 	m_dummy_mode = RC_GetDummyMode();
 	
-	if(m_ctrl.available == 1)                        //Ö»ÓĞavailableÊ±²Å¸øm_server_ctrl¸³Öµ
+	if(m_ctrl.available == 1)                        //åªæœ‰availableæ—¶æ‰ç»™m_server_ctrlèµ‹å€¼
 	{
-		m_ctrl.action = (m_dummy_mode == 3) ? Get_ifaction() : 1;  //m_dummy_mode == 3±íÊ¾server¿ØÖÆ
-		if(m_ctrl.action == 1) // Ö»ÒªÊÕµ½ÏûÏ¢¾ÍÊÇ0£¨±íÊ¾Î´Íê³É£©, action±äÎª0Ò²²»ÊÜÓ°Ïì£¬Ö»ÓĞµ±ºóÏŞÎ»¿ª¹Ø´¥·¢£¨±íÊ¾Íê³ÉÊ±£©£¬ÒÀ´ÎÁîpick_complete, place_complete±ä1
+		m_ctrl.action = (m_dummy_mode == 3) ? Get_ifaction() : 1;  //m_dummy_mode == 3è¡¨ç¤ºserveræ§åˆ¶
+		if(m_ctrl.action == 1) // åªè¦æ”¶åˆ°æ¶ˆæ¯å°±æ˜¯0ï¼ˆè¡¨ç¤ºæœªå®Œæˆï¼‰, actionå˜ä¸º0ä¹Ÿä¸å—å½±å“ï¼Œåªæœ‰å½“åé™ä½å¼€å…³è§¦å‘ï¼ˆè¡¨ç¤ºå®Œæˆæ—¶ï¼‰ï¼Œä¾æ¬¡ä»¤pick_complete, place_completeå˜1
 		{
 			m_ctrl.pick_complete = 0;
 			m_ctrl.place_complete = 0;
@@ -129,9 +129,9 @@ void Dummy_Update(void)
 			{
 				m_ctrl.current_command = m_server_ctrl.command;
 			}
-			else if(m_server_ctrl.command == 3) // ×¥·Å½áºÏ
+			else if(m_server_ctrl.command == 3) // æŠ“æ”¾ç»“åˆ
 			{
-				if(m_ctrl.pick_complete == 0) // ÈôÃ»×¥È¡£¬Ôò×¥È¡
+				if(m_ctrl.pick_complete == 0) // è‹¥æ²¡æŠ“å–ï¼Œåˆ™æŠ“å–
 				{
 					m_ctrl.current_command = 0;
 				}
@@ -145,7 +145,7 @@ void Dummy_Update(void)
 		{
 			// m_server_ctrl.take_id = test_index;
 			m_ctrl.current_command = (test_command == 0) ? 1:0;  
-			// ¸Ğ¾õ¾ÍÊÇ°ÑÔ­±¾Ò»¸ötarget_id±ä³ÉÁËtake_idºÍgive_id£¬ÔÚÕâÀï¿ÉÒÔ²»Çø·Ö¡£
+			// æ„Ÿè§‰å°±æ˜¯æŠŠåŸæœ¬ä¸€ä¸ªtarget_idå˜æˆäº†take_idå’Œgive_idï¼Œåœ¨è¿™é‡Œå¯ä»¥ä¸åŒºåˆ†ã€‚
 			m_server_ctrl.take_id = test_index;
 			m_server_ctrl.give_id = test_index;
 			if(m_ctrl.current_command == 0)
@@ -164,16 +164,16 @@ void Dummy_Update(void)
 		m_ctrl.charge_mode = 0;
 	}
 
-	 /*************** ĞÂÔö£º±ßÑØ¼ì²â ****************/
-    // ¼ì²â m_ctrl.number ÊÇ·ñ´Ó0±äÎª·Ç0
+	 /*************** æ–°å¢ï¼šè¾¹æ²¿æ£€æµ‹ ****************/
+    // æ£€æµ‹ m_ctrl.number æ˜¯å¦ä»0å˜ä¸ºé0
     if(last_number == 0 && m_ctrl.number != 0){
-        rfid_cnt++;   // ¼ÆÊı+1
+        rfid_cnt++;   // è®¡æ•°+1
     }
     last_number = m_ctrl.number;
 
-    // ¼ì²â pg_state ÊÇ·ñ´Ó0±äÎª1
+    // æ£€æµ‹ pg_state æ˜¯å¦ä»0å˜ä¸º1
     if(last_pg_state == 0 && m_ctrl.pg_state == 1){
-        pg_cnt++;       // ¼ÆÊı+1
+        pg_cnt++;       // è®¡æ•°+1
     }
     last_pg_state = m_ctrl.pg_state;
 }
@@ -182,19 +182,19 @@ void SwitchState(void)
 {
  switch(sm.currentState){
 	 case STATE_IDLE:
-			//1. ĞÄÌøĞÅºÅ
-			if(heart_cnt  % 80000 == 10000 && m_ctrl.place_complete == 1)  // 15s ÔÚÈ¡×®Íê³Éºó£¬²»·¢¿ÕÏĞ×´Ì¬Ö¸Áî£¬ÒÔÃâºÍÆ½Ì¨³åÍ»
+			//1. å¿ƒè·³ä¿¡å·
+			if(heart_cnt  % 80000 == 10000 && m_ctrl.place_complete == 1)  // 15s åœ¨å–æ¡©å®Œæˆåï¼Œä¸å‘ç©ºé—²çŠ¶æ€æŒ‡ä»¤ï¼Œä»¥å…å’Œå¹³å°å†²çª
 			{
 				send_json_response("free",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 			}
 			heart_cnt ++;
-			//2.1 Èç¹ûSOC<30£¬ÇÒ°á×®Íê³É(charge_mode = 1)£¬ÔòÁ¢Âí½øÈë³äµç×´Ì¬
+			//2.1 å¦‚æœSOC<30ï¼Œä¸”æ¬æ¡©å®Œæˆ(charge_mode = 1)ï¼Œåˆ™ç«‹é©¬è¿›å…¥å……ç”µçŠ¶æ€
 			if(m_ctrl.m_soc < Low_Battery_Threshold && m_ctrl.charge_mode == 1)
 			{
 				//charge_cnt = 0;
-				heart_cnt = 0; // ½øÈëÏÂÒ»¸ö×´Ì¬£¬ÖØĞÂ¿ªÊ¼¼ÆËã
+				heart_cnt = 0; // è¿›å…¥ä¸‹ä¸€ä¸ªçŠ¶æ€ï¼Œé‡æ–°å¼€å§‹è®¡ç®—
 		
-				// ÖØÖÃif_finished£¬·ÀÖ¹Ö±½Ó´Ó³äµç×´Ì¬Ìøµ½running×´Ì¬(Ã»¶®Ö®Ç°ÊÇÊ²Ã´Çé¿öĞ´µÄÕâ¸ö£¬µ«ÕÕ×ö°É)
+				// é‡ç½®if_finishedï¼Œé˜²æ­¢ç›´æ¥ä»å……ç”µçŠ¶æ€è·³åˆ°runningçŠ¶æ€(æ²¡æ‡‚ä¹‹å‰æ˜¯ä»€ä¹ˆæƒ…å†µå†™çš„è¿™ä¸ªï¼Œä½†ç…§åšå§)
 				// m_ctrl.if_finished = 1; 
 				m_ctrl.place_complete = 1;
 				m_ctrl.pick_complete = 1;
@@ -205,37 +205,37 @@ void SwitchState(void)
 			}
 			else
 			{
-				//2.2 ÊÕµ½ÈÎÎñ£¬Ö±½Ó³ö·¢
-				if(m_ctrl.place_complete == 0)   // ¿ÕÏĞ×´Ì¬ÏÂ£¬Èôserver_command == 1/3£¬ÄÇÃ´Ö»ÒªÃ»·Å×®£¬¶¼ÒªÒÆ¶¯£»
+				//2.2 æ”¶åˆ°ä»»åŠ¡ï¼Œç›´æ¥å‡ºå‘
+				if(m_ctrl.place_complete == 0)   // ç©ºé—²çŠ¶æ€ä¸‹ï¼Œè‹¥server_command == 1/3ï¼Œé‚£ä¹ˆåªè¦æ²¡æ”¾æ¡©ï¼Œéƒ½è¦ç§»åŠ¨ï¼›
 				{
-					if(m_server_ctrl.command == 0 && m_ctrl.pick_complete == 1) // Ö»ÓĞserver_command == 0Ê±£¬È¡Íê×®Ã»·Å×®²Å²»ÓÃÒÆ¶¯
+					if(m_server_ctrl.command == 0 && m_ctrl.pick_complete == 1) // åªæœ‰server_command == 0æ—¶ï¼Œå–å®Œæ¡©æ²¡æ”¾æ¡©æ‰ä¸ç”¨ç§»åŠ¨
 					{
 						break;
 					}
-					if(if_target_valid(m_server_ctrl.take_id) == 0 && if_target_valid(m_server_ctrl.give_id) == 0) // Ä¿±êµãÎ»²»ÔÚ·¶Î§ÄÚ
+					if(if_target_valid(m_server_ctrl.take_id) == 0 && if_target_valid(m_server_ctrl.give_id) == 0) // ç›®æ ‡ç‚¹ä½ä¸åœ¨èŒƒå›´å†…
 					{
-						//TODO£ºÈôÈ¡×®Î»ÖÃ²»¶Ô£¬ÔòÖ±½ÓÈ¡Ïû±¾´ÎÈÎÎñ£»Èô·Å×®Î»ÖÃ²»¶Ô£¬Òªµ½Ö¸¶¨Î»ÖÃ·Å×®
-						// m_ctrl.if_finished = 1; //Çå¿ÕÈÎÎñ
+						//TODOï¼šè‹¥å–æ¡©ä½ç½®ä¸å¯¹ï¼Œåˆ™ç›´æ¥å–æ¶ˆæœ¬æ¬¡ä»»åŠ¡ï¼›è‹¥æ”¾æ¡©ä½ç½®ä¸å¯¹ï¼Œè¦åˆ°æŒ‡å®šä½ç½®æ”¾æ¡©
+						// m_ctrl.if_finished = 1; //æ¸…ç©ºä»»åŠ¡
 						send_json_response("Fail",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 						break;
 					}
-					heart_cnt = 0; // ½øÈëÏÂÒ»¸ö×´Ì¬£¬ÖØĞÂ¿ªÊ¼¼ÆËã
+					heart_cnt = 0; // è¿›å…¥ä¸‹ä¸€ä¸ªçŠ¶æ€ï¼Œé‡æ–°å¼€å§‹è®¡ç®—
 					sm.currentState = STATE_RUNNING;
 					sm.lastState = STATE_IDLE;
 					m_ctrl.available = 0; // Server can not send task
 					// m_ctrl.place_complete = 0;
 					// test_command = 0;
-					if(m_ctrl.current_command == 0) //Ö»ÓĞµÚÒ»´Î·µ»Ø½ÓÊÜ³É¹¦
+					if(m_ctrl.current_command == 0) //åªæœ‰ç¬¬ä¸€æ¬¡è¿”å›æ¥å—æˆåŠŸ
 					{
 						send_json_response("Success",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 					}
 					
 					break;
 				}
-			   //2.3 Èô30sÄÚÃ»ÊÕµ½ÈÎÎñ£¬ÔòÇ°Íù³äµç
+			   //2.3 è‹¥30så†…æ²¡æ”¶åˆ°ä»»åŠ¡ï¼Œåˆ™å‰å¾€å……ç”µ
 				if(m_ctrl.charge_mode == 1)
 				{
-				// ·Å×®Íê³ÉºóµÈ´ıÒ»¶ÎÊ±¼ä£¬ÈôÆ½Ì¨ÎŞÖ¸Áî£¬ÔòÈ¥³äµç
+				// æ”¾æ¡©å®Œæˆåç­‰å¾…ä¸€æ®µæ—¶é—´ï¼Œè‹¥å¹³å°æ— æŒ‡ä»¤ï¼Œåˆ™å»å……ç”µ
 					if(charge_cnt < 55000)
 					{
 						charge_cnt++;
@@ -243,7 +243,7 @@ void SwitchState(void)
 					else
 					{
 						charge_cnt = 0;
-						heart_cnt = 0; // ½øÈëÏÂÒ»¸ö×´Ì¬£¬ÖØĞÂ¿ªÊ¼¼ÆËã
+						heart_cnt = 0; // è¿›å…¥ä¸‹ä¸€ä¸ªçŠ¶æ€ï¼Œé‡æ–°å¼€å§‹è®¡ç®—
 						sm.currentState = STATE_RUNNING;
 						sm.lastState = STATE_IDLE;
 						m_ctrl.available = 0;
@@ -258,9 +258,9 @@ void SwitchState(void)
 		 break;
 		 
 	 case STATE_RUNNING:
-		 //1. ĞÄÌøĞÅºÅ
+		 //1. å¿ƒè·³ä¿¡å·
 			
-			if(heart_cnt % 10000 == 0)  // 10·ÖÖÓ·¢Ò»´Î
+			if(heart_cnt % 10000 == 0)  // 10åˆ†é’Ÿå‘ä¸€æ¬¡
 			{   
 				if(m_ctrl.charge_mode == 1)
 				{
@@ -276,9 +276,9 @@ void SwitchState(void)
 				}
 			}
 			heart_cnt ++;
-			//2. ĞĞ×ß
+			//2. è¡Œèµ°
 			 
-			//2.1 µ±Ç°Ä¿±êµãÎ»£ºa. ³äµçµãÎ» b. ·ÅÖÃ/×¥È¡µãÎ»
+			//2.1 å½“å‰ç›®æ ‡ç‚¹ä½ï¼ša. å……ç”µç‚¹ä½ b. æ”¾ç½®/æŠ“å–ç‚¹ä½
 			if(m_ctrl.charge_mode == 1){m_ctrl.current_target_id = Charge_ID;}
 			else if(m_ctrl.current_command == 0)  // pick
 			{
@@ -290,11 +290,11 @@ void SwitchState(void)
 			}
 			 
 			
-			//2.2 ¼ÆËã·½Ïò & Ç°Ò»¸öµãÎ»ĞÅÏ¢ (when ID is correct but pg is not)
-			if(arrive_flag == 1 && m_ctrl.location_id == m_ctrl.current_target_id)  // °´ÀíËµÕâÁ½¸öÓ¦¸ÃÊÇÒ»¸öÒâË¼£¬µ«ÊÇÎªÁË·ÀÖ¹»úÆ÷ÈËÄªÃû»¹ÊÇ×ßµ½ÏÂÒ»¸öµãÎ»£¬¼ÓÒ»¸ö == ¿ÉÒÔ±£Ö¤»úÆ÷ÈËÄÜ»ØÀ´¡£
+			//2.2 è®¡ç®—æ–¹å‘ & å‰ä¸€ä¸ªç‚¹ä½ä¿¡æ¯ (when ID is correct but pg is not)
+			if(arrive_flag == 1 && m_ctrl.location_id == m_ctrl.current_target_id)  // æŒ‰ç†è¯´è¿™ä¸¤ä¸ªåº”è¯¥æ˜¯ä¸€ä¸ªæ„æ€ï¼Œä½†æ˜¯ä¸ºäº†é˜²æ­¢æœºå™¨äººè«åè¿˜æ˜¯èµ°åˆ°ä¸‹ä¸€ä¸ªç‚¹ä½ï¼ŒåŠ ä¸€ä¸ª == å¯ä»¥ä¿è¯æœºå™¨äººèƒ½å›æ¥ã€‚
 			{
 				arrive_cnt++;
-				if(arrive_cnt > 14000)  //×ß7s
+				if(arrive_cnt > 14000)  //èµ°7s
 				{
 					arrive_cnt = 0;
 					//m_ctrl.move_direction = -m_ctrl.move_direction;  // test***************************
@@ -302,13 +302,13 @@ void SwitchState(void)
 
 			}
 			// else if 
-			if(m_ctrl.location_id != m_ctrl.current_target_id)  //±ÜÃâÑÓÊ±µ¼ÖÂarrive_flag»¹Î´=1£¬µ«RFIDÒÑ¾­Ê¶±ğ -> ²»ÓÃelse,¶øÓÃelse if
+			if(m_ctrl.location_id != m_ctrl.current_target_id)  //é¿å…å»¶æ—¶å¯¼è‡´arrive_flagè¿˜æœª=1ï¼Œä½†RFIDå·²ç»è¯†åˆ« -> ä¸ç”¨else,è€Œç”¨else if
 			{
 				m_ctrl.move_direction = get_direction(m_ctrl.location_id,m_ctrl.current_target_id);
 				m_ctrl.previous_id = get_previous_point(m_ctrl.current_target_id,m_ctrl.move_direction);
 			}
 			
-			//2.3 Èç¹ûÊ¶±ğµ½µãÎ» & ¹âµçÃÅ´¥·¢
+			//2.3 å¦‚æœè¯†åˆ«åˆ°ç‚¹ä½ & å…‰ç”µé—¨è§¦å‘
 			if( m_ctrl.location_id == m_ctrl.current_target_id)  
 			{
 				SetxSpeed(500,2);
@@ -327,7 +327,7 @@ void SwitchState(void)
 			}
 		 
 		
-		 //2.4 ÉèÖÃËÙ¶È
+		 //2.4 è®¾ç½®é€Ÿåº¦
 		 if (m_ctrl.ultra_stop == 0)
 		 { 
 			 
@@ -347,11 +347,11 @@ void SwitchState(void)
 			 else
 			 {
 				// Normal
-				if(m_ctrl.location_id != m_ctrl.previous_id && slow_flag == 0)  // Ã»ÒÆ¶¯µ½Ç°Ò»µã£ºÕı³£ËÙ¶È  (ÉèÖÃslow_flagÊÇÎªÁËÈç¹û´í¹ıÁËÍ£Ö¹µãÎ»£¬Ó¦¸Ã¼ÌĞøÂıËÙÑ°ÕÒ£©
+				if(m_ctrl.location_id != m_ctrl.previous_id && slow_flag == 0)  // æ²¡ç§»åŠ¨åˆ°å‰ä¸€ç‚¹ï¼šæ­£å¸¸é€Ÿåº¦  (è®¾ç½®slow_flagæ˜¯ä¸ºäº†å¦‚æœé”™è¿‡äº†åœæ­¢ç‚¹ä½ï¼Œåº”è¯¥ç»§ç»­æ…¢é€Ÿå¯»æ‰¾ï¼‰
 				{
-					if(m_ctrl.move_direction == 1)   // ×ªÍä´¦¼õËÙ£¬ÆäËüµØ·½Õı³£ËÙ¶È
+					if(m_ctrl.move_direction == 1)   // è½¬å¼¯å¤„å‡é€Ÿï¼Œå…¶å®ƒåœ°æ–¹æ­£å¸¸é€Ÿåº¦
 					{
-						(m_ctrl.location_id == turn_num2 || m_ctrl.location_id == turn_num4)?SetxSpeed(slow_speed,2):SetxSpeed(fast_speed,2); //±¾À´Õâ¸öÎª-
+						(m_ctrl.location_id == turn_num2 || m_ctrl.location_id == turn_num4)?SetxSpeed(slow_speed,2):SetxSpeed(fast_speed,2); //æœ¬æ¥è¿™ä¸ªä¸º-
 					}
 					else
 					{
@@ -382,17 +382,17 @@ void SwitchState(void)
 		break;
 	
 	 case STATE_ADJUST:
-		    // ¹âµçÃÅºóÑÓÊ±½×¶Î£ºÊ¶±ğµ½¹âµçÃÅºó¼ÌĞøµÍËÙ×ß200´Î(0.1s)ÔÙÍ£³µ
+		    // å…‰ç”µé—¨åå»¶æ—¶é˜¶æ®µï¼šè¯†åˆ«åˆ°å…‰ç”µé—¨åç»§ç»­ä½é€Ÿèµ°200æ¬¡(0.1s)å†åœè½¦
 		    if(pg_delay_flag == 1)
 		    {
 		        if(pg_delay_cnt < 200)
 		        {
 		            pg_delay_cnt++;
-		            SetxSpeed(50,2);         // ¼ÌĞøµÍËÙÒÆ¶¯
+		            SetxSpeed(50,2);         // ç»§ç»­ä½é€Ÿç§»åŠ¨
 		        }
 		        else
 		        {
-		            SetxSpeed(0,2);          // ÕæÕıÍ£³µ
+		            SetxSpeed(0,2);          // çœŸæ­£åœè½¦
 		            pg_delay_flag = 0;
 		            pg_delay_cnt = 0;
 		            if(m_ctrl.charge_mode == 1)
@@ -400,7 +400,7 @@ void SwitchState(void)
 		                sm.currentState = STATE_CHARGING;
 		                send_json_response("arrive",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 		                heart_cnt = 0;
-		                charge_pushrod_cnt = 0; // ³äµçÍÆ¸ËÉìËõ¼ÆÊıÇåÁã
+		                charge_pushrod_cnt = 0; // å……ç”µæ¨æ†ä¼¸ç¼©è®¡æ•°æ¸…é›¶
 		            }
 		            else
 		            {
@@ -419,7 +419,7 @@ void SwitchState(void)
 					adjust_cnt = 0;
 					if(m_ctrl.pg_state == 1 && m_ctrl.location_id == m_ctrl.current_target_id)  
 					{
-						// ¹âµçÃÅÈ·ÈÏÓĞĞ§£¬½øÈëÑÓÊ±½×¶Î¶ø·ÇÁ¢¼´Í£³µ
+						// å…‰ç”µé—¨ç¡®è®¤æœ‰æ•ˆï¼Œè¿›å…¥å»¶æ—¶é˜¶æ®µè€Œéç«‹å³åœè½¦
 						pg_delay_flag = 1;
 						pg_delay_cnt = 0;
 					}
@@ -438,12 +438,12 @@ void SwitchState(void)
 	 
 	 case STATE_WORKING:
 				SetxSpeed(0,2);
-				if( push_flag != 1 ) //»¹Ã»ÓĞÍÆ³ö
+				if( push_flag != 1 ) //è¿˜æ²¡æœ‰æ¨å‡º
 				 {
 					sm.currentState = STATE_PUSH;
 					sm.lastState = STATE_WORKING;
 					SetySpeed(working_speed);
-					switch_cnt = 0; // ÓÃÓÚÅĞ¶ÏÊÇ·ñ¹ı³¤Ê±¼ä ÏŞÎ»¿ª¹ØÎ´´¥·¢
+					switch_cnt = 0; // ç”¨äºåˆ¤æ–­æ˜¯å¦è¿‡é•¿æ—¶é—´ é™ä½å¼€å…³æœªè§¦å‘
 						 
 				 }
 				 else
@@ -467,7 +467,7 @@ void SwitchState(void)
 		 
 	 case STATE_PUSH:
 			 switch_cnt ++;
-//			 if(switch_cnt > 60000) // ³¬¹ıÒ»·ÖÖÓ
+//			 if(switch_cnt > 60000) // è¶…è¿‡ä¸€åˆ†é’Ÿ
 //       {
 //						error_code = 3;
 //						sm.currentState = STATE_ERROR;
@@ -485,7 +485,7 @@ void SwitchState(void)
 			 
 	 case STATE_PULL:
 		 switch_cnt ++;
-//			 if(switch_cnt > 60000) // ³¬¹ıÒ»·ÖÖÓ
+//			 if(switch_cnt > 60000) // è¶…è¿‡ä¸€åˆ†é’Ÿ
 //       {
 //						error_code = 4;
 //						sm.currentState = STATE_ERROR;
@@ -502,8 +502,8 @@ void SwitchState(void)
 //					m_ctrl.available = 1;
 //				 }
 				//  m_ctrl.if_finished = 1;
-				 charge_cnt = 0; // ÓÃÓÚ¼ÆËã´Ó°á×®Íê³Éµ½µÈ´ıÆ½Ì¨Ö¸ÁîµÄÊ±¼ä
-				 m_ctrl.available = 1; // Ò»¶¨ÒªÉèÖÃ£¬ÕâÑù¿ÉÒÔ»»current_command
+				 charge_cnt = 0; // ç”¨äºè®¡ç®—ä»æ¬æ¡©å®Œæˆåˆ°ç­‰å¾…å¹³å°æŒ‡ä»¤çš„æ—¶é—´
+				 m_ctrl.available = 1; // ä¸€å®šè¦è®¾ç½®ï¼Œè¿™æ ·å¯ä»¥æ¢current_command
 				 Reset_flag();
 				 
 				if(m_ctrl.current_command == 0)
@@ -526,10 +526,10 @@ void SwitchState(void)
 		 
 		 
 		 case STATE_CHARGING:
-		    // 1.ÕıÔÚ³äµç×´Ì¬·´À¡ & ³äµçÒì³£·´À¡
+		    // 1.æ­£åœ¨å……ç”µçŠ¶æ€åé¦ˆ & å……ç”µå¼‚å¸¸åé¦ˆ
 			heart_cnt ++;
 			SetxSpeed(0,2);
-			if(heart_cnt % 80000 == 100)  // 10·ÖÖÓ·¢Ò»´Î
+			if(heart_cnt % 80000 == 100)  // 10åˆ†é’Ÿå‘ä¸€æ¬¡
 			{
 				send_json_response("charge",m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag);
 			}
@@ -538,7 +538,7 @@ void SwitchState(void)
 			if(m_ctrl.m_soc >= StopCharge_Threshold)
 			{
 				PushRod_StopCharge();
-				if(m_ctrl.is_charging ==0)  //µ±µçÍÆ¸ËÀë¿ª½ğÊôµæÆ¬
+				if(m_ctrl.is_charging ==0)  //å½“ç”µæ¨æ†ç¦»å¼€é‡‘å±å«ç‰‡
 				{
 					sm.currentState = STATE_IDLE;
 					sm.lastState = STATE_CHARGING;
@@ -558,25 +558,25 @@ void SwitchState(void)
 						charge_flag = 1;
 					}
 
-					//2.1 ÈôSOC<30,»úÆ÷ÈË²»¿ÉÓÃ
-					if(m_ctrl.m_soc < Low_Battery_Threshold ) //ÉÔÎ¢³ä¶àÒ»µãµçÔÙ×ß£¬²»È»¸Õµ½30¾Í×ß£¬×ßÍêÒ»´ÎÓÖÒª³äµç
+					//2.1 è‹¥SOC<30,æœºå™¨äººä¸å¯ç”¨
+					if(m_ctrl.m_soc < Low_Battery_Threshold ) //ç¨å¾®å……å¤šä¸€ç‚¹ç”µå†èµ°ï¼Œä¸ç„¶åˆšåˆ°30å°±èµ°ï¼Œèµ°å®Œä¸€æ¬¡åˆè¦å……ç”µ
 					{
 						m_ctrl.available = 0;
 					}
-					//2.2 ÈôSOC>=30,»úÆ÷ÈË¿ÉÓÃ
+					//2.2 è‹¥SOC>=30,æœºå™¨äººå¯ç”¨
 					else
 					{
 						m_ctrl.available = 1;
-						// 2.2.1 ÈôÊÕµ½ÃüÁî£¬ÔòÍË³ö³äµç×´Ì¬
+						// 2.2.1 è‹¥æ”¶åˆ°å‘½ä»¤ï¼Œåˆ™é€€å‡ºå……ç”µçŠ¶æ€
 						if(m_ctrl.place_complete == 0)
 						{
 							PushRod_StopCharge();
-							if(m_ctrl.is_charging ==0)  //µ±µçÍÆ¸ËÀë¿ª½ğÊôµæÆ¬
+							if(m_ctrl.is_charging ==0)  //å½“ç”µæ¨æ†ç¦»å¼€é‡‘å±å«ç‰‡
 							{
-								heart_cnt = 0; // ½øÈëÏÂÒ»¸ö×´Ì¬£¬ÖØĞÂ¿ªÊ¼¼ÆËã
+								heart_cnt = 0; // è¿›å…¥ä¸‹ä¸€ä¸ªçŠ¶æ€ï¼Œé‡æ–°å¼€å§‹è®¡ç®—
 								sm.currentState = STATE_RUNNING;
 								sm.lastState = STATE_CHARGING;
-								m_ctrl.available = 0; // »úÆ÷ÈË×ªÎª²»¿ÉÓÃ
+								m_ctrl.available = 0; // æœºå™¨äººè½¬ä¸ºä¸å¯ç”¨
 								m_ctrl.place_complete = 0; 
 								test_command = 0;
 								Reset_flag();   
@@ -592,16 +592,16 @@ void SwitchState(void)
 		 
 		 	case STATE_ERROR:
 				
-			// ÆäËü¹ÊÕÏÔõÃ´½â¾ö£¿
+			// å…¶å®ƒæ•…éšœæ€ä¹ˆè§£å†³ï¼Ÿ
 		    SetxSpeed(0,2);
 			SetySpeed(0);
 			heart_cnt ++;
-			 if(heart_cnt % 600000 == 0)  // 10·ÖÖÓ·¢Ò»´Î
+			 if(heart_cnt % 600000 == 0)  // 10åˆ†é’Ÿå‘ä¸€æ¬¡
 			 {
-					send_json_response(error_list[error_code],m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag); //¸ù¾İerror_code·¢ËÍ¹ÊÕÏĞÅÏ¢
+					send_json_response(error_list[error_code],m_ctrl.available,m_ctrl.location_id,m_ctrl.m_soc,m_ctrl.m_current,charge_flag); //æ ¹æ®error_codeå‘é€æ•…éšœä¿¡æ¯
 			 }
 			 
-	   // 1. ´¦ÀíÒòÎªÕÏ°­ÎïÍ£ÏÂµÄÇé¿ö
+	   // 1. å¤„ç†å› ä¸ºéšœç¢ç‰©åœä¸‹çš„æƒ…å†µ
 	   if(error_code == 1 && m_ctrl.ultra_stop == 0) 
 		 {
 			 error_code = 0;
@@ -618,14 +618,14 @@ void SwitchState(void)
 	}
 }
 
-// mode = 1ÎªÒ£¿ØÄ£Ê½£¬ÎŞÂÛÔõÑù¶¼ÊÇÕâÑù¸³Öµ£¬ mode = 2Îª×Ô¶¯Ä£Ê½£¬²»Í¬³¡µØ²»Ò»Ñù
+// mode = 1ä¸ºé¥æ§æ¨¡å¼ï¼Œæ— è®ºæ€æ ·éƒ½æ˜¯è¿™æ ·èµ‹å€¼ï¼Œ mode = 2ä¸ºè‡ªåŠ¨æ¨¡å¼ï¼Œä¸åŒåœºåœ°ä¸ä¸€æ ·
 void SetxSpeed(int _speed, uint8_t mode)
 {
-	if(m_ctrl.move_direction == Move_Direction || mode == 1) //ÏòµãÎ»Êı´óµÄ·½ÏòÒÆ¶¯ 1 -> 2 -> 3 ...
+	if(m_ctrl.move_direction == Move_Direction || mode == 1) //å‘ç‚¹ä½æ•°å¤§çš„æ–¹å‘ç§»åŠ¨ 1 -> 2 -> 3 ...
 	{
 		m_motor_speed[1] = _speed;
 	}
-	else                           //ÏòµãÎ»ÊıĞ¡µÄ·½ÏòÒÆ¶¯ 3 -> 2 -> 1 ...
+	else                           //å‘ç‚¹ä½æ•°å°çš„æ–¹å‘ç§»åŠ¨ 3 -> 2 -> 1 ...
 	{
 		m_motor_speed[1] = -_speed;
 	}
@@ -637,14 +637,14 @@ void SetySpeed(int _speed)
 	m_motor_speed[0] = _speed;
 }
 
-// ¼ÆËãĞĞ½ø·½Ïò£ºË³Ê±Õë·µ»Ø 1£¬ÄæÊ±Õë·µ»Ø -1
+// è®¡ç®—è¡Œè¿›æ–¹å‘ï¼šé¡ºæ—¶é’ˆè¿”å› 1ï¼Œé€†æ—¶é’ˆè¿”å› -1
 int get_direction(uint8_t  location_id, uint8_t  target_id) {
     int cw_distance = (target_id - location_id + Direction_Point) % Direction_Point;
     int ccw_distance = (location_id - target_id + Direction_Point) % Direction_Point;
     return (cw_distance <= ccw_distance) ? 1 : -1;
 }
 
-// ¼ÆËãÄ¿±êµãÎ»µÄÇ°Ò»¸öµãÎ»
+// è®¡ç®—ç›®æ ‡ç‚¹ä½çš„å‰ä¸€ä¸ªç‚¹ä½
 uint8_t  get_previous_point(uint8_t target_id, int direction) {
     return (target_id - direction - 1 + Direction_Point) % Direction_Point + 1;
 }
@@ -660,7 +660,7 @@ void Sensor_t_Init(void)
 	m_ctrl.rear_state = 0;
 	//m_ctrl.location_id = 0;
 	m_ctrl.previous_id = 0;
-	// m_ctrl.if_finished = 1; //ÏÈÊÇÈÎÎñÍê³É
+	// m_ctrl.if_finished = 1; //å…ˆæ˜¯ä»»åŠ¡å®Œæˆ
 	m_ctrl.need_charge = 0;
 	m_ctrl.is_charging = 0;
 	m_ctrl.charge_mode = 0;
@@ -669,7 +669,7 @@ void Sensor_t_Init(void)
 	m_ctrl.available = 1;
 	m_ctrl.pick_complete = 1;
 	m_ctrl.place_complete = 1;
-	m_ctrl.current_command = 99; // ÎŞÃüÁî
+	m_ctrl.current_command = 99; // æ— å‘½ä»¤
 }
 
 void StateMachine_Init(void)
@@ -693,7 +693,7 @@ void Dummy_Reset(void)
 	//PushRod_StopCharge();
 	Reset_flag();
 	heart_cnt = 0;
-	//¶ÔÓÚm_ctrl,Ö»ÖØÖÃĞèÒªµÄ
+	//å¯¹äºm_ctrl,åªé‡ç½®éœ€è¦çš„
 	Sensor_t_Reset();
 }
 
@@ -705,9 +705,9 @@ void Sensor_t_Reset(void)
 	m_ctrl.charge_mode = 0;
 	m_ctrl.current_target_id = 1;
 	m_ctrl.available = 1;
-	m_ctrl.place_complete = 1;  // ±¾À´Ï£Íû²»ÖØÖÃ£¬ÕâÑù×Ô¶¯²âÊÔ³ÌĞò¿ÉÒÔ¼ÌĞø£»µ«ÊÇÏÖÔÚ¿ÉÒÔÍ¨¹ıÆ½Ì¨×Ô¶¯²âÊÔÁË£¬ÄÇ¾ÍÖØÖÃ°É
+	m_ctrl.place_complete = 1;  // æœ¬æ¥å¸Œæœ›ä¸é‡ç½®ï¼Œè¿™æ ·è‡ªåŠ¨æµ‹è¯•ç¨‹åºå¯ä»¥ç»§ç»­ï¼›ä½†æ˜¯ç°åœ¨å¯ä»¥é€šè¿‡å¹³å°è‡ªåŠ¨æµ‹è¯•äº†ï¼Œé‚£å°±é‡ç½®å§
 	m_ctrl.pick_complete = 1;
-	m_ctrl.current_command = 99; // ÎŞÃüÁîS
+	m_ctrl.current_command = 99; // æ— å‘½ä»¤S
 }
 
 void Get_MotorSpeed(int16_t *_speed)
@@ -717,13 +717,13 @@ void Get_MotorSpeed(int16_t *_speed)
 
 void Reset_flag(void)
 {
-	slow_flag = 0;  // ÊÇ·ñÊÇÂıËÙ×´Ì¬
+	slow_flag = 0;  // æ˜¯å¦æ˜¯æ…¢é€ŸçŠ¶æ€
   push_flag = 0; 
 	error_code = 0;
 	arrive_flag = 0;
 	charge_flag = 0;
-	pg_delay_flag = 0;  // ¹âµçÃÅÑÓÊ±±êÖ¾ÇåÁã
-	pg_delay_cnt = 0;   // ¹âµçÃÅÑÓÊ±¼ÆÊıÇåÁã
+	pg_delay_flag = 0;  // å…‰ç”µé—¨å»¶æ—¶æ ‡å¿—æ¸…é›¶
+	pg_delay_cnt = 0;   // å…‰ç”µé—¨å»¶æ—¶è®¡æ•°æ¸…é›¶
 }
 
 Sensor_t Get_SensorData(void)

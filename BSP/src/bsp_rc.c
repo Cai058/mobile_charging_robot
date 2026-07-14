@@ -7,8 +7,8 @@
 //static RC_raw_t rc_raw;
 static uint8_t SBUS_buff_rc[SBUS_RX_BUF_NUM];
 
-volatile uint16_t rc_rx_len = 0;  // ¼ÇÂ¼±¾´Î½ÓÊÕµ½µÄ³¤¶È
-volatile uint8_t rc_rx_complete = 0;  // ¼ÇÂ¼ÊÇ·ñ½ÓÊÕÍê³É
+volatile uint16_t rc_rx_len = 0;  // è®°å½•æœ¬æ¬¡æ¥æ”¶åˆ°çš„é•¿åº¦
+volatile uint8_t rc_rx_complete = 0;  // è®°å½•æ˜¯å¦æ¥æ”¶å®Œæˆ
 
 
 UART_HandleTypeDef huart1;
@@ -66,7 +66,7 @@ void bsp_rc_Config(void)
 	HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(USART1_IRQn);
 
-	/* ---------------- IDLEÖĞ¶Ï´ò¿ª ------------------------ */
+	/* ---------------- IDLEä¸­æ–­æ‰“å¼€ ------------------------ */
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
 
 	HAL_UART_Receive_DMA(&huart1, SBUS_buff_rc, SBUS_RX_BUF_NUM);
@@ -111,19 +111,19 @@ void USART1_IRQHandler(void)
 //			SBUS_TO_RC(SBUS_rx_buf, &rc_raw);
 //		}
 
-		// ÖØĞÂÆô¶¯DMA½ÓÊÕ
+		// é‡æ–°å¯åŠ¨DMAæ¥æ”¶
 		HAL_UART_DMAStop(&huart1);
 		HAL_UART_Receive_DMA(&huart1, SBUS_buff_rc, SBUS_RX_BUF_NUM);
 	}
 }
 
-/***************** »ñÈ¡½ÓÊÕµ½µÄÊı¾İ **********************/
+/***************** è·å–æ¥æ”¶åˆ°çš„æ•°æ® **********************/
 char *get_rc_rebuff(uint16_t *len)
 {
     if (rc_rx_complete)
     {
         *len = rc_rx_len;
-        rc_rx_complete = 0;  // Çå³ı±êÖ¾
+        rc_rx_complete = 0;  // æ¸…é™¤æ ‡å¿—
         return (char *)SBUS_buff_rc;
     }
     else
@@ -133,7 +133,7 @@ char *get_rc_rebuff(uint16_t *len)
     }
 }
 
-/***************** Çå¿Õ½ÓÊÕ»º³åÇø **********************/
+/***************** æ¸…ç©ºæ¥æ”¶ç¼“å†²åŒº **********************/
 void clean_rc_rebuff(void) 
 {
     memset(SBUS_buff_rc, 0, SBUS_RX_BUF_NUM);

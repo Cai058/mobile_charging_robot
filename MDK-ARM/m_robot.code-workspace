@@ -1,0 +1,12 @@
+{
+    "folders": [
+        {
+            "name": "mobile_charging_robot",
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "cortex-debug.variableUseNaturalFormat": true
+    },
+    "extensions": {}
+}

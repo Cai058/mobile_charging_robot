@@ -29,30 +29,30 @@
 
 
 // ===========================================011===========================================
-#define Robot_ID "011"
-#define Total_Points 3
-#define Direction_Point 18
-#define Charge_ID 2
-#define Rear_LimitSwitch 1
-#define Move_Direction 1
-#define Pushrod_Mode 0
-#define turn_num1 0
-#define turn_num2 0
-#define turn_num3 0
-#define turn_num4 0
+//#define Robot_ID "011"
+//#define Total_Points 3
+//#define Direction_Point 18
+//#define Charge_ID 2
+//#define Rear_LimitSwitch 1
+//#define Move_Direction 1
+//#define Pushrod_Mode 0
+//#define turn_num1 0
+//#define turn_num2 0
+//#define turn_num3 0
+//#define turn_num4 0
 
 
 // ===========================================014===========================================
-// #define Robot_ID "014"
-// #define Total_Points 18
-// #define Direction_Point 18
-// #define Charge_ID 1
-// #define Rear_LimitSwitch 0
-// #define Move_Direction -1
-// #define Pushrod_Mode 1
-// #define turn_num1 1
-// #define turn_num2 9
-// #define turn_num3 10
-// #define turn_num4 18
+ #define Robot_ID "014"
+ #define Total_Points 18
+ #define Direction_Point 18
+ #define Charge_ID 1
+ #define Rear_LimitSwitch 0
+ #define Move_Direction -1
+ #define Pushrod_Mode 1
+ #define turn_num1 1
+ #define turn_num2 9
+ #define turn_num3 10
+ #define turn_num4 18
 
 #endif

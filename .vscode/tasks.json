@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake: Configure Debug",
+            "type": "process",
+            "command": "C:/Program Files/CMake/bin/cmake.exe",
+            "args": ["--preset", "debug"],
+            "problemMatcher": []
+        },
+        {
+            "label": "CMake: Build Debug ELF",
+            "type": "process",
+            "command": "C:/Program Files/CMake/bin/cmake.exe",
+            "args": ["--build", "--preset", "debug"],
+            "dependsOn": "CMake: Configure Debug",
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "CMake: Configure Release",
+            "type": "process",
+            "command": "C:/Program Files/CMake/bin/cmake.exe",
+            "args": ["--preset", "release"],
+            "problemMatcher": []
+        },
+        {
+            "label": "CMake: Build Release ELF",
+            "type": "process",
+            "command": "C:/Program Files/CMake/bin/cmake.exe",
+            "args": ["--build", "--preset", "release"],
+            "dependsOn": "CMake: Configure Release",
+            "dependsOrder": "sequence",
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}

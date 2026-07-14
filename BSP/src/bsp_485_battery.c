@@ -10,9 +10,9 @@ DMA_HandleTypeDef hdma_usart6_rx;
 
 uint8_t usart_buff_battery[BATTERY_RX_BUFFER_SIZE];
 uint8_t usart_buff_battery_bak[BATTERY_RX_BUFFER_SIZE];
-volatile uint16_t battery_rx_len = 0;  // ¼ÇÂ¼±¾´Î½ÓÊÕµ½µÄ³¤¶È
-volatile uint8_t battery_rx_complete = 0;  // ¼ÇÂ¼ÊÇ·ñ½ÓÊÕÍê³É
-volatile uint8_t battery_tx_complete = 1;  // ¼ÇÂ¼ÊÇ·ñ½ÓÊÕÍê³É
+volatile uint16_t battery_rx_len = 0;  // è®°å½•æœ¬æ¬¡æ¥æ”¶åˆ°çš„é•¿åº¦
+volatile uint8_t battery_rx_complete = 0;  // è®°å½•æ˜¯å¦æ¥æ”¶å®Œæˆ
+volatile uint8_t battery_tx_complete = 1;  // è®°å½•æ˜¯å¦æ¥æ”¶å®Œæˆ
 
 
 void BSP_Battery_Config(void)
@@ -33,7 +33,7 @@ void BSP_Battery_Config(void)
     GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
     HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-    // USART6 ³õÊ¼»¯
+    // USART6 åˆå§‹åŒ–
     huart6.Instance = USART6;
     huart6.Init.BaudRate = 9600;
     huart6.Init.WordLength = UART_WORDLENGTH_8B;
@@ -58,7 +58,7 @@ void BSP_Battery_Config(void)
 
     HAL_DMA_Init(&hdma_usart6_tx);
 
-    // ¹ØÁªDMAµ½USART6µÄTX
+    // å…³è”DMAåˆ°USART6çš„TX
     __HAL_LINKDMA(&huart6, hdmatx, hdma_usart6_tx);
 		
 		// DMA RX Init
@@ -76,31 +76,31 @@ void BSP_Battery_Config(void)
 
     __HAL_LINKDMA(&huart6, hdmarx, hdma_usart6_rx);
 
-    // ÖĞ¶ÏÓÅÏÈ¼¶ÅäÖÃ
+    // ä¸­æ–­ä¼˜å…ˆçº§é…ç½®
     HAL_NVIC_SetPriority(USART6_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USART6_IRQn);
 		
-		HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 1, 0);  // USART6 TX ÊÇ DMA2_Stream6
+		HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 1, 0);  // USART6 TX æ˜¯ DMA2_Stream6
 		HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
 
-		// Æô¶¯ DMA ½ÓÊÕ
+		// å¯åŠ¨ DMA æ¥æ”¶
     HAL_UART_Receive_DMA(&huart6, usart_buff_battery, BATTERY_RX_BUFFER_SIZE);
 
-    // ¿ªÆô¿ÕÏĞÖĞ¶Ï
+    // å¼€å¯ç©ºé—²ä¸­æ–­
     __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
 }
 
 void USART6_IRQHandler(void)
 {
-    if (__HAL_UART_GET_FLAG(&huart6, UART_FLAG_IDLE)) // ¼ì²â¿ÕÏĞÖĞ¶Ï
+    if (__HAL_UART_GET_FLAG(&huart6, UART_FLAG_IDLE)) // æ£€æµ‹ç©ºé—²ä¸­æ–­
     {
-        __HAL_UART_CLEAR_FLAG(&huart6, UART_FLAG_IDLE);  // Çå³ı¿ÕÏĞÖĞ¶Ï±êÖ¾
+        __HAL_UART_CLEAR_FLAG(&huart6, UART_FLAG_IDLE);  // æ¸…é™¤ç©ºé—²ä¸­æ–­æ ‡å¿—
 
-        // ¼ÆËã½ÓÊÕµ½µÄÊı¾İ³¤¶È
+        // è®¡ç®—æ¥æ”¶åˆ°çš„æ•°æ®é•¿åº¦
         battery_rx_len = BATTERY_RX_BUFFER_SIZE - __HAL_DMA_GET_COUNTER(&hdma_usart6_rx);
-        battery_rx_complete = 1;  // ±ê¼Ç½ÓÊÕÍê³É
+        battery_rx_complete = 1;  // æ ‡è®°æ¥æ”¶å®Œæˆ
 
-        // Í£Ö¹ DMA ´«Êä²¢ÖØĞÂÆô¶¯£¬ÒÔÈ·±£Êı¾İÕıÈ·´¦Àí
+        // åœæ­¢ DMA ä¼ è¾“å¹¶é‡æ–°å¯åŠ¨ï¼Œä»¥ç¡®ä¿æ•°æ®æ­£ç¡®å¤„ç†
         HAL_UART_DMAStop(&huart6);
 			  memset(usart_buff_battery_bak, 0, BATTERY_RX_BUFFER_SIZE); // ?????
         memcpy(usart_buff_battery_bak, usart_buff_battery, battery_rx_len+3);
@@ -117,13 +117,13 @@ void DMA2_Stream6_IRQHandler(void)
 }
 
 
-/***************** »ñÈ¡½ÓÊÕµ½µÄÊı¾İ **********************/
+/***************** è·å–æ¥æ”¶åˆ°çš„æ•°æ® **********************/
 char *get_battery_rebuff(uint16_t *len)
 {
     if (battery_rx_complete)
     {
         *len = battery_rx_len;
-        battery_rx_complete = 0;  // Çå³ı±êÖ¾
+        battery_rx_complete = 0;  // æ¸…é™¤æ ‡å¿—
         //return (char *)usart_buff_battery;
 			  return (char *)usart_buff_battery_bak;
     }
@@ -138,7 +138,7 @@ uint8_t get_battery_rx_complete(void)
 {
 		return battery_rx_complete;
 }
-/***************** Çå¿Õ½ÓÊÕ»º³åÇø **********************/
+/***************** æ¸…ç©ºæ¥æ”¶ç¼“å†²åŒº **********************/
 void clean_battery_rebuff(void) 
 {
     //memset(usart_buff_battery, 0, BATTERY_RX_BUFFER_SIZE);
@@ -172,7 +172,7 @@ void usart6_tx_cplt(void)
 {
 		battery_tx_complete = 1;
 }
-//static void m_Delay(__IO uint32_t nCount)	 //¼òµ¥µÄÑÓÊ±º¯Êı
+//static void m_Delay(__IO uint32_t nCount)	 //ç®€å•çš„å»¶æ—¶å‡½æ•°
 //{
 //	for(; nCount != 0; nCount--);
 //}

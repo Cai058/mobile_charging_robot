@@ -16,22 +16,22 @@ float m_Kp_y = 1.5f;
 float m_Ki_y = 0.0f;
 float m_Kd_y = 0.0f;
 float m_maxout = 20000;
-float m_intergral_limit = 4000; // »ı·ÖÏŞ·ù
+float m_intergral_limit = 4000; // ç§¯åˆ†é™å¹…
 float m_deadband = 0.0f;
-float m_I_band = 300.0f; // »ı·Ö·ÖÀë 
+float m_I_band = 300.0f; // ç§¯åˆ†åˆ†ç¦» 
 
 
 // Motor 
 int16_t motor_speed[4];   // save the speed of motor 
-//int16_t limited_motor_speed[4];  // ÏŞÖÆºóµÄËÙ¶È
+//int16_t limited_motor_speed[4];  // é™åˆ¶åçš„é€Ÿåº¦
 int16_t motor_speed_filtered[4]; // speed after filtered
 Motor_measure_t Motor_measure[4];  // in bsp_can.h
 PID_typedef Motor_pid[4];          // in pid.h  
 VxFilter_t vx_filter[4];           // in first_order_filter.h
 // Mode
-char ctrl_mode = 0;         // ×Ô¶¯»¹ÊÇÒ£¿Ø
+char ctrl_mode = 0;         // è‡ªåŠ¨è¿˜æ˜¯é¥æ§
 char last_ctrl_mode = 0;
-char dummy_mode = 0;        // ×Ô¶¯: Æ½Ì¨¿ØÖÆ»¹ÊÇ²âÊÔ
+char dummy_mode = 0;        // è‡ªåŠ¨: å¹³å°æ§åˆ¶è¿˜æ˜¯æµ‹è¯•
 char last_dummy_mode = 0;
 
 
@@ -40,7 +40,7 @@ uint8_t m_ischarge = 0;
 
 void Init(void)
 {
-  // ³õÊ¼»¯ÅäÖÃ
+  // åˆå§‹åŒ–é…ç½®
   //LoadRobotConfig();
   //CAN
     MX_GPIO_Init();
@@ -84,7 +84,7 @@ void Init(void)
 
 void Update(void)
 {
-// ¸üĞÂ¸÷¸ö´«¸ĞÆ÷,»ñµÃ¸÷¸ö´«¸ĞÆ÷µÄÖµ
+// æ›´æ–°å„ä¸ªä¼ æ„Ÿå™¨,è·å¾—å„ä¸ªä¼ æ„Ÿå™¨çš„å€¼
 Sensor_t_Update();
 ctrl_mode = RC_GetMode();
 dummy_mode = RC_GetDummyMode();
@@ -92,7 +92,7 @@ m_ischarge = Battery_isCharging();
 
 	
 // Update State
-if(ctrl_mode == 1)  // ×óÉÏ  ½øÈë×Ô¶¯
+if(ctrl_mode == 1)  // å·¦ä¸Š  è¿›å…¥è‡ªåŠ¨
 {
 	if(last_ctrl_mode != 1)  // The first siwtch, init the state to IDLE
 	{
@@ -102,7 +102,7 @@ if(ctrl_mode == 1)  // ×óÉÏ  ½øÈë×Ô¶¯
 		SetySpeed(0);
 		  //send_json_response("free");
 	}
-	if(last_dummy_mode != dummy_mode) // Èç¹ûÆ½Ì¨ºÍ²âÊÔÄ£Ê½ÇĞ»»ÁË£¬ÖØÖÃ £¨×¢Òâ£¬±ä³ÉÒ£¿Ø×´Ì¬Ê±£¬²»»áÇĞ»»£©
+	if(last_dummy_mode != dummy_mode) // å¦‚æœå¹³å°å’Œæµ‹è¯•æ¨¡å¼åˆ‡æ¢äº†ï¼Œé‡ç½® ï¼ˆæ³¨æ„ï¼Œå˜æˆé¥æ§çŠ¶æ€æ—¶ï¼Œä¸ä¼šåˆ‡æ¢ï¼‰
 	{
 		last_dummy_mode = dummy_mode;
 		Dummy_Reset();
@@ -113,7 +113,7 @@ if(ctrl_mode == 1)  // ×óÉÏ  ½øÈë×Ô¶¯
 	
 	
 }
-else if(ctrl_mode == 2 || ctrl_mode == 3) // ×óÖĞ/×óÏÂ  ½øÈëÒ£¿Ø
+else if(ctrl_mode == 2 || ctrl_mode == 3) // å·¦ä¸­/å·¦ä¸‹  è¿›å…¥é¥æ§
 {
 	if(last_ctrl_mode != 2)
 	{
@@ -121,31 +121,31 @@ else if(ctrl_mode == 2 || ctrl_mode == 3) // ×óÖĞ/×óÏÂ  ½øÈëÒ£¿Ø
 		  SetySpeed(0);
 		 last_ctrl_mode = 2;
 	}
-	// »ñµÃÒ£¿ØÆ÷µÄÖµ
+	// è·å¾—é¥æ§å™¨çš„å€¼
 	RC_ctrl_Update();
 	RC_Control(ctrl_mode);
 }
 
-// »ñµÃMotorÄ¿±êËÙ¶ÈÖµ
+// è·å¾—Motorç›®æ ‡é€Ÿåº¦å€¼
 
 Get_MotorSpeed(motor_speed);
 
 
-// limited_motor_speed[0] = motor_speed[0];  //Ğ¡ºĞ×Ó²»×÷ËÙ¶ÈÏŞÖÆ
-// limited_motor_speed[1] = limit_speed(Motor_measure[1].speed, motor_speed[1], 500); // Ã¿´Î×î´ó±ä»¯200
+// limited_motor_speed[0] = motor_speed[0];  //å°ç›’å­ä¸ä½œé€Ÿåº¦é™åˆ¶
+// limited_motor_speed[1] = limit_speed(Motor_measure[1].speed, motor_speed[1], 500); // æ¯æ¬¡æœ€å¤§å˜åŒ–200
 // limited_motor_speed[2] = -limited_motor_speed[1];
 //m_stop_flag= Get_stop_flag();
 // Send Msg to motor	
 for(int i=0;i<4;i++)
 {
-	// Èç¹ûÊÇÕı³£µÄ
+	// å¦‚æœæ˜¯æ­£å¸¸çš„
 	// if(m_stop_flag == 1){VxFilter_Update(motor_speed[i],&vx_filter[i]);}
 	// else{VxFilter_Update(limited_motor_speed[i],&vx_filter[i]);}
 	VxFilter_Update(motor_speed[i],&vx_filter[i]);
 	motor_speed_filtered[i] = VxFilter_GetResult(&vx_filter[i]);
 	Motor_measure[i].Output = PID_calc(&Motor_pid[i],Motor_measure[i].speed,motor_speed_filtered[i]);
 }
- Set_motor_cmd(&hcan1,First_STDID,Motor_measure[0].Output,Motor_measure[1].Output,Motor_measure[2].Output,Motor_measure[3].Output);
+//Set_motor_cmd(&hcan1,First_STDID,Motor_measure[0].Output,Motor_measure[1].Output,Motor_measure[2].Output,Motor_measure[3].Output);
 
 Set_RGB();
 

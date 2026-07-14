@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-vscode.cmake-tools",
+    "ms-vscode.cpptools",
+    "marus25.cortex-debug",
+    "misaka21.arm-livewatch"
+  ],
+  "unwantedRecommendations": [
+    "stmicroelectronics.stm32-vscode-extension"
+  ]
+}
