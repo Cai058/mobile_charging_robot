@@ -226,6 +226,8 @@ EIDE 从 Keil 工程导入后，仍可使用 ARMCC V5 生成 `m_robot.axf`。该
 
 ### 阶段 3：重建完整 CubeMX 工程
 
+状态：已在 `codex/cubemx-rebuild` 分支启动。当前迁移记录见 `docs/cubemx-migration-status.md`。
+
 1. 在独立 Git 分支或独立目录中创建 STM32F427IIHx CMake 工程。
 2. 第一轮继续使用 STM32Cube FW_F4 V1.26.2，避免同时升级 HAL。
 3. 按 `docs/cubemx-rebuild-checklist.md` 还原时钟、引脚、UART、CAN、TIM、DMA 和 NVIC。

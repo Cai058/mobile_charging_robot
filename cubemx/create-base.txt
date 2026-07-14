@@ -1,0 +1,11 @@
+load STM32F427IIHx
+project name mobile_charging_robot_cubemx
+project path "D:\SUSTech\Research\project\Robot\robot 1st\mobile_charging_robot(vscode)\cubemx\generated"
+project toolchain CMake
+project compiler GCC
+project couplefilesbyip 1
+SetStructure Basic
+SetCopyLibrary "copy only"
+project SetCustomFwPath "C:\Users\Lexi\STM32Cube\Repository\STM32Cube_FW_F4_V1.26.2"
+config saveas "D:\SUSTech\Research\project\Robot\robot 1st\mobile_charging_robot(vscode)\cubemx\mobile_charging_robot_base.ioc"
+exit

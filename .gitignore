@@ -22,3 +22,11 @@
 /MDK-ARM/.clang-format
 /MDK-ARM/.gitignore
 /MDK-ARM/RTE_Components.h
+
+# CubeMX isolated build output and reproducible firmware-package copies
+# (IOC, generated application source and CMake configuration remain tracked)
+/cubemx/generated/build/
+/cubemx/generated/**/build/
+/cubemx/generated/**/Drivers/
+/cubemx/generated/**/*.ioc
+/cubemx/generated/**/.mxproject
