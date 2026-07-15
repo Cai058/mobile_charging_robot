@@ -19,7 +19,8 @@ set(PROJECT_SOURCES
     platform/syscalls.c
 
     User/Src/main.c
-    User/Src/can.c
+    # CAN 初始化直接使用 CubeMX 生成源码。
+    cubemx/generated/mobile_charging_robot_cubemx/Src/can.c
     User/Src/gpio.c
     User/Src/stm32f4xx_hal_msp.c
     User/Src/stm32f4xx_it.c

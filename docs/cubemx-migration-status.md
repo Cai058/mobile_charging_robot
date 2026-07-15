@@ -100,6 +100,35 @@ cubemx/
 
 正式接管时，将根目录 `User/Src/can.c` 的 CAN Bus-Off USER CODE 与隔离 CubeMX 生成结果同步：在 `HAL_CAN_Init()` 成功后启用 `CAN_IT_BUSOFF`，不再在 MSP 初始化过程中提前启用。CAN1 的时序、GPIO、NVIC 和中断处理保持与生成结果一致。
 
+### CubeMX 生成文件直接编译验证
+
+完成 CAN1 风险收口后，下一步不再手工同步两份 `can.c`，而是让根目录 CMake 直接编译 `cubemx/generated/mobile_charging_robot_cubemx/Src/can.c`。`User/Src/can.c` 暂时保留为回退和差异参考，但不参与正式 ELF 构建。
+
+验证链路固定为：
+
+```text
+mobile_charging_robot.ioc
+→ CubeMX Generate Code
+→ cubemx/generated/.../Src/can.c
+→ 根目录 CMake/GNU Arm GCC ELF
+→ OpenOCD 烧录
+→ CAN1 上机验证
+```
+
+本次只直接接入生成的 `can.c`。根工程暂时继续使用 `User/Inc/can.h` 和现有 HAL/CMSIS 驱动；确认生成源文件可以稳定参与完整机器人固件构建后，再决定头文件和其他外设生成文件的接管顺序。CubeMX 代码生成不应在每次普通 Build 时自动执行，只在 IOC 修改后显式执行，以避免每次编译额外增加约 40 秒生成时间。
+
+2026-07-15 已完成该直接编译验证：
+
+- 从 `mobile_charging_robot.ioc` 重新执行 CubeMX Generate Code 成功。
+- 生成文件中的 `AutoBusOff = ENABLE` 和 `CAN_IT_BUSOFF` USER CODE 均在重复生成后保留。
+- 根目录 CMake 的 `compile_commands.json` 和链接 Map 均确认正式 ELF 编译的是 `cubemx/generated/mobile_charging_robot_cubemx/Src/can.c`，不再编译 `User/Src/can.c`。
+- 完整机器人 Debug ELF 构建成功，Flash 约 53 KB，RAM 15,704 字节。
+- OpenOCD 编程和 Flash Verify 成功。
+- 上机后 `hcan1` 处于工作态且错误码为 0；CAN2 保持未初始化；过滤器分界值为 14，过滤器组 0 正常激活。
+- 连续采样确认前三路电机反馈仍在更新。
+
+因此，CAN1 已从“手工同步生成结果”升级为“正式 CMake 直接编译 CubeMX 生成的 `can.c`”。旧 `User/Src/can.c` 目前只作为回退参考保留。
+
 ### GPIO 归属与启动电平
 
 已验证根固件中的 `MX_GPIO_Init()` 当前只开启端口时钟，下面列出的引脚初始化均被注释。部分引脚稍后由 BSP 模块初始化，而 CubeMX 会立即初始化全部引脚，并在切换为输出模式前把所有已配置输出置为低电平。
@@ -133,7 +162,7 @@ CAN1 迁移切片已经完成编译、烧录和上机技术验证，最终 Debug
 - `hcan2` 保持全零复位态，且不再被错误调用，因此错误码为 0。
 - 连续两次采样中，前三个 `Motor_measure` 均具有有效角度，转矩电流字段持续变化，确认 CAN1 接收中断和电机反馈正常。
 - CAN1 接收回调只允许 `0x201`–`0x204` 映射到四元素 `Motor_measure` 数组，其他报文和未迁移的 CAN2 报文不会再造成越界写入。
-- 根目录 `User/Src/can.c` 的 `CAN_IT_BUSOFF` USER CODE 位置已经与隔离 CubeMX 生成结果同步。
+- 正式 CMake 已直接编译 CubeMX 生成的 `can.c`；`User/Src/can.c` 不再参与 ELF 构建。
 
 CAN2 不属于本次已完成切片。后续必须先明确 CAN2 的硬件连接和业务需求，并修正当前回调对 `Motor_measure[7...]` 的越界风险，才能单独启用和测试 CAN2。
 
