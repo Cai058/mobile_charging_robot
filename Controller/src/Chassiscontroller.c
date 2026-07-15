@@ -145,7 +145,7 @@ for(int i=0;i<4;i++)
 	motor_speed_filtered[i] = VxFilter_GetResult(&vx_filter[i]);
 	Motor_measure[i].Output = PID_calc(&Motor_pid[i],Motor_measure[i].speed,motor_speed_filtered[i]);
 }
-//Set_motor_cmd(&hcan1,First_STDID,Motor_measure[0].Output,Motor_measure[1].Output,Motor_measure[2].Output,Motor_measure[3].Output);
+Set_motor_cmd(&hcan1,First_STDID,Motor_measure[0].Output,Motor_measure[1].Output,Motor_measure[2].Output,Motor_measure[3].Output);
 
 Set_RGB();
 
