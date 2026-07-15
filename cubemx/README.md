@@ -24,3 +24,15 @@ cmake --build --preset Debug
 ```
 
 CAN 自动 Bus-Off 恢复在 IOC 中使用 `ABOM=ENABLE` 表示。显式启用 `CAN_IT_BUSOFF` 的代码保存在生成文件 `can.c` 的 USER CODE 区中，重新生成工程时不会丢失。
+
+## 将已审查的生成文件同步到正式工程
+
+根工程使用稳定的 `User/Src/` 路径，不直接长期依赖 `cubemx/generated/`。重新生成并审查通过后，运行白名单同步脚本：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File cubemx/sync-generated.ps1 -Peripheral can
+```
+
+该脚本目前只允许把生成的 `can.c` 同步到 `User/Src/can.c`。后续每完成一个外设迁移切片，再显式扩展白名单；不要手工复制整个生成目录。
+
+迁移前的旧源码保存在 `User/archive/`，不会参与正式 CMake 编译。

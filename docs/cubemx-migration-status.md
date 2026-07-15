@@ -127,7 +127,53 @@ mobile_charging_robot.ioc
 - 上机后 `hcan1` 处于工作态且错误码为 0；CAN2 保持未初始化；过滤器分界值为 14，过滤器组 0 正常激活。
 - 连续采样确认前三路电机反馈仍在更新。
 
-因此，CAN1 已从“手工同步生成结果”升级为“正式 CMake 直接编译 CubeMX 生成的 `can.c`”。旧 `User/Src/can.c` 目前只作为回退参考保留。
+因此，直接编译实验已经证明 CubeMX 生成的 `can.c` 可以独立替代旧实现。该实验作为正式目录方案的验证依据保留，后续正式工作流采用下面的受控同步方式。
+
+### 正式采用的受控同步目录方案
+
+直接编译隔离目录生成文件的实验已经证明 CubeMX `can.c` 可以参与完整机器人固件构建并通过上机验证。为了让根工程的源码路径、CMake 配置、调试断点和后续 CubeMX 工程重建保持稳定，正式迁移流程进一步调整为“隔离生成、白名单同步、稳定路径编译”：
+
+```text
+cubemx/mobile_charging_robot.ioc
+→ CubeMX 在 cubemx/generated/ 中生成代码
+→ 审查当前外设的生成差异
+→ cubemx/sync-generated.ps1 按白名单复制
+→ User/Src/<外设>.c
+→ 根目录 CMake 使用原有稳定路径编译
+```
+
+目录职责如下：
+
+| 目录 | 职责 |
+| --- | --- |
+| `cubemx/mobile_charging_robot.ioc` | 唯一硬件配置源。 |
+| `cubemx/generated/` | CubeMX 隔离生成输出，用于审查和同步，不直接作为根工程长期源码路径。 |
+| `User/archive/` | 保存迁移前的旧初始化源码，只用于对比和回退，不参与 CMake 编译。 |
+| `User/Src/` | 当前正式固件的稳定源码路径；迁移完成的文件由同步脚本从 CubeMX 输出更新。 |
+
+执行规则：
+
+1. 每次只迁移一个外设。
+2. 第一次接管某文件前，把已验证基线版本保存到 `User/archive/`，归档文件之后不再修改。
+3. 修改 IOC 并重新生成后，先审查生成差异，再把对应文件加入同步脚本白名单。
+4. 禁止直接复制整个 `Src/` 或 `Inc/` 目录，避免覆盖尚未迁移的业务代码和中断处理。
+5. 同步后保持根 `CMakeLists.txt` 中的稳定路径，例如 `User/Src/can.c`。
+6. 完成 CMake 编译、BIN 差分检查、OpenOCD 烧录和上机回归后，才能接管下一个外设。
+
+CAN1 是第一个采用该正式流程的文件。归档来源固定为已验证基线提交 `440b4c1`（标签 `v2.0.0-cmake-vscode`），同步来源为 `cubemx/generated/mobile_charging_robot_cubemx/Src/can.c`，正式目标为 `User/Src/can.c`。
+
+受控同步方案验证结果：
+
+- 旧 `can.c` 已保存为 `User/archive/can.c`，并通过 `User/archive/README.md` 记录来源和使用规则。
+- 归档文件的 Git Blob SHA-1 为 `099d67ed9ced9be25d87c854cfa14d7a93901cab`，与基线提交 `440b4c1:User/Src/can.c` 完全一致。
+- `cubemx/sync-generated.ps1 -Peripheral can` 只同步白名单中的 CAN 文件，并在复制后校验 SHA-256。
+- 生成端和正式端 `can.c` 的 SHA-256 均为 `C73BC5507B05ACD10223CC862AEC3A00695024D80CC1AADF61ECC5B5EE497A0B`。
+- 根 CMake 已恢复编译稳定路径 `User/Src/can.c`，`compile_commands.json` 也确认使用该路径。
+- 在其他工作区内容完全相同的条件下，直接编译生成文件和同步后编译得到的 BIN SHA-256 均为 `2441C9DDFEFBD16CD214BF390CEB3CAA8C4F070A64BD7607EB516EFA92745459`。
+- 执行 `cmake --build --preset debug --clean-first` 后，52 个目标从零重新编译成功，BIN 哈希仍保持一致，排除了复用旧对象文件造成误判的可能。
+- 再次运行同步脚本会报告文件已经一致，不产生重复修改。
+
+由于同步前后 BIN 逐字节相同，而直接编译版本已经完成烧录和 CAN1 上机回归，因此目录切换不需要再次烧录。
 
 ### GPIO 归属与启动电平
 
@@ -162,7 +208,7 @@ CAN1 迁移切片已经完成编译、烧录和上机技术验证，最终 Debug
 - `hcan2` 保持全零复位态，且不再被错误调用，因此错误码为 0。
 - 连续两次采样中，前三个 `Motor_measure` 均具有有效角度，转矩电流字段持续变化，确认 CAN1 接收中断和电机反馈正常。
 - CAN1 接收回调只允许 `0x201`–`0x204` 映射到四元素 `Motor_measure` 数组，其他报文和未迁移的 CAN2 报文不会再造成越界写入。
-- 正式 CMake 已直接编译 CubeMX 生成的 `can.c`；`User/Src/can.c` 不再参与 ELF 构建。
+- 正式 CMake 编译稳定路径 `User/Src/can.c`；该文件由白名单脚本从 CubeMX 生成目录同步更新。
 
 CAN2 不属于本次已完成切片。后续必须先明确 CAN2 的硬件连接和业务需求，并修正当前回调对 `Motor_measure[7...]` 的越界风险，才能单独启用和测试 CAN2。
 
