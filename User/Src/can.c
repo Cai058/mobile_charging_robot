@@ -56,6 +56,8 @@ void MX_CAN1_Init(void)
   }
   /* USER CODE BEGIN CAN1_Init 2 */
 
+  __HAL_CAN_ENABLE_IT(&hcan1, CAN_IT_BUSOFF);
+
   /* USER CODE END CAN1_Init 2 */
 
 }
@@ -87,6 +89,8 @@ void MX_CAN2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN CAN2_Init 2 */
+
+  __HAL_CAN_ENABLE_IT(&hcan2, CAN_IT_BUSOFF);
 
   /* USER CODE END CAN2_Init 2 */
 
@@ -127,7 +131,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
     HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn);
   /* USER CODE BEGIN CAN1_MspInit 1 */
-		__HAL_CAN_ENABLE_IT(&hcan1,CAN_IT_BUSOFF);
+
   /* USER CODE END CAN1_MspInit 1 */
   }
   else if(canHandle->Instance==CAN2)
@@ -159,8 +163,8 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
     HAL_NVIC_EnableIRQ(CAN2_TX_IRQn);
     HAL_NVIC_SetPriority(CAN2_RX0_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(CAN2_RX0_IRQn);
-	/* USER CODE BEGIN CAN2_MspInit 1 */
-		__HAL_CAN_ENABLE_IT(&hcan2,CAN_IT_BUSOFF);
+  /* USER CODE BEGIN CAN2_MspInit 1 */
+
   /* USER CODE END CAN2_MspInit 1 */
   }
 }
