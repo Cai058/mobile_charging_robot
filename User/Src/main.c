@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "tim.h"
 
 /* USER CODE END Includes */
 
@@ -88,7 +88,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   
-	Time_Init();
+	MX_TIM2_Init();
+	if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK)
+	{
+		Error_Handler();
+	}
 	Init();
 	printf("111");
 	

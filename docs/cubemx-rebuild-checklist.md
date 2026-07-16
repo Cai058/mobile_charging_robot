@@ -36,8 +36,8 @@ Keep the existing clock tree unchanged during the first CubeMX reconstruction.
 ### Battery
 
 - Peripheral: USART6, 9600 8-N-1
-- TX: PG9, AF8
-- RX: PG14, AF8
+- TX: PG14, AF8
+- RX: PG9, AF8
 - TX DMA: DMA2 Stream6, channel 5
 - RX DMA: DMA2 Stream1, channel 5
 - IRQs: USART6 and DMA2 Stream6

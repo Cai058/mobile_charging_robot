@@ -32,7 +32,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "time.h"
 #include "Chassiscontroller.h"
 /* USER CODE END Includes */
 

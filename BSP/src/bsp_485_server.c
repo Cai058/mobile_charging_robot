@@ -1,157 +1,54 @@
 #include "bsp_485_server.h"
-#include "main.h"
+#include "usart.h"
 #include "usart_callback.h"
 #include <stdarg.h>
 
-//static void Delay(__IO uint32_t nCount); 
+//static void Delay(__IO uint32_t nCount);
 
-UART_HandleTypeDef huart7;
-DMA_HandleTypeDef hdma_uart7_rx;
-DMA_HandleTypeDef hdma_uart7_tx;
-
-//÷–∂œª∫¥Ê¥Æø⁄ ˝æ›
+//‰∏≠Êñ≠ÁºìÂ≠ò‰∏≤Âè£Êï∞ÊçÆ
 #define UART_BUFF_SIZE      1024
-volatile    uint16_t uart_p_server = 1;
-uint8_t     uart_buff_server[UART_BUFF_SIZE];
-volatile uint16_t uart_rx_len = 0;  // º«¬º±æ¥ŒΩ” ’µΩµƒ≥§∂»
-volatile uint8_t server_rx_complete = 0;  // º«¬º «∑ÒΩ” ’ÕÍ≥…
-volatile uint8_t server_tx_complete = 1;  // º«¬º «∑Ò∑¢ÀÕÕÍ≥… 
-
+volatile uint16_t uart_p_server = 1;
+uint8_t uart_buff_server[UART_BUFF_SIZE];
+volatile uint16_t uart_rx_len = 0;  // ËÆ∞ÂΩïÊú¨Ê¨°Êé•Êî∂Âà∞ÁöÑÈïøÂ∫¶
+volatile uint8_t server_rx_complete = 0;  // ËÆ∞ÂΩïÊòØÂê¶Êé•Êî∂ÂÆåÊàê
+volatile uint8_t server_tx_complete = 1;  // ËÆ∞ÂΩïÊòØÂê¶ÂèëÈÄÅÂÆåÊàê
 
 void UART7_Config(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
-  
-  __GPIOE_CLK_ENABLE();
-  //__GPIOH_CLK_ENABLE();
-	
-  /*  πƒ‹ UART  ±÷” */
-  __HAL_RCC_UART7_CLK_ENABLE();
-	
-	__HAL_RCC_DMA1_CLK_ENABLE();  // ∆Ù”√DMA1 ±÷”
-	
-	/*≈‰÷√µÁ‘¥ ‰≥ˆ12V*/
-//	GPIO_InitStruct.Pin = GPIO_PIN_2;  // ºŸ…Ë…Ë÷√ PH2 “˝Ω≈
-//	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;  // …Ë÷√Œ™ ‰»Îƒ£ Ω
-//	GPIO_InitStruct.Pull = GPIO_PULLUP;     // …Ë÷√Œ™…œ¿≠
-//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-//	HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-
-  /**USART7 GPIO Configuration    
-  PE8    ------> USART7_TX
-  PE7    ------> USART7_RX 
-  */
-  /* ≈‰÷√Tx“˝Ω≈Œ™∏¥”√π¶ƒ‹  */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF8_UART7;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-  
-  /* ≈‰÷√Rx“˝Ω≈Œ™∏¥”√π¶ƒ‹ */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Alternate = GPIO_AF8_UART7;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct); 
-  
-  /* ≈‰÷√¥Æ485_USART ƒ£ Ω */
-  huart7.Instance = UART7;
-  huart7.Init.BaudRate = 9600;
-  huart7.Init.WordLength = UART_WORDLENGTH_8B;
-  huart7.Init.StopBits = UART_STOPBITS_1;
-  huart7.Init.Parity = UART_PARITY_NONE;
-  huart7.Init.Mode = UART_MODE_TX_RX;
-  huart7.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart7.Init.OverSampling = UART_OVERSAMPLING_16;
-  HAL_UART_Init(&huart7);
-
-	/* uart7 DMA Init */
-    /* uart7_RX Init */
-    hdma_uart7_rx.Instance = DMA1_Stream3;
-    hdma_uart7_rx.Init.Channel = DMA_CHANNEL_5;
-    hdma_uart7_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_uart7_rx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_uart7_rx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_uart7_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_uart7_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_uart7_rx.Init.Mode = DMA_NORMAL;
-    hdma_uart7_rx.Init.Priority = DMA_PRIORITY_LOW;
-    hdma_uart7_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_uart7_rx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(&huart7,hdmarx,hdma_uart7_rx);
-
-    /* uart7_TX Init */
-    hdma_uart7_tx.Instance = DMA1_Stream1;
-    hdma_uart7_tx.Init.Channel = DMA_CHANNEL_5;
-    hdma_uart7_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_uart7_tx.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_uart7_tx.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_uart7_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    hdma_uart7_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_uart7_tx.Init.Mode = DMA_NORMAL;
-    hdma_uart7_tx.Init.Priority = DMA_PRIORITY_LOW;
-    hdma_uart7_tx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if (HAL_DMA_Init(&hdma_uart7_tx) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(&huart7,hdmatx,hdma_uart7_tx);
-  /*¥Æø⁄1÷–∂œ≥ı ºªØ */
-  //HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
-	HAL_NVIC_SetPriority(UART7_IRQn, 0 ,0);
-	HAL_NVIC_EnableIRQ(UART7_IRQn);
-		
-	HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 1, 0);  
-	HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
-		
-	HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 1, 0);  
-	HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
-  /*≈‰÷√¥Æø⁄Ω” ’÷–∂œ */
-  //__HAL_UART_ENABLE_IT(&huart7,UART_IT_RXNE);
-
-	/* ∆Ù∂Ø DMA Ω” ’ */
-  HAL_UART_Receive_DMA(&huart7, uart_buff_server, UART_BUFF_SIZE);
-
-	/*  πƒ‹ø’œ–÷–∂œ£®IDLE ÷–∂œ£© */
-	__HAL_UART_ENABLE_IT(&huart7, UART_IT_IDLE);
+    /* UART7„ÄÅGPIO„ÄÅDMA Âíå NVIC Áî± CubeMX Áªü‰∏ÄÂàùÂßãÂåñ„ÄÇ */
+    HAL_UART_Receive_DMA(&huart7, uart_buff_server, UART_BUFF_SIZE);
+    __HAL_UART_ENABLE_IT(&huart7, UART_IT_IDLE);
 }
 
-
-/*****************   π”√DMA∑¢ÀÕ ˝æ› **********************/
-
-void Server_SendString(uint8_t *str,uint16_t len)
-{  
-
-		if(server_tx_complete == 0)
-		{
-			 return;
-		}
-		server_tx_complete = 0;
+/*****************  ‰ΩøÁî®DMAÂèëÈÄÅÊï∞ÊçÆ **********************/
+void Server_SendString(uint8_t *str, uint16_t len)
+{
+    if (server_tx_complete == 0)
+    {
+        return;
+    }
+    server_tx_complete = 0;
     HAL_UART_Transmit_DMA(&huart7, str, len);
-	  //Delay(1000);
+    //Delay(1000);
 }
 
 void uart7_tx_cplt(void)
 {
-		server_tx_complete = 1;
+    server_tx_complete = 1;
 }
 
 uint8_t if_server_complete(void)
 {
-	return server_tx_complete;   // 0: not complete  1: complete
+    return server_tx_complete;   // 0: not complete  1: complete
 }
-/***************** ªÒ»°Ω” ’µΩµƒ ˝æ› **********************/
+
+/***************** Ëé∑ÂèñÊé•Êî∂Âà∞ÁöÑÊï∞ÊçÆ **********************/
 char *get_server_rebuff(uint16_t *len)
 {
     if (server_rx_complete)
     {
         *len = uart_rx_len;
-        server_rx_complete = 0;  // «Â≥˝±Í÷æ
+        server_rx_complete = 0;  // Ê∏ÖÈô§Ê†áÂøó
         return (char *)uart_buff_server;
     }
     else
@@ -161,26 +58,24 @@ char *get_server_rebuff(uint16_t *len)
     }
 }
 
-/***************** «Âø’Ω” ’ª∫≥Â«¯ **********************/
-void clean_server_rebuff(void) 
+/***************** Ê∏ÖÁ©∫Êé•Êî∂ÁºìÂÜ≤Âå∫ **********************/
+void clean_server_rebuff(void)
 {
     memset(uart_buff_server, 0, UART_BUFF_SIZE);
-		uart_rx_len = 0;
-		server_rx_complete = 0;
+    uart_rx_len = 0;
+    server_rx_complete = 0;
 }
 
-/***************** ¥Æø⁄÷–∂œ¥¶¿Ì∫Ø ˝£®∞¸∫¨ø’œ–÷–∂œ£© **********************/
+/***************** ‰∏≤Âè£‰∏≠Êñ≠Â§ÑÁêÜÂáΩÊï∞ÔºàÂåÖÂê´Á©∫Èó≤‰∏≠Êñ≠Ôºâ **********************/
 void UART7_IRQHandler(void)
 {
-    if (__HAL_UART_GET_FLAG(&huart7, UART_FLAG_IDLE)) // ºÏ≤‚ø’œ–÷–∂œ
+    if (__HAL_UART_GET_FLAG(&huart7, UART_FLAG_IDLE))
     {
-        __HAL_UART_CLEAR_FLAG(&huart7, UART_FLAG_IDLE);  // «Â≥˝ø’œ–÷–∂œ±Í÷æ
+        __HAL_UART_CLEAR_FLAG(&huart7, UART_FLAG_IDLE);
 
-        // º∆À„Ω” ’µΩµƒ ˝æ›≥§∂»
         uart_rx_len = UART_BUFF_SIZE - __HAL_DMA_GET_COUNTER(&hdma_uart7_rx);
-        server_rx_complete = 1;  // ±Íº«Ω” ’ÕÍ≥…
+        server_rx_complete = 1;
 
-        // Õ£÷π DMA ¥´ ‰≤¢÷ÿ–¬∆Ù∂Ø£¨“‘»∑±£ ˝æ›’˝»∑¥¶¿Ì
         HAL_UART_DMAStop(&huart7);
         HAL_UART_Receive_DMA(&huart7, uart_buff_server, UART_BUFF_SIZE);
     }
@@ -190,14 +85,15 @@ void UART7_IRQHandler(void)
 
 void DMA1_Stream1_IRQHandler(void)
 {
-    HAL_DMA_IRQHandler(&hdma_uart7_tx); // ???? TX
+    HAL_DMA_IRQHandler(&hdma_uart7_tx);
 }
 
 void DMA1_Stream3_IRQHandler(void)
 {
-		HAL_DMA_IRQHandler(&hdma_uart7_rx);
+    HAL_DMA_IRQHandler(&hdma_uart7_rx);
 }
-//static void Delay(__IO uint32_t nCount)	 //ºÚµ•µƒ—” ±∫Ø ˝
+
+//static void Delay(__IO uint32_t nCount)
 //{
-//	for(; nCount != 0; nCount--);
+//    for(; nCount != 0; nCount--);
 //}

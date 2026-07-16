@@ -1,4 +1,6 @@
 #include "Chassiscontroller.h"
+#include "dma.h"
+#include "usart.h"
 
 // PID controller const
 float m_Kp = 3.0f;
@@ -44,22 +46,22 @@ void Init(void)
   //LoadRobotConfig();
   //CAN
     MX_GPIO_Init();
+	MX_DMA_Init();
     MX_CAN1_Init();
 	can_filter_init();
 	
-	//sensors GPIO Init
-	LED_GPIO_Config();
-	Key_GPIO_Config();
+	// Basic GPIO is initialized centrally by CubeMX MX_GPIO_Init().
+	// Peripheral-specific initialization remains in the corresponding BSP.
 	Ultrawave_Config();
+	MX_UART8_Init();
 	RFID_Config();  
-	Photogate_Config();
-	Limit_Switch_Config();
-	L298N_Config();
-	RGB_Config();
+	MX_USART6_UART_Init();
 	Battery_Init();
+	MX_USART1_UART_Init();
 	RC_Init();
 	
 	// Server Msg Init
+	MX_UART7_Init();
 	Server_Init();
 	
   // Sensor_t and Statemachine Init
@@ -145,7 +147,7 @@ for(int i=0;i<4;i++)
 	motor_speed_filtered[i] = VxFilter_GetResult(&vx_filter[i]);
 	Motor_measure[i].Output = PID_calc(&Motor_pid[i],Motor_measure[i].speed,motor_speed_filtered[i]);
 }
-Set_motor_cmd(&hcan1,First_STDID,Motor_measure[0].Output,Motor_measure[1].Output,Motor_measure[2].Output,Motor_measure[3].Output);
+//Set_motor_cmd(&hcan1,First_STDID,Motor_measure[0].Output,Motor_measure[1].Output,Motor_measure[2].Output,Motor_measure[3].Output);
 
 Set_RGB();
 

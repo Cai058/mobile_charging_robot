@@ -12,3 +12,9 @@
 当前文件：
 
 - `can.c`：迁移前的 CAN1/CAN2 初始化实现。
+- `gpio.c`：迁移前的 GPIO 初始化实现。
+- `bsp_rc.c`：迁移前的 USART1、DMA 和 RC 接收初始化实现。
+- `time.c`：迁移前的 TIM2 系统调度初始化实现。
+- `bsp_485_rfid.c`：迁移前的 UART8、DMA1 和 RFID 收发初始化实现。
+- `bsp_485_battery.c`：迁移前的 USART6、DMA2 和 Battery 收发初始化实现。
+- `bsp_485_server.c`：迁移前的 UART7、DMA1 和 Server 收发初始化实现。

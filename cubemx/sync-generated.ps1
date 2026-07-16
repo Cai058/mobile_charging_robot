@@ -1,6 +1,6 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
-    [ValidateSet('can')]
+    [ValidateSet('can', 'gpio', 'usart1_rc', 'tim2', 'rfid_uart8', 'battery_usart6', 'server_uart7')]
     [string]$Peripheral = 'can'
 )
 
@@ -12,6 +12,94 @@ $mappings = @{
         @{
             Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/can.c'
             Destination = Join-Path $repoRoot 'User/Src/can.c'
+        }
+    )
+    gpio = @(
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/gpio.c'
+            Destination = Join-Path $repoRoot 'User/Src/gpio.c'
+        }
+    )
+    usart1_rc = @(
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/usart.c'
+            Destination = Join-Path $repoRoot 'User/Src/usart.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/usart.h'
+            Destination = Join-Path $repoRoot 'User/Inc/usart.h'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/dma.c'
+            Destination = Join-Path $repoRoot 'User/Src/dma.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/dma.h'
+            Destination = Join-Path $repoRoot 'User/Inc/dma.h'
+        }
+    )
+    tim2 = @(
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/tim.c'
+            Destination = Join-Path $repoRoot 'User/Src/tim.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/tim.h'
+            Destination = Join-Path $repoRoot 'User/Inc/tim.h'
+        }
+    )
+    rfid_uart8 = @(
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/usart.c'
+            Destination = Join-Path $repoRoot 'User/Src/usart.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/usart.h'
+            Destination = Join-Path $repoRoot 'User/Inc/usart.h'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/dma.c'
+            Destination = Join-Path $repoRoot 'User/Src/dma.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/dma.h'
+            Destination = Join-Path $repoRoot 'User/Inc/dma.h'
+        }
+    )
+    battery_usart6 = @(
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/usart.c'
+            Destination = Join-Path $repoRoot 'User/Src/usart.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/usart.h'
+            Destination = Join-Path $repoRoot 'User/Inc/usart.h'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/dma.c'
+            Destination = Join-Path $repoRoot 'User/Src/dma.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/dma.h'
+            Destination = Join-Path $repoRoot 'User/Inc/dma.h'
+        }
+    )
+    server_uart7 = @(
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/usart.c'
+            Destination = Join-Path $repoRoot 'User/Src/usart.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/usart.h'
+            Destination = Join-Path $repoRoot 'User/Inc/usart.h'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/dma.c'
+            Destination = Join-Path $repoRoot 'User/Src/dma.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/dma.h'
+            Destination = Join-Path $repoRoot 'User/Inc/dma.h'
         }
     )
 }

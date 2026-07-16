@@ -22,6 +22,9 @@ set(PROJECT_SOURCES
     # 由 cubemx/sync-generated.ps1 同步 CubeMX 生成源码。
     User/Src/can.c
     User/Src/gpio.c
+    User/Src/dma.c
+    User/Src/usart.c
+    User/Src/tim.c
     User/Src/stm32f4xx_hal_msp.c
     User/Src/stm32f4xx_it.c
     User/Src/usart_callback.c
@@ -54,7 +57,6 @@ set(PROJECT_SOURCES
     BSP/src/bsp_photogate.c
     BSP/src/bsp_ultrawave.c
     BSP/src/pid.c
-    BSP/src/time.c
     BSP/src/bsp_debug_usart.c
     BSP/src/cJSON.c
     BSP/src/bsp_rgb.c

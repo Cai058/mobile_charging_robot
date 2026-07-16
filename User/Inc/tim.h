@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    usart.h
+  * @file    tim.h
   * @brief   This file contains all the function prototypes for
-  *          the usart.c file
+  *          the tim.c file
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USART_H__
-#define __USART_H__
+#ifndef __TIM_H__
+#define __TIM_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,32 +32,15 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern UART_HandleTypeDef huart7;
-
-extern UART_HandleTypeDef huart8;
-
-extern UART_HandleTypeDef huart1;
-
-extern UART_HandleTypeDef huart6;
+extern TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_UART7_Init(void);
-void MX_UART8_Init(void);
-void MX_USART1_UART_Init(void);
-void MX_USART6_UART_Init(void);
+void MX_TIM2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
-extern DMA_HandleTypeDef hdma_uart8_tx;
-extern DMA_HandleTypeDef hdma_uart8_rx;
-extern DMA_HandleTypeDef hdma_usart1_rx;
-extern DMA_HandleTypeDef hdma_usart6_tx;
-extern DMA_HandleTypeDef hdma_usart6_rx;
-extern DMA_HandleTypeDef hdma_uart7_tx;
-extern DMA_HandleTypeDef hdma_uart7_rx;
 
 /* USER CODE END Prototypes */
 
@@ -65,5 +48,5 @@ extern DMA_HandleTypeDef hdma_uart7_rx;
 }
 #endif
 
-#endif /* __USART_H__ */
+#endif /* __TIM_H__ */
 

@@ -1,5 +1,4 @@
 #include "bsp_rc.h"
-#include "usart.h"
 #include <string.h>
 
 #define SBUS_RX_BUF_NUM 36u
@@ -12,6 +11,10 @@ volatile uint16_t rc_rx_len = 0;  // 记录本次接收到的长度
 volatile uint8_t rc_rx_complete = 0;  // 记录是否接收完成
 
 
+UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
+
+
 //RC_raw_t *get_remote_control_raw(void)
 //{
 //	return &rc_raw;
@@ -19,13 +22,54 @@ volatile uint8_t rc_rx_complete = 0;  // 记录是否接收完成
 
 void bsp_rc_Config(void)
 {
-	/* USART1, PB7 and DMA2 Stream2 are initialized by CubeMX. */
+		/* ---------------- GPIO and UART Init ------------------- */
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_USART1_CLK_ENABLE();
+	__HAL_RCC_DMA2_CLK_ENABLE();
+
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_PIN_7;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	huart1.Instance = USART1;
+	huart1.Init.BaudRate = 100000;
+	huart1.Init.WordLength = UART_WORDLENGTH_8B;
+	huart1.Init.StopBits = UART_STOPBITS_1;
+	huart1.Init.Parity = UART_PARITY_EVEN;
+	huart1.Init.Mode = UART_MODE_RX;
+	huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+	HAL_UART_DeInit(&huart1);
+	HAL_UART_Init(&huart1);
+
+	/* ---------------- DMA Init ----------------------------- */
+	hdma_usart1_rx.Instance = DMA2_Stream2;
+	hdma_usart1_rx.Init.Channel = DMA_CHANNEL_4;
+	hdma_usart1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+	hdma_usart1_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+	hdma_usart1_rx.Init.MemInc = DMA_MINC_ENABLE;
+	hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+	hdma_usart1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+	hdma_usart1_rx.Init.Mode = DMA_CIRCULAR;
+	hdma_usart1_rx.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+	hdma_usart1_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+
+	HAL_DMA_DeInit(&hdma_usart1_rx);
+	HAL_DMA_Init(&hdma_usart1_rx);
+
+	__HAL_LINKDMA(&huart1, hdmarx, hdma_usart1_rx);
+	
+	HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
+
+	/* ---------------- IDLE中断打开 ------------------------ */
 	__HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
 
-	if (HAL_UART_Receive_DMA(&huart1, SBUS_buff_rc, SBUS_RX_BUF_NUM) != HAL_OK)
-	{
-		Error_Handler();
-	}
+	HAL_UART_Receive_DMA(&huart1, SBUS_buff_rc, SBUS_RX_BUF_NUM);
 }
 
 
