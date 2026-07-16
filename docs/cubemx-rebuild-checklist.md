@@ -1,8 +1,8 @@
-# STM32CubeMX rebuild checklist
+# STM32CubeMX 重建检查清单
 
-Rebuild this configuration on `codex/cubemx-rebuild`, created from the verified `codex/cmake-vscode` / `v2.0.0-cmake-vscode` baseline. Do not generate CubeMX code directly on `master` or overwrite the current verified source tree in place. The CMake firmware remains the behavioral reference until each peripheral has been tested on hardware.
+在 `codex/cubemx-rebuild` 分支上重建配置。该分支来自已验证的 `codex/cmake-vscode` / `v2.0.0-cmake-vscode` 基线。不得在 `master` 上直接生成 CubeMX 代码，也不得让 CubeMX 原地覆盖正式源码。每个外设切片完成上机测试前，都以已验证的 CMake 固件作为行为参考。
 
-## Device and clock
+## 芯片与时钟
 
 - MCU: STM32F427IIHx
 - Flash: 2 MB at `0x08000000`
@@ -14,24 +14,22 @@ Rebuild this configuration on `codex/cubemx-rebuild`, created from the verified 
 - APB2: 84 MHz, timer clock 168 MHz
 - FPU: single precision, hard-float ABI
 
-Keep the existing clock tree unchanged during the first CubeMX reconstruction.
+首次重建期间保持现有时钟树不变。
 
-## Existing CubeMX resources
+## 已重建的 CubeMX 资源
 
 - CAN1: PD0 RX, PD1 TX
-- CAN2: PB12 RX, PB13 TX
 - USART1: PB7 RX, PB6 TX
 - USART1 RX DMA: DMA2 Stream2
 - TIM2: internal clock and update interrupt
 - SWD: PA13 and PA14
 - HSE: PH0 and PH1
-- Key: PB2 input
 - Red LED: PE11 output
 - Green LED: PF14 output
 - Power outputs: PH2, PH3, PH4, PH5
 - Other existing GPIO: PA1 input, PE4 output, PE5 output
 
-## BSP-owned serial resources
+## 已迁移的串口资源
 
 ### Battery
 
@@ -41,7 +39,7 @@ Keep the existing clock tree unchanged during the first CubeMX reconstruction.
 - TX DMA: DMA2 Stream6, channel 5
 - RX DMA: DMA2 Stream1, channel 5
 - IRQs: USART6 and DMA2 Stream6
-- Source: `BSP/src/bsp_485_battery.c`
+- 业务源文件：`BSP/src/bsp_485_battery.c`
 
 ### Server
 
@@ -51,7 +49,7 @@ Keep the existing clock tree unchanged during the first CubeMX reconstruction.
 - TX DMA: DMA1 Stream1, channel 5
 - RX DMA: DMA1 Stream3, channel 5
 - IRQs: UART7, DMA1 Stream1, and DMA1 Stream3
-- Source: `BSP/src/bsp_485_server.c`
+- 业务源文件：`BSP/src/bsp_485_server.c`
 
 ### RFID
 
@@ -61,7 +59,7 @@ Keep the existing clock tree unchanged during the first CubeMX reconstruction.
 - TX DMA: DMA1 Stream0, channel 5
 - RX DMA: DMA1 Stream6, channel 5
 - IRQs: UART8 and DMA1 Stream0
-- Source: `BSP/src/bsp_485_rfid.c`
+- 业务源文件：`BSP/src/bsp_485_rfid.c`
 
 ### Remote control
 
@@ -69,42 +67,42 @@ Keep the existing clock tree unchanged during the first CubeMX reconstruction.
 - RX: PB7, AF7
 - RX DMA: DMA2 Stream2, channel 4, circular mode, very high priority
 - IRQ: USART1
-- Source: `BSP/src/bsp_rc.c`
+- 业务源文件：`BSP/src/bsp_rc.c`
 
-The USART1 settings in the BSP must be treated as authoritative when reconstructing CubeMX; they are not conventional 8-N-1 settings.
+USART1 不是常规 8-N-1 配置，重建时必须以已验证参数为准。
 
-## BSP-owned timers and GPIO
+## 定时器与 GPIO
 
-### Timing
+### 定时器
 
-- TIM2: 1 ms update interrupt used by `Time_Init()` and `Update()`
-- TIM4 CH2 PWM trigger: PD13, AF2
-- Ultrasonic echo input paired with TIM4: PD12, GPIO input with pulldown
-- TIM5 CH1 PWM trigger: PH10, AF2
-- Ultrasonic echo input paired with TIM5: PH11, GPIO input with pulldown
+- TIM2：当前实际周期约 0.5 ms，由 CubeMX 初始化并驱动 `Update()` 控制调度。
+- TIM4/TIM5：原用于 Ultrawave，但机器人实际未使用；阶段 3 明确排除，不迁移进 IOC。
 
-Verify TIM4/TIM5 prescalers, periods, polarity, and channels directly against `BSP/src/bsp_ultrawave.c` before entering them in CubeMX.
+Ultrawave 的 TIM4/TIM5、PD12/PD13、PH10/PH11 旧实现已在清理前硬件验证基线提交 `8154cca` 中保留，正式分支不再编译或维护该模块。
 
-### Digital I/O
+### 数字 GPIO
 
 - Push rod outputs: PA0, PA1, PA2, PA3
 - Front/rear limit switches: PI6, PI7 inputs with pulldown
 - Photogate: PI2 input with pullup
 - RGB outputs: PD14, PD15, PH12
 - LEDs: PE11 and PF14
-- Key: PB2
+- PB2 Key：没有业务读取，阶段 3 明确排除。
 
-Use the active `.c` implementation as the source of truth. Some older BSP headers contain stale pin comments that do not match the current implementation.
+以正式 `.c` 实现和已验证 IOC 为准；部分旧 BSP 头文件中的引脚注释已经过时。
 
-## Migration order
+## 迁移顺序与当前状态
 
-1. Recreate the MCU, clock tree, SWD, CAN1/CAN2, and existing GPIO.
-2. Add USART1 with its actual 100000 baud/parity/DMA settings and verify remote control input.
-3. Add TIM2 and verify the 1 ms control update.
-4. Add USART6, UART7, and UART8 one at a time, including DMA and NVIC.
-5. Add TIM4/TIM5 ultrasonic resources.
-6. Add remaining GPIO and verify actuators with motors mechanically disconnected.
-7. Move each hardware initialization function out of BSP only after its CubeMX-generated replacement passes an on-board test.
-8. Keep each IRQ handler defined in exactly one translation unit.
+1. [x] 重建 MCU、时钟树、SWD、CAN1 和实际使用的 GPIO。
+2. [x] 迁移 USART1 100000 baud、偶校验、RX DMA，并验证遥控器。
+3. [x] 迁移 TIM2 并验证控制调度。
+4. [x] 依次迁移 USART6、UART7、UART8、DMA 和 NVIC。
+5. [x] 迁移 L298N、限位、光电门、RGB 和 LED GPIO。
+6. [x] 删除已由 CubeMX 替代的 BSP GPIO 初始化函数。
+7. [x] 删除未使用的 Ultrawave、Key 和 Debug USART 模块。
+8. [x] 删除当前 CMake 分支中的 Keil/EIDE 工程、旧 IOC、未编译示例和可重新生成缓存；远程 `master` 保留完整 Keil 基线。
+9. [x] 确认 CAN2 不使用，并从 IOC、生成代码、正式源码、NVIC 和 BSP 枚举中删除。
+10. [x] 对清理后的最终版本执行整机上机回归，CAN1、RC、TIM2、RFID、Battery、Server、光电门、后限位、RGB、推杆、LED 和 LiveWatch 通过。
+11. [x] 阶段 3 封版并使用 `v3.0.0-cubemx` 标签保存；该版本与远程 `master` 上的 Keil 基线分开维护。
 
-Do not enable a peripheral in CubeMX while retaining a second BSP initialization path for the same handle, DMA stream, or IRQ.
+不得在 CubeMX 已启用某个外设后，继续保留针对同一句柄、DMA Stream 或 IRQ 的第二套 BSP 初始化路径。每个 IRQ 处理函数必须只有一个强定义。

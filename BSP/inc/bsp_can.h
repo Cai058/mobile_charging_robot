@@ -14,14 +14,6 @@ typedef enum{
 	CAN1_3508_ID5  = 0x205,
 	CAN1_3508_ID6  = 0x206,
 	CAN1_6020_ID3  = 0x207,
-	
-	CAN2_3508_ID1  = 0x201,
-	CAN2_3508_ID2  = 0x202,
-	CAN2_3508_ID3  = 0x203,
-	CAN2_3508_ID4  = 0x204,
-	CAN2_6020_ID1  = 0x205,
-	CAN2_6020_ID2  = 0x206,
-	CAN2_6020_ID3  = 0x207,
 }CAN_ID_e;
 
 typedef struct{

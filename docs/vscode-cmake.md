@@ -1,6 +1,6 @@
 # VSCode / CMake / OpenOCD 标准开发流程
 
-最后更新：2026-07-14
+最后更新：2026-07-16
 
 ## 目标
 
@@ -24,7 +24,7 @@ CMake Preset
 
 使用 VSCode打开仓库根目录 `mobile_charging_robot(vscode)`。
 
-不要将 `MDK-ARM` 单独作为日常 VSCode工作区打开。`MDK-ARM` 只保留 Keil工程和回退固件入口。
+当前 CubeMX/CMake 分支不再包含 `MDK-ARM`。完整 Keil 工程和 ARMCC 回退版本保留在远程 `master` 分支；日常工作只打开仓库根目录。
 
 最终配置统一位于：
 

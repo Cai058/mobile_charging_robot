@@ -1,6 +1,6 @@
 # VSCode/CMake 迁移状态
 
-最后更新：2026-07-14
+最后更新：2026-07-16
 
 ## 目标
 
@@ -46,7 +46,7 @@ Keil 基线和 CMake 基线长期分开维护。阶段 3、4 完成前，不把 
 - `platform/syscalls.c`：Newlib 的堆、标准输入输出和系统调用适配。
 - `.gitignore`：忽略 CMake 的 `build` 目录。
 
-CMake 当前严格复用 Keil 工程中的源码集合，没有把尚未加入 Keil 工程的 `APP` 源文件自动加入构建。
+CMake 当前只编译机器人实际使用的源码。未进入主链路、且依赖旧 CMSIS-RTOS 接口的 `APP` 示例已在 2026-07-16 目录清理中删除。
 
 ### VSCode 配置
 
@@ -131,6 +131,8 @@ EIDE GCC实验构建资源占用：
 
 该实验确认 EIDE GCC ELF具有完整 LOAD映射，但最终决定不维护 EIDE和 CMake两套构建配置。日常主链路统一回到 CMake；EIDE实验配置不再作为阶段 2交付物。
 
+2026-07-16 项目目录收尾时，当前 `codex/cubemx-rebuild` 分支已删除 `MDK-ARM/` 和旧 EIDE 流程文档。上述路径仅作为历史实验记录；完整 Keil/EIDE 文件仍可从远程 `master` 或清理前提交 `8154cca` 获取。
+
 ### 上板下载、调试和实时变量验证
 
 已完成以下实机验证：
@@ -147,24 +149,17 @@ ARM LiveWatch 必须单独指定 GNU GDB 14.2 的绝对路径。插件不会自�
 
 ### CubeMX 配置盘点
 
-确认当前 `RM_Robot_on_A_no_os.ioc` 不是完整硬件配置。
+旧文件 `RM_Robot_on_A_no_os.ioc` 已从当前分支删除，仅在远程 `master` 和清理前提交中作为历史参考。阶段 3 已新建并逐项重建 `cubemx/mobile_charging_robot.ioc`，当前由 CubeMX 接管：
 
-`.ioc` 当前主要包含：
+- 芯片、时钟树和 SWD
+- CAN1
+- USART1/RC、UART8/RFID、USART6/Battery、UART7/Server 及其 DMA/NVIC
+- TIM2 控制调度
+- L298N、前后限位、光电门、RGB 和 LED GPIO
 
-- CAN1、CAN2
-- USART1 和部分 DMA
-- TIM2
-- 时钟、SWD 和少量 GPIO
+Ultrawave、PB2 Key、Debug USART 和 CAN2 因机器人实际未使用而主动排除。CAN2 已从最终 IOC、生成代码、正式源码和强中断实现中删除。
 
-BSP 代码还手工配置了：
-
-- USART6：电池通信
-- UART7：服务器通信
-- UART8：RFID 通信
-- TIM4、TIM5：超声波
-- 其他执行器、限位开关、光电门、RGB 和电源 GPIO
-
-详细资源和迁移顺序见 `docs/cubemx-rebuild-checklist.md`。
+详细状态见 `docs/cubemx-migration-status.md` 和 `docs/cubemx-rebuild-checklist.md`。
 
 ## 阶段 1 和阶段 2 封版结论
 
@@ -174,17 +169,14 @@ BSP 代码还手工配置了：
 - F5 能自动完成 Build、启动 OpenOCD、连接 CMSIS-DAP、下载同一 ELF、加载符号并进入源码调试。
 - reset、halt、断点、继续运行和单步调试均通过。
 - ARM LiveWatch 能在 CPU 运行时连接 `127.0.0.1:6666`，实时显示标量、结构体及结构体成员。
-- CAN、电机、USART1、USART6、UART7、UART8、DMA、中断、超声波、推杆、限位开关、光电门、RFID、电池通信和充电相关模块均已完成上机检测。
+- CAN、电机、USART1、USART6、UART7、UART8、DMA、中断、推杆、限位开关、光电门、RFID、电池通信和充电相关模块均已完成上机检测；Ultrawave 后续确认未在实际机器人上使用，阶段 3 主动排除。
 - 日常流程不再需要打开 Keil，也不需要手工切换 ELF、端口或烧录文件。
 
 因此阶段 1“CMake 固件整机行为回归”和阶段 2“VSCode 编译、下载、调试、LiveWatch 链路”正式完成。
 
-## 当前没有做
+## 当前尚未完成
 
-- 没有使用当前不完整的 `.ioc` 覆盖或重新生成现有源码。
-- 没有开始阶段 3 的完整 CubeMX 工程重建。
-- 没有修改现有 BSP 的外设初始化归属。
-- 没有执行阶段 4 的 GCC 警告、编码、重复全局变量和 `-fcommon` 清理。
+- 尚未执行阶段 4 的 GCC 警告、全量编码、重复全局变量和 `-fcommon` 清理。
 - 没有移除远程 `master` 中的 Keil 工程；它继续作为独立稳定基线保留。
 
 ## 已知问题
@@ -203,7 +195,7 @@ BSP 代码还手工配置了：
 
 EIDE 从 Keil 工程导入后，仍可使用 ARMCC V5 生成 `m_robot.axf`。该 AXF 可以由 Keil 正常烧录和调试，但其 `RW_IRAM1` 不在 GNU GDB 可识别的 ELF LOAD 段内，GNU GDB 直接执行 `target-download` 时会失败。
 
-最终调试方案不再使用 ARMCC AXF，而是使用 CMake/GCC生成的标准 `build/debug/mobile_charging_robot.elf`，由同一个 ELF同时承担 Flash下载和调试符号加载。Keil/AC5工程只保留为行为参考和固件回退路径。
+最终调试方案不再使用 ARMCC AXF，而是使用 CMake/GCC生成的标准 `build/debug/mobile_charging_robot.elf`，由同一个 ELF同时承担 Flash下载和调试符号加载。Keil/AC5工程只在远程 `master` 中保留为行为参考和固件回退路径。
 
 ### 调试探针信息
 
@@ -226,7 +218,7 @@ EIDE 从 Keil 工程导入后，仍可使用 ARMCC V5 生成 `m_robot.axf`。该
 
 ### 阶段 3：重建完整 CubeMX 工程
 
-状态：已在 `codex/cubemx-rebuild` 分支启动。当前迁移记录见 `docs/cubemx-migration-status.md`。
+状态：已完成。2026-07-16 先将清理前整机验证版本以提交 `8154cca` 推送到远程，随后删除未使用模块、重复初始化代码和 CAN2。清理后 Debug/Release 全新构建通过，最终 Debug 固件已在真实机器人上完成 CAN1、RC、TIM2、RFID、Battery、Server、GPIO、推杆、LED 和 LiveWatch 回归。阶段 3 使用 `v3.0.0-cubemx` 标签封版，详细记录见 `docs/cubemx-migration-status.md`。
 
 1. 在独立 Git 分支或独立目录中创建 STM32F427IIHx CMake 工程。
 2. 第一轮继续使用 STM32Cube FW_F4 V1.26.2，避免同时升级 HAL。
@@ -243,9 +235,4 @@ EIDE 从 Keil 工程导入后，仍可使用 ARMCC V5 生成 `m_robot.axf`。该
 2. 清理头文件中的 `static` 实现和重复全局变量。
 3. 移除 `-fcommon`，重新验证链接。
 4. 建立 Debug/Release 固件发布和回退流程。
-5. CMake/CubeMX 工程稳定后，再决定是否归档 Keil 工程。
-
-## 继续工作前需要的信息
-
-- 当前机器人可正常工作的 Keil 固件版本或 HEX。
-- 上板测试时可以安全断开的电机、推杆和充电执行器范围。
+5. [x] 当前 CMake/CubeMX 分支删除 Keil/EIDE 文件，完整 Keil 工程继续由远程 `master` 独立保存。

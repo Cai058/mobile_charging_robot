@@ -28,7 +28,6 @@ set(PROJECT_SOURCES
     User/Src/stm32f4xx_hal_msp.c
     User/Src/stm32f4xx_it.c
     User/Src/usart_callback.c
-    User/Src/Robot_Config.c
     User/Src/system_stm32f4xx.c
 
     Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
@@ -50,14 +49,11 @@ set(PROJECT_SOURCES
     Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
 
     BSP/src/bsp_can.c
-    BSP/src/bsp_key.c
     BSP/src/bsp_L298N.c
     BSP/src/bsp_led.c
     BSP/src/bsp_limitSwitch.c
     BSP/src/bsp_photogate.c
-    BSP/src/bsp_ultrawave.c
     BSP/src/pid.c
-    BSP/src/bsp_debug_usart.c
     BSP/src/cJSON.c
     BSP/src/bsp_rgb.c
     BSP/src/bsp_rc.c

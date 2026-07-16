@@ -16,6 +16,8 @@
 
 CubeMX 会更新整个隔离生成工程，但根工程不得直接复制整个 `Src/` 或 `Inc/`。每次只审查和同步当前迁移外设。
 
+隔离工程中的 `Drivers/`、`build/`、生成副本 `.ioc` 和 `.mxproject` 都可以由 CubeMX/固件包重新创建，已被 Git 忽略，可在目录清理时安全删除。正式配置源始终是 `cubemx/mobile_charging_robot.ioc`。
+
 ## 白名单同步
 
 CAN：
@@ -23,6 +25,8 @@ CAN：
 ```powershell
 powershell -ExecutionPolicy Bypass -File cubemx/sync-generated.ps1 -Peripheral can
 ```
+
+该白名单会同时同步 `can.c` 和 `can.h`，避免生成端与正式端的句柄或初始化声明不一致。脚本还会自动把 CubeMX 在 `can.h` 文件末尾生成的多个空行规范为一个换行，保证重复同步和 `git diff --check` 稳定通过。
 
 GPIO：
 

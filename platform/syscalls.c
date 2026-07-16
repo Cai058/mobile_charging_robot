@@ -57,23 +57,16 @@ int _lseek(int file, int ptr, int dir)
 
 int _read(int file, char *ptr, int len)
 {
-    int index;
-
     (void)file;
-    for (index = 0; index < len; ++index) {
-        ptr[index] = (char)fgetc(stdin);
-    }
-    return len;
+    (void)ptr;
+    (void)len;
+    return 0;
 }
 
 int _write(int file, char *ptr, int len)
 {
-    int index;
-
     (void)file;
-    for (index = 0; index < len; ++index) {
-        fputc(ptr[index], stdout);
-    }
+    (void)ptr;
     return len;
 }
 

@@ -60,7 +60,6 @@ const char* error_list[] = {
 void Sensor_t_Update(void)
 {	
 	// *********Update***************
-	Ultrawave_Update();
 	//== RFID ==
 	if(m_ctrl.number != 0){rfid_flag = 1;}
 	if(rfid_flag == 1)
@@ -85,9 +84,6 @@ void Sensor_t_Update(void)
 	RC_Update();
 	
 	// Assign to variable
-	//m_ctrl.ultra_stop = Ultrawave_IfStop(); 
-	
-	m_ctrl.ultra_stop =0;
 	m_ctrl.pg_state = Get_PGState();
 	// 记录当前经过的点位
 	if(m_ctrl.number != 0){
@@ -328,7 +324,6 @@ void SwitchState(void)
 		 
 		
 		 //2.4 设置速度
-		 if (m_ctrl.ultra_stop == 0)
 		 { 
 			 
 			 // Adjust
@@ -602,7 +597,7 @@ void SwitchState(void)
 			 }
 			 
 	   // 1. 处理因为障碍物停下的情况
-	   if(error_code == 1 && m_ctrl.ultra_stop == 0) 
+	   if(error_code == 1)
 		 {
 			 error_code = 0;
 			 sm.currentState = sm.lastState;
@@ -652,7 +647,6 @@ uint8_t  get_previous_point(uint8_t target_id, int direction) {
 void Sensor_t_Init(void)
 {
 	//sensors state init
-	m_ctrl.ultra_stop = 0;
 	m_ctrl.pg_state = 0;
 	m_ctrl.action = 0;
 	m_ctrl.number = 0;

@@ -51,8 +51,6 @@ void Init(void)
 	can_filter_init();
 	
 	// Basic GPIO is initialized centrally by CubeMX MX_GPIO_Init().
-	// Peripheral-specific initialization remains in the corresponding BSP.
-	Ultrawave_Config();
 	MX_UART8_Init();
 	RFID_Config();  
 	MX_USART6_UART_Init();

@@ -94,9 +94,6 @@ int main(void)
 		Error_Handler();
 	}
 	Init();
-	printf("111");
-	
-	//DEBUG_USART_Config();
   /* USER CODE END 2 */
 
   /* Infinite loop */

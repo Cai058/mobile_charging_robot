@@ -1,6 +1,6 @@
 # STM32CubeMX 迁移状态
 
-最后更新：2026-07-15
+最后更新：2026-07-16
 
 ## 分支与基线
 
@@ -23,7 +23,7 @@
 
 CubeMX 6.18.0-RC3 比原 IOC 记录的 6.3.0 更新。本分支只允许它在隔离目录中生成代码；所有生成的初始化和中断代码在合入前都必须与已验证实现进行对比。
 
-旧文件 `RM_Robot_on_A_no_os.ioc` 无法被 CubeMX 6.18.0-RC3 稳定迁移，加载时会出现 `Range [5, 3) out of bounds for length 3` 和 `Mcu.getDie() is null`。因此，本次迁移采用全新的 STM32F427IIHx 工程，并逐项重建配置。旧 IOC 保持不变，只作为参考。
+旧文件 `RM_Robot_on_A_no_os.ioc` 无法被 CubeMX 6.18.0-RC3 稳定迁移，加载时会出现 `Range [5, 3) out of bounds for length 3` 和 `Mcu.getDie() is null`。因此，本次迁移采用全新的 STM32F427IIHx 工程，并逐项重建配置。2026-07-16 目录清理后，旧 IOC 不再保留在当前分支；需要对照时从远程 `master` 或清理前提交 `8154cca` 获取。
 
 ## 隔离目录结构
 
@@ -34,7 +34,7 @@ cubemx/
   generated/                  # 隔离的 CubeMX CMake 生成工程
 ```
 
-重建过程中不会原地覆盖根目录中的 `RM_Robot_on_A_no_os.ioc`、`User/`、`BSP/`、`Controller/`、`Entity/` 以及现有 CMake 工作流。
+重建过程中不会原地覆盖 `User/`、`BSP/`、`Controller/`、`Entity/` 以及现有 CMake 工作流。
 
 ## 迁移切片 1
 
@@ -45,7 +45,7 @@ cubemx/
 3. APB1 42 MHz，APB2 84 MHz。
 4. PA13/PA14 上的 SWD。
 5. PD0/PD1 上的 CAN1，1 Mbit/s。
-6. PB12/PB13 上的 CAN2 配置暂时保留在 IOC 中，但本切片不启用 CAN2。
+6. 初始切片曾暂时保留 PB12/PB13 上的 CAN2 配置但不启用；2026-07-16 确认机器人不使用 CAN2 后，已从最终 IOC 和正式源码彻底删除。
 7. 旧 IOC 中已有的 GPIO 配置，用于对比和归属盘点。
 
 初始 IOC 中暂时保留 USART1 和 TIM2，以便生成工程与已验证代码进行对比；这两个外设的所有权迁移及 BSP 清理属于后续切片。
@@ -75,9 +75,9 @@ cubemx/
 
 ### CAN
 
-第一次生成的代码将 `AutoBusOff` 设置为 `DISABLE`，而已验证固件的两路 CAN 都使用 `ENABLE`。CubeMX 6.18 在 IOC 中使用参数名 `ABOM` 表示此配置。重建后的 IOC 已固定设置 `CAN1.ABOM=ENABLE` 和 `CAN2.ABOM=ENABLE`，重新生成后会正确得到 `AutoBusOff = ENABLE`。
+第一次生成的代码将 `AutoBusOff` 设置为 `DISABLE`，而已验证固件的两路 CAN 都使用 `ENABLE`。CubeMX 6.18 在 IOC 中使用参数名 `ABOM` 表示此配置。迁移过程中曾为两路 CAN 固定设置 `ABOM=ENABLE`；最终删除 CAN2 后，只保留 `CAN1.ABOM=ENABLE`。
 
-已验证固件还会显式启用 `CAN_IT_BUSOFF`。隔离生成工程现在在 `HAL_CAN_Init()` 之后，分别通过 `CAN1_Init 2` 和 `CAN2_Init 2` 的 USER CODE 区启用该中断。再次运行 CubeMX 生成代码后，这两处修改仍然保留，重新生成的工程也能成功编译。
+已验证固件还会显式启用 `CAN_IT_BUSOFF`。迁移过程中曾在两路 CAN 的 USER CODE 区启用该中断；最终删除 CAN2 后，只保留 CAN1 的 BUSOFF 中断设置。再次运行 CubeMX 生成代码后该设置仍然保留。
 
 其余 CAN 初始化字段、CAN GPIO 复用功能、NVIC 优先级以及 TX/RX0 中断处理函数均与已验证实现一致。
 
@@ -94,9 +94,9 @@ cubemx/
 
 但是进一步审查发现，CAN2 接收回调使用 `i = RX_Header.StdId - CAN2_3508_ID1 + 7`，会写入 `Motor_measure[7...]`，而当前 `Motor_measure` 数组实际上只有 4 个元素。一旦 CAN2 收到对应报文就会产生越界写入。历史固件中的 CAN2 从未真正启用，当前业务代码也没有通过 `hcan2` 发送报文，因此不能在未完成数据模型迁移前直接启用 CAN2。
 
-本切片最终采用安全方案：只初始化和启动 CAN1；将过滤器结构体清零，并在配置 CAN1 前固定设置 `SlaveStartFilterBank = 14`；CAN1 的 HAL 配置、启动和通知步骤都检查返回值。CAN2 的 IOC 配置继续保留，等后续明确电气连接、消息 ID、目标数组容量和业务需求后再单独迁移。
+本切片采用的安全方案是只初始化和启动 CAN1；将过滤器结构体清零，并在配置 CAN1 前固定设置 `SlaveStartFilterBank = 14`；CAN1 的 HAL 配置、启动和通知步骤都检查返回值。初期曾保留 CAN2 IOC 配置等待决策，2026-07-16 已确认不用并彻底删除。
 
-由于当前 CAN1 过滤器使用全零掩码，会接收全部标准帧，接收回调还必须检查报文 ID。只有 `0x201`–`0x204` 才允许映射到四元素 `Motor_measure` 数组；其他 ID 直接忽略。CAN2 未完成独立迁移前，不允许其回调写入该数组。
+由于当前 CAN1 过滤器使用全零掩码，会接收全部标准帧，接收回调还必须检查报文 ID。只有 `0x201`–`0x204` 才允许映射到四元素 `Motor_measure` 数组；其他 ID 直接忽略。最终源码中已不存在 CAN2 接收回调。
 
 正式接管时，将根目录 `User/Src/can.c` 的 CAN Bus-Off USER CODE 与隔离 CubeMX 生成结果同步：在 `HAL_CAN_Init()` 成功后启用 `CAN_IT_BUSOFF`，不再在 MSP 初始化过程中提前启用。CAN1 的时序、GPIO、NVIC 和中断处理保持与生成结果一致。
 
@@ -409,7 +409,7 @@ User usart_callback.c
 
 已发现的边界和风险：
 
-1. `bsp_debug_usart.h` 也把调试串口定义为 UART8/PE0/PE1，但 `DEBUG_USART_Config()` 当前在 `main.c` 中被注释。RFID 迁移后该调试初始化必须继续保持禁用，否则会用第二个 UART 句柄和不同波特率重新配置同一外设。
+1. 清理前的 `bsp_debug_usart.h` 也把调试串口定义为 UART8/PE0/PE1，但 `DEBUG_USART_Config()` 从未启用；否则会用第二个 UART 句柄和不同波特率重新配置同一外设。阶段 3 收尾时已删除该未使用模块。
 2. `RFID_DMA_Rx_ReStart()` 当前直接调用 `HAL_UART_MspInit(&huart8)`，会绕过 CubeMX 所有权并重复配置 GPIO/DMA；迁移时移除该调用，只保留接收停止、状态恢复和 DMA 重启。
 3. `RFID_Update()` 在首帧到来前可能通过空的 `pbuf_rfid` 读取地址 0；UART8 IRQ 中 `memcpy(..., rfid_rx_len + 3)` 在接近满缓冲区时也存在越界风险。这两项属于 RFID 业务健壮性问题，本切片先记录，不与硬件初始化迁移同时重写；上机前应再单独收口。
 
@@ -557,7 +557,7 @@ Entity Server.c
 - DMA1 与现有 UART8、DMA2 外设共用 `User/Src/dma.c` 和 `User/Inc/dma.h`。
 - CubeMX 6.18.0-RC3 中 UART7 的 DMA 请求继续按 RX 后 TX 排列，并保持全局请求索引后缀一致。
 - 不同步生成的 `stm32f4xx_it.c`。正式 UART7、DMA1 Stream1 和 DMA1 Stream3 中断继续由 Server BSP 提供。
-- `bsp_debug_usart.h` 中存在被注释的 UART7 调试串口备选定义，但当前没有启用，不与 Server 争用外设。
+- 清理前的 `bsp_debug_usart.h` 中存在被注释的 UART7 调试串口备选定义，但从未启用；阶段 3 收尾时已删除，不再存在与 Server 争用外设的风险。
 
 已发现但不在硬件所有权迁移中同时修改的业务风险：
 
@@ -613,18 +613,59 @@ CAN1 迁移切片已经完成编译、烧录和上机技术验证，最终 Debug
 
 - 程序稳定运行在 `main.c:100` 主循环。
 - `hcan1.Instance = 0x40006400`，状态为工作态，错误码为 0。
-- CAN1 时钟已开启，CAN2 时钟保持关闭。
+- CAN1 时钟已开启；最终源码中不存在 CAN2 句柄、初始化或时钟配置。
 - CAN 过滤器分界值为 14，过滤器组 0 已激活。
-- `hcan2` 保持全零复位态，且不再被错误调用，因此错误码为 0。
+- `hcan2`、`MX_CAN2_Init()`、CAN2 强中断处理函数和 CAN2 电机 ID 枚举均已从 ELF 输入源码删除。
 - 连续两次采样中，前三个 `Motor_measure` 均具有有效角度，转矩电流字段持续变化，确认 CAN1 接收中断和电机反馈正常。
-- CAN1 接收回调只允许 `0x201`–`0x204` 映射到四元素 `Motor_measure` 数组，其他报文和未迁移的 CAN2 报文不会再造成越界写入。
+- CAN1 接收回调只允许 `0x201`–`0x204` 映射到四元素 `Motor_measure` 数组，其他报文直接忽略。
 - 正式 CMake 编译稳定路径 `User/Src/can.c`；该文件由白名单脚本从 CubeMX 生成目录同步更新。
 
-CAN2 不属于本次已完成切片。后续必须先明确 CAN2 的硬件连接和业务需求，并修正当前回调对 `Motor_measure[7...]` 的越界风险，才能单独启用和测试 CAN2。
+2026-07-16 用户确认当前机器人不使用 CAN2。最终 IOC 已删除 CAN2 外设、PB12/PB13 和 CAN2 NVIC；生成端与正式端均不再包含 CAN2 句柄、初始化、MSP 或强中断实现。启动文件保留的 CAN2 弱向量是 STM32F427 固定中断向量表的一部分，不会启用外设。
 
-GPIO、USART1/RC DMA、TIM2、UART8/RFID、USART6/Battery 和 UART7/Server 切片均已完成离线迁移及整机回归，现有四路业务串口的硬件初始化均已由 CubeMX 接管。下一独立迁移切片为仍由 BSP 完整持有的 Ultrawave TIM4/TIM5 与对应 GPIO；CAN2 继续保持未启用状态，待明确业务需求和修复数组越界风险后再单独处理。
+GPIO、USART1/RC DMA、TIM2、UART8/RFID、USART6/Battery 和 UART7/Server 切片均已完成离线迁移及整机回归，现有四路业务串口的硬件初始化均已由 CubeMX 接管。Ultrawave、PB2 Key、Debug USART 和 CAN2 已确认不属于当前机器人的有效功能，阶段 3 主动排除并从最终配置与正式构建中删除。
 
-## 2026-07-16 整机上机回归
+## 2026-07-16 阶段 3 收尾清理
+
+删除前，已将完成整机验证的版本提交并推送到远程 `codex/cubemx-rebuild` 分支：
+
+- 清理前硬件验证基线提交：`8154cca`（`stage3: establish hardware-validated CubeMX migration baseline`）。
+- 该提交对应本文件“2026-07-16 整机上机回归”记录的 ELF/BIN 和实测结果，可作为本轮清理的精确回退点。
+
+本轮清理内容：
+
+- 从 CMake 和正式源码中删除 `bsp_ultrawave.c/.h`、`bsp_key.c/.h`、`bsp_debug_usart.c/.h`。
+- 删除 `Init()` 与 `Sensor_t_Update()` 中的 Ultrawave 初始化/更新调用，并移除 `Sensor_t::ultra_stop`。原逻辑一直将该字段固定为 0，清理后保持“无超声波阻挡”的现有行为。
+- 删除由 `MX_GPIO_Init()` 完整替代的 `LED_GPIO_Config()`、`l298n_GPIO_Config()`、`L298N_Config()`、`Limit_Switch_Config()`、`Photogate_Config()` 和 `RGB_Config()` 及其头文件声明。
+- 保留 LED/RGB 控制、推杆控制、前后限位读取和光电门读取等业务接口。
+- 标准输入输出系统调用改为非阻塞空实现，避免删除未初始化的 Debug USART 重定向后发生 Newlib 递归；当前固件没有启用控制台输出。
+- 为了能安全修改历史 GBK/ANSI 文件，只将本轮涉及的少量源码机械转换为 UTF-8；不改变业务逻辑。
+- 删除未进入 CMake 的旧 RTOS 示例 `APP/`、已由 `tim.c/tim.h` 替代的 `BSP/src/time.c` 和 `BSP/inc/time.h`，以及内容全部被注释的 `User/Src/Robot_Config.c`；实际机器人配置宏继续保留在 `User/Inc/Robot_Config.h`。
+- 当前分支删除 `MDK-ARM/`、旧 EIDE 文档、旧损坏 IOC/`.mxproject`、Keil 数据脚本和过期测试 JSON；这些历史内容仍由远程 `master` 和提交 `8154cca` 保存。
+- 清除 EIDE 芯片包缓存、旧构建目录、隔离 CubeMX 工程中可重新生成的 Drivers/build 副本、`.bak` 和编辑器临时状态，释放约 669 MB。本次保留根 `build/`，因为 F5、GDB 和 ARM LiveWatch 仍需要当前 Debug ELF。
+- 删除空的 `Robot_Config.c` 对 ELF 调试/符号元数据有影响，但 Debug BIN 哈希保持不变，说明烧录到 Flash 的程序字节没有因这一步目录清理而变化。
+
+离线验证结果：
+
+- Debug 和 Release 均使用 GNU Arm GCC 14.2、CMake Preset 和 Ninja 完成 `--fresh` 全新构建。
+- Debug：text 51,612 字节、data 552 字节、bss 14,896 字节；目录清理后的 ELF SHA-256 `212389B330273EF58A824BD4A900582BB9D3854600F34AD8DE8E1428C897B92E`，BIN SHA-256 `6ECF9E1F7B3904CF91D2FFB22A55E15CD714FFDE5B96B51EECC28AE6D2EE4C27`。
+- Release：text 51,260 字节、data 556 字节、bss 14,892 字节；ELF SHA-256 `7D2347407E59F285631AE08CB89E5AD855F55287055E0126CE7C37808EB879D0`。
+- 没有新增编译错误；剩余警告仍是阶段 4 已记录的 `__packed`、头文件无效 `static` 声明和 Battery 有符号/无符号比较。
+- 按用户要求，本轮暂不上机测试。清理版本仍需在阶段 3 封版前完成一次烧录、启动和主要链路冒烟验证。
+
+### CAN2 最终删除
+
+2026-07-16 用户确认机器人不使用 CAN2，阶段 3 不再保留“未来可能启用”的半成品配置：
+
+- 从 `cubemx/mobile_charging_robot.ioc` 删除 CAN2 IP、PB12/PB13、CAN2 RX0/TX NVIC 和 `MX_CAN2_Init()` 生成顺序，并重新连续编号 IP 与 Pin 列表。
+- 使用 STM32CubeMX 6.18.0-RC3 重新生成隔离工程；生成结果只加载 CAN1，不再生成 CAN2 句柄、初始化、MSP 或强中断实现。
+- `can` 白名单扩展为同时同步 `can.c` 和 `can.h`，并自动清除 CubeMX 在 `can.h` 末尾生成的多余空行。生成端与正式端哈希一致：`can.c` SHA-256 `02674253579699A0B21A752EC79FFB0177B330B4E05E0D7A672A295E8297E820`，`can.h` SHA-256 `76384587DEA3CBB5276BC7DA4B923704059B655B0B205BD8A76C6CDFA66AF9DF`。
+- 从正式 `stm32f4xx_it.c/.h` 删除 CAN2 强中断处理函数，从 CAN BSP 删除 `hcan2` 外部声明和全部 CAN2 电机 ID 枚举。
+- Debug 和 Release 再次完成 `--fresh` 全新构建。Debug：text 51,396、data 552、bss 14,848，ELF SHA-256 `BEC090AE1FAF60974187594A8554179860D51C091E0380DBF1D45F1C35EC60BE`，BIN SHA-256 `BE2A1DBA4A81338BC7ED406D8EA201789E6C42290D85C4640E4788074FBFA9A6`。
+- Release：text 51,052、data 556、bss 14,852，ELF SHA-256 `E9CAF4D0B7CA1374A21C6975EEA3A02AE7C39173173D58F427F26AB0B66C18A6`，BIN SHA-256 `B2F67F350BB66B7E31B2F6DA7A8410A4225B4DB6ED2469843FF96713BC41B0EC`。
+- ELF 中只剩启动文件提供的 CAN2 RX0/TX 弱默认向量，没有 CAN2 强实现或业务符号。与删除 CAN2 前相比，Debug 的 text 减少 216 字节、bss 减少 48 字节。
+- 本轮仍按用户要求只做离线验证；最终上机冒烟测试尚未执行。
+
+## 2026-07-16 清理前基线整机上机回归
 
 本次使用 `ATK ATK-HS-V3-CMSIS-DAP`（序列号 `ATK 20190528`）、xPack OpenOCD、SWD 1 MHz 和当前 CMake Debug ELF 完成烧录及运行验证。OpenOCD 识别 STM32F42x/43x 2 MB Flash，程序下载完成并通过逐字节校验。
 
@@ -646,4 +687,36 @@ GPIO、USART1/RC DMA、TIM2、UART8/RFID、USART6/Battery 和 UART7/Server 切�
 - 前限位按下时 PI6 和 `m_ctrl.front_state` 同步由 0 变为 1，松开后恢复；后限位按下/松开状态及光电门由用户现场确认正常。
 - RGB 输出寄存器与绿色状态一致；L298N、LED、推杆和其余 GPIO/执行机构由用户现场测试并确认无异常。
 
-回归完成后已关闭测试用后台 OpenOCD，CMSIS-DAP 和端口 `3333/4444/6666` 均已释放。Ultrawave 尚未迁移到 CubeMX，不计入本轮已完成迁移切片。
+回归完成后已关闭测试用后台 OpenOCD，CMSIS-DAP 和端口 `3333/4444/6666` 均已释放。Ultrawave 因机器人实际未使用而被阶段 3 主动排除；其旧实现已由清理前基线提交 `8154cca` 保留，正式源码不再编译该模块。
+
+## 2026-07-16 清理后最终整机回归（通过）
+
+本次使用删除 CAN2、Ultrawave、Key、Debug USART、重复 GPIO 初始化和冗余工程文件后的最终 Debug 固件。通过 `ATK ATK-HS-V3-CMSIS-DAP`、xPack OpenOCD 和 SWD 1 MHz 完成烧录，OpenOCD 使用 GDB/Telnet/TCL 端口 `3333/4444/6666`。
+
+本次烧录产物：
+
+- Debug ELF SHA-256：`BEC090AE1FAF60974187594A8554179860D51C091E0380DBF1D45F1C35EC60BE`。
+- Debug BIN SHA-256：`BE2A1DBA4A81338BC7ED406D8EA201789E6C42290D85C4640E4788074FBFA9A6`。
+- GNU size：text 51,396 字节、data 552 字节、bss 14,848 字节。
+
+已通过：
+
+- 程序稳定运行在主循环，状态机保持 `STATE_IDLE`；TIM2 约为 2 kHz。
+- CAN1 处于 LISTENING，错误码为 0，三个电机反馈持续更新。
+- RC 通道数据、模式开关和新帧接收正常。
+- Battery 成功解析约 20.01 Ah、SOC 99%，TX DMA 正常。
+- Server RX 成功解析安全测试帧，Server TX 队列、UART7 TX DMA 和完成回调正常。
+- UART1、USART6、UART7 和 UART8 状态正常。
+- RFID 识别原始码 `0x9E1D` 为编号 2，11 字节帧为 `30 E0 04 01 53 08 C3 9E 1D 23 0D`。
+- 光电门触发与释放均正常。
+- RGB 红、青、绿输出切换正常，测试后恢复绿色。
+- ARM LiveWatch 通过 TCL 端口实现非停机变量读取。
+- 推杆正向和反向各短动约 0.3 秒，用户现场确认两个方向均有实际动作；测试后 PA0–PA3 已强制恢复低电平。
+- 后限位按下时 PI7 为低电平，`m_ctrl.rear_state` 同步为触发状态 1；用户确认该链路正常，不再重复检查松开状态。
+- 红色 LED（PE11）和绿色 LED（PF14）依次完成“全灭→仅红灯亮→仅绿灯亮→两灯亮”切换，寄存器与现场亮灭结果一致；最后恢复两灯亮的初始状态。
+
+说明：
+
+- 按用户要求，本轮不重复测试前限位；清理前基线已记录 PI6 和 `m_ctrl.front_state` 的按下、松开联动正常。
+- 回归完成后已关闭后台 OpenOCD，CMSIS-DAP 及端口 `3333/4444/6666` 已释放。
+- 清理后最终固件通过主要硬件和通信链路回归，阶段 3 的 CubeMX 重建、重复初始化清理和未使用模块删除已完成验收。

@@ -2,24 +2,6 @@
 
 // RobotConfig_t RobotConfig_l298n;
 
-void l298n_GPIO_Config(void) {
-    GPIO_InitTypeDef GPIO_InitStructure;
-	
-	 GPIO_InitStructure.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3;
-    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStructure.Pull = GPIO_NOPULL;
-    GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-	  PushRod_Stop();
-}
-
-
-void L298N_Config(void)
-{
-	l298n_GPIO_Config();
-}
-
 void PushRod_Backward(void) {
 //    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
 //    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);

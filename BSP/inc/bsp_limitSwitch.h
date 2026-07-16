@@ -12,7 +12,6 @@
 #define LIMIT_SWITCH2_GPIO_PORT      		GPIOB                      
 #define LIMIT_SWITCH2_GPIO_CLK_ENABLE()	__GPIOB_CLK_ENABLE()
 
-void Limit_Switch_Config(void);
 uint8_t limit_Switch_Scan(GPIO_TypeDef * GPIOx,uint16_t GPIO_Pin);
 bool bsp_limitswitch_front_get(void);
 uint8_t Get_rearlimitState(void);

@@ -33,13 +33,13 @@
 //#define GRAB_IN2_Port GPIOB
 //#define GRAB_ENABLE_PWM_Pin GPIO_PIN_7  // TIM4_CH2
 
-// /* TIM8Í¨µÀ1Êä³öÒı½Å */
-// #define ADVANCE_OCPWM_PIN           		GPIO_PIN_4            //PA4Êä³öPWM²¨µ½l298nµÄENA¶Ë
+// /* TIM8é€šé“1è¾“å‡ºå¼•è„š */
+// #define ADVANCE_OCPWM_PIN           		GPIO_PIN_4            //PA4è¾“å‡ºPWMæ³¢åˆ°l298nçš„ENAç«¯
 // #define ADVANCE_OCPWM_GPIO_PORT     		GPIOC                      
 // #define ADVANCE_OCPWM_GPIO_CLK_ENABLE() 	__GPIOC_CLK_ENABLE()
 // //#define ADVANCE_OCPWM_AF					GPIO_AF3_TIM8
 
-// //Í¨¹ı¿ØÖÆIN1,IN2µÄ¸ßµÍµçÆ½¿ØÖÆµç»úĞı×ªµÄ·½Ïò
+// //é€šè¿‡æ§åˆ¶IN1,IN2çš„é«˜ä½ç”µå¹³æ§åˆ¶ç”µæœºæ—‹è½¬çš„æ–¹å‘
 // #define IN1_PIN            		GPIO_PIN_9              //IN1_PIN
 // #define IN1_GPIO_PORT      		GPIOA                      
 // #define IN1_GPIO_CLK_ENABLE()	__GPIOA_CLK_ENABLE()
@@ -57,13 +57,6 @@
 // #define SWITCH1_IRQHandler 									EXTI3_IRQHandler
 // #define SWITCH2_INT_EXTI_IRQ 								EXTI4_IRQn
 // #define SWITCH2_IRQHandler 									EXTI4_IRQHandler
-
-
-extern TIM_HandleTypeDef TIM_TimeBaseStructure;
-
-void l298n_GPIO_Config(void);
-void TIM_Mode_Config(void);
-void L298N_Config(void);
 
 
 void PushRod_Forward(void);

@@ -3,7 +3,7 @@
 
 #include "stm32f4xx.h"
 
-//Òý½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 #define LED1_Pin GPIO_PIN_14
 #define LED1_GPIO_Port GPIOF
@@ -14,7 +14,6 @@
 
 
 
-void LED_GPIO_Config(void);
 void LED_RED_ON(void);
 void LED_RED_OFF(void);
 void LED_GREEN_ON(void);

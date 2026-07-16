@@ -10,18 +10,9 @@
 # Local backups
 *.bak
 
-# Keil/EIDE generated metadata and build outputs.
-# The remote master branch remains the Keil source baseline.
-/MDK-ARM/.cmsis/
-/MDK-ARM/.eide/
-/MDK-ARM/.pack/
-/MDK-ARM/.vscode/
-/MDK-ARM/build/
-/MDK-ARM/new_robo/
-/MDK-ARM/*.uvguix.*
-/MDK-ARM/.clang-format
-/MDK-ARM/.gitignore
-/MDK-ARM/RTE_Components.h
+# Keil/EIDE files are not part of this CMake/CubeMX branch.
+# The complete Keil project remains available on remote master.
+/MDK-ARM/
 
 # CubeMX isolated build output and reproducible firmware-package copies
 # (IOC, generated application source and CMake configuration remain tracked)

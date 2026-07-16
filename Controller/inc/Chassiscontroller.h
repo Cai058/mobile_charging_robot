@@ -5,13 +5,10 @@
 //#include "usart.h"
 #include "gpio.h"
 
-#include "bsp_ultrawave.h"
 #include "bsp_photogate.h"
 #include "bsp_led.h" 
 #include "bsp_can.h"
-#include "bsp_key.h"
 #include "pid.h"
-#include "bsp_debug_usart.h"
 #include "bsp_limitSwitch.h"
 #include "bsp_L298N.h"
 #include "RFID.h"
@@ -29,7 +26,6 @@
 
 
 //typedef struct{
-//uint16_t ultra_stop;
 //GPIO_PinState pg_state;
 //uint8_t action;
 //uint8_t number;

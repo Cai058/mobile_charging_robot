@@ -3,7 +3,7 @@
 
 #include "stm32f4xx.h"
 
-//Òý½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 
 
@@ -14,7 +14,6 @@ typedef enum{
 		CYAN
 }RGB_COLOR;
 
-void RGB_Config(void);
 void RGB_ON(RGB_COLOR color);
 void RGB_OFF(void);
 

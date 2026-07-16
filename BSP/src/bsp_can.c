@@ -2,7 +2,6 @@
 #include "main.h"
 
 extern CAN_HandleTypeDef hcan1;
-extern CAN_HandleTypeDef hcan2;
 
 static CAN_TxHeaderTypeDef  CANx_tx_message;
 static uint8_t              CANx_send_data[8];

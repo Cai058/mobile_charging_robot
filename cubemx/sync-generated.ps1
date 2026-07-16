@@ -12,6 +12,11 @@ $mappings = @{
         @{
             Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Src/can.c'
             Destination = Join-Path $repoRoot 'User/Src/can.c'
+        },
+        @{
+            Source = Join-Path $PSScriptRoot 'generated/mobile_charging_robot_cubemx/Inc/can.h'
+            Destination = Join-Path $repoRoot 'User/Inc/can.h'
+            NormalizeTrailingBlankLines = $true
         }
     )
     gpio = @(
@@ -110,6 +115,19 @@ foreach ($mapping in $mappings[$Peripheral]) {
 
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
         throw "CubeMX generated file not found: $source. Run Generate Code first."
+    }
+
+    if ($mapping.NormalizeTrailingBlankLines) {
+        $sourceText = [IO.File]::ReadAllText($source)
+        $normalizedSourceText = [regex]::Replace($sourceText, '(\r?\n)+\z', "`r`n")
+        if ($sourceText -ne $normalizedSourceText) {
+            [IO.File]::WriteAllText(
+                $source,
+                $normalizedSourceText,
+                [Text.UTF8Encoding]::new($false)
+            )
+            Write-Host "Normalized trailing blank lines: $source"
+        }
     }
 
     $sourceHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash

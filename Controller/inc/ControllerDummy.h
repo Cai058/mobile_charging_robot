@@ -1,13 +1,10 @@
 #ifndef CONTROLLER_DUMMY_H
 #define	CONTROLLER_DUMMY_H
 
-#include "bsp_ultrawave.h"
 #include "bsp_photogate.h"
 #include "bsp_led.h" 
 #include "bsp_can.h"
-#include "bsp_key.h"
 #include "pid.h"
-#include "bsp_debug_usart.h"
 #include "bsp_limitSwitch.h"
 #include "bsp_L298N.h"
 #include "RFID.h"
@@ -23,7 +20,6 @@
 
 
 typedef struct{
-uint16_t ultra_stop;
 uint8_t  pg_state;
 uint8_t action;
 uint8_t number;
@@ -36,7 +32,7 @@ uint8_t need_charge;
 uint8_t is_charging;
 uint8_t charge_mode;
 int move_direction;
-uint8_t current_target_id; //µ±Ç°Ä¿±ê£¨³äµçµãÎ»»òÕß´ÓÆ½Ì¨»ñÈ¡µÄ£©
+uint8_t current_target_id; //å½“å‰ç›®æ ‡ï¼ˆå……ç”µç‚¹ä½æˆ–è€…ä»å¹³å°è·å–çš„ï¼‰
 uint8_t available;
 uint8_t place_complete;
 uint8_t pick_complete;
@@ -68,36 +64,36 @@ void Sensor_t_Update(void);
 void Dummy_Update(void);
 void SwitchState(void);
 
-//³õÊ¼»¯½á¹¹Ìå
+//åˆå§‹åŒ–ç»“æ„ä½“
 void Dummy_Init(void);
 void Sensor_t_Init(void);
 void StateMachine_Init(void);
 
-//ÇĞ»»»Ø×Ô¶¯×´Ì¬Ê±£¬ÖØÖÃ±äÁ¿
+//åˆ‡æ¢å›è‡ªåŠ¨çŠ¶æ€æ—¶ï¼Œé‡ç½®å˜é‡
 void Dummy_Reset(void);
 void Sensor_t_Reset(void);
 
-//·µ»ØÖµ
+//è¿”å›å€¼
 void Get_MotorSpeed(int16_t *_speed);
 
-//ÉèÖÃµç»úËÙ¶È
+//è®¾ç½®ç”µæœºé€Ÿåº¦
 void SetxSpeed(int _speed, uint8_t mode);
 void SetySpeed(int _speed);
 
-//¼ÆËã·½ÏòºÍÇ°Ò»¸öµãÎ»Î»ÖÃ
+//è®¡ç®—æ–¹å‘å’Œå‰ä¸€ä¸ªç‚¹ä½ä½ç½®
 int get_direction(uint8_t  location_id, uint8_t  target_id);
 uint8_t  get_previous_point(uint8_t  target_id, int  direction);
 
-//½øÈë¿ÕÏĞ×´Ì¬µÄÊ±ºò£¬ÖØÖÃËùÓĞflag
+//è¿›å…¥ç©ºé—²çŠ¶æ€çš„æ—¶å€™ï¼Œé‡ç½®æ‰€æœ‰flag
 void Reset_flag(void);
 
-//´«µİsensor_t
+//ä¼ é€’sensor_t
 Sensor_t Get_SensorData(void);
 
 // Get test index
 uint8_t Get_test_index(uint8_t _current);
 
-// ÅĞ¶ÏÄ¿±êµãÎ»ÊÇ·ñÔÚ³¡Õ¾·¶Î§ÄÚ
+// åˆ¤æ–­ç›®æ ‡ç‚¹ä½æ˜¯å¦åœ¨åœºç«™èŒƒå›´å†…
 uint8_t if_target_valid(uint8_t _id);
 
 uint8_t Get_stop_flag(void);
