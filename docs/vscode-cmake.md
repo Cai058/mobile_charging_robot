@@ -2,6 +2,8 @@
 
 最后更新：2026-07-16
 
+全新 Windows 电脑的工具安装、路径复制、VSCode 扩展、首次 Build/F5/LiveWatch 验收和排错步骤，见 `docs/windows-cmake-vscode-setup.md`。
+
 ## 目标
 
 阶段 2 收口后只保留一条日常开发主链路：
